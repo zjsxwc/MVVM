@@ -275,8 +275,7 @@ public class CalendarUtils {
      *
      * @param srcDate
      * @param tagDate
-     * @return 如果小于0，则srcData < tagData;如果等于0，则srcData = tagData;如果大于0，则srcData
-     * > tagData
+     * @return 如果小于0，则srcData < tagData;如果等于0，则srcData = tagData;如果大于0，则srcData > tagData
      */
     public static int compare(String srcDate, String tagDate) {
         return srcDate.compareTo(tagDate);

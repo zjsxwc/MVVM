@@ -179,7 +179,6 @@ public class FileUtil {
      *
      * @param zipFile    压缩文件
      * @param folderPath 解压目录
-     * @throws Exception
      */
     public static int unZipFile(File zipFile, String folderPath) {
         ZipFile zfile = null;

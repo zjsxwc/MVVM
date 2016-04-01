@@ -2,7 +2,6 @@ package com.arialyy.frame.util;
 
 /**
  * Created by AriaLyy on 2015/1/10.
- * <p/>
  * 正则表达式规则
  */
 public class RegularExpression {

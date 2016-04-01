@@ -43,7 +43,7 @@ public class ScreenUtil {
      * 设置灰度
      *
      * @param v
-     * @param greyScale true --> 灰度
+     * @param greyScale true:灰度
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void setGreyScale(View v, boolean greyScale) {

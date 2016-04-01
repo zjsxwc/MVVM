@@ -390,7 +390,7 @@ public class AndroidUtils {
     }
 
     /**
-     * 打开一个隐藏了图标的APP<br/>
+     * 打开一个隐藏了图标的APP
      *
      * @param context
      */
