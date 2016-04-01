@@ -9,16 +9,6 @@ import android.text.TextUtils;
 import com.arialyy.frame.cache.CacheUtil;
 import com.arialyy.frame.http.inf.IResponse;
 import com.arialyy.frame.util.show.L;
-import com.squareup.okhttp.Call;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.FormEncodingBuilder;
-import com.squareup.okhttp.Headers;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.MultipartBuilder;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -34,6 +24,15 @@ import java.net.URL;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.Headers;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * Created by lyy on 2015/11/5.
@@ -205,7 +204,7 @@ public class HttpUtil {
         //请求加入调度
         call.enqueue(new Callback() {
             @Override
-            public void onFailure(Request request, IOException e) {
+            public void onFailure(Call call, IOException e) {
                 L.e(TAG, "请求链接【" + url + "】失败");
                 String data = null;
                 if (useCache) {
@@ -221,7 +220,7 @@ public class HttpUtil {
             }
 
             @Override
-            public void onResponse(Response response) throws IOException {
+            public void onResponse(Call call, Response response) throws IOException {
                 String data = response.body().string();
                 L.d(TAG, "数据获取成功，获取到的数据为 >>>> ");
                 L.j(data);
@@ -242,7 +241,7 @@ public class HttpUtil {
                      final boolean useCache) {
         L.v(TAG, "请求链接 >>>> " + url);
         OkHttpClient client = new OkHttpClient();
-        FormEncodingBuilder builder = new FormEncodingBuilder();
+        FormBody.Builder formB = new FormBody.Builder();
         //头数据
         Headers.Builder hb = new Headers.Builder();
         if (header != null && header.size() > 0) {
@@ -259,19 +258,19 @@ public class HttpUtil {
             Set set = params.entrySet();
             for (Object aSet : set) {
                 Map.Entry entry = (Map.Entry) aSet;
-                builder.add(entry.getKey() + "", entry.getValue() + "");
+                formB.add(entry.getKey() + "", entry.getValue() + "");
             }
             L.v(TAG, "请求参数为 >>>> ");
             L.m(params);
         } else {
-            builder.add("null", "null");
+            formB.add("null", "null");
         }
 
-        Request request = new Request.Builder().url(url).post(builder.build()).headers(hb.build()).build();
+        Request request = new Request.Builder().url(url).post(formB.build()).headers(hb.build()).build();
         Call call = client.newCall(request);
         call.enqueue(new Callback() {
             @Override
-            public void onFailure(Request request, IOException e) {
+            public void onFailure(Call call, IOException e) {
                 L.e(TAG, "请求链接【" + url + "】失败");
                 String data = null;
                 if (useCache) {
@@ -280,14 +279,14 @@ public class HttpUtil {
                     L.j(data);
                 }
                 if (TextUtils.isEmpty(data)) {
-                    setOnError(request, absResponse);
+                    setOnError(call, absResponse);
                 } else {
                     setOnResponse(data, absResponse);
                 }
             }
 
             @Override
-            public void onResponse(Response response) throws IOException {
+            public void onResponse(Call call, Response response) throws IOException {
                 String data = response.body().string();
                 L.d(TAG, "数据获取成功，获取到的数据为 >>>>");
                 L.j(data);
@@ -297,6 +296,7 @@ public class HttpUtil {
                 }
                 setOnResponse(data, absResponse);
             }
+
         });
     }
 
