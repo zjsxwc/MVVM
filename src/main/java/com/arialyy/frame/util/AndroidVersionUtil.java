@@ -99,12 +99,12 @@ public class AndroidVersionUtil {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
     }
 
-//    /**
-//     * 当前是否在6.0以上
-//     */
-//    public static boolean has(){
-//        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.
-//    }
+    /**
+     * 当前是否在6.0以上
+     */
+    public static boolean hasM(){
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
+    }
 
 
 }
