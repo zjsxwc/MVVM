@@ -1,4 +1,12 @@
+*.iml
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
 /build
-mvvm2.iml
-jcenter.gradle
-gradle.properties
+/captures
+/mvvm2/gradle.properties
+/mvvm2/build
+/javadoc
+app/build
