@@ -1,8 +1,9 @@
 # MVVM
-这是一个使用谷歌dataBinding 技术实现的 MVVM框架，谷歌dataBinding 实现的 V 和 VM的关联，使用IOC架构实现了 M 和 VM的关联。
+这是一个使用谷歌dataBinding 技术实现的 MVVM框架，谷歌dataBinding 实现的 V 和 VM的关联，使用IOC架构实现了 M 和 VM的关联。</br>
+如果你觉得我的代码对你有帮助，请麻烦你在右上角给我一个star.^_^
 
 # 下载
-[![Download](https://api.bintray.com/packages/arialyy/maven/MvvmFrame/images/download.svg)](https://bintray.com/arialyy/maven/MvvmFrame/_latestVersion)
+[![Download](https://api.bintray.com/packages/arialyy/maven/MvvmFrame/images/download.svg)](https://bintray.com/arialyy/maven/MvvmFrame/_latestVersion)</br>
 compile 'com.arialyy.frame:Frame:1.0.4'
 # 使用
 * 在build.gradle 打开dataBinding 选项
@@ -252,6 +253,9 @@ public class ShowDialog extends AbsDialogFragment<DialogShowBinding> implements 
     }
 }
 ```
+
+# 示例
+![例子](https://github.com/AriaLyy/MVVM/blob/master/img/mvvm.gif "")
 
 License
 -------
