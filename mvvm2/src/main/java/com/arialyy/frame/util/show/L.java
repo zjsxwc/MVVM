@@ -44,6 +44,9 @@ public class L {
      */
     public static String m2s(Map map) {
         if (isDebug) {
+            if (map == null) {
+                return "";
+            }
             StringBuilder sb = new StringBuilder();
             Set set = map.entrySet();
             for (Object aSet : set) {
