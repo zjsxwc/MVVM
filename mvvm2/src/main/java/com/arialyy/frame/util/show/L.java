@@ -40,6 +40,22 @@ public class L {
     private static final String TAG = "lyy";
 
     /**
+     * map to str
+     */
+    public static String m2s(Map map) {
+        if (isDebug) {
+            StringBuilder sb = new StringBuilder();
+            Set set = map.entrySet();
+            for (Object aSet : set) {
+                Map.Entry entry = (Map.Entry) aSet;
+                sb.append(entry.getValue());
+            }
+            return sb.toString();
+        }
+        return "";
+    }
+
+    /**
      * 打印MAp
      */
     public static void m(Map map) {

@@ -136,7 +136,7 @@ public class HttpUtil {
                     }
                     OutputStream outputSteam = conn.getOutputStream();
                     DataOutputStream dos = new DataOutputStream(outputSteam);
-                    StringBuffer sb = new StringBuffer();
+                    StringBuilder sb = new StringBuilder();
                     sb.append(PREFIX);
                     sb.append(BOUNDARY);
                     sb.append(LINE_END);
@@ -199,6 +199,13 @@ public class HttpUtil {
         }
 
         OkHttpClient client = new OkHttpClient();
+        try {
+            if (!client.cache().isClosed()) {
+                client.cache().close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         final Request request = new Request.Builder().url(requestUrl).build();
         Call call = client.newCall(request);
         //请求加入调度
@@ -208,7 +215,7 @@ public class HttpUtil {
                 L.e(TAG, "请求链接【" + url + "】失败");
                 String data = null;
                 if (useCache) {
-                    data = mCacheUtil.getStringCache(url);
+                    data = mCacheUtil.getStringCache(url + L.m2s(params));
                     L.d(TAG, "数据获取成功，获取到的数据为 >>>> ");
                     L.j(data);
                 }
@@ -226,7 +233,7 @@ public class HttpUtil {
                 L.j(data);
                 if (useCache) {
                     L.v(TAG, "缓存链接【" + url + "】的数据");
-                    mCacheUtil.putStringCache(url, data);
+                    mCacheUtil.putStringCache(url + L.m2s(params), data);
                 }
                 setOnResponse(data, absResponse);
             }
@@ -241,6 +248,13 @@ public class HttpUtil {
                      final boolean useCache) {
         L.v(TAG, "请求链接 >>>> " + url);
         OkHttpClient client = new OkHttpClient();
+        try {
+            if (!client.cache().isClosed()) {
+                client.cache().close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         FormBody.Builder formB = new FormBody.Builder();
         //头数据
         Headers.Builder hb = new Headers.Builder();
@@ -274,7 +288,7 @@ public class HttpUtil {
                 L.e(TAG, "请求链接【" + url + "】失败");
                 String data = null;
                 if (useCache) {
-                    data = mCacheUtil.getStringCache(url);
+                    data = mCacheUtil.getStringCache(url + L.m2s(params));
                     L.d(TAG, "从缓存读取的数据为 >>>> ");
                     L.j(data);
                 }
@@ -292,7 +306,7 @@ public class HttpUtil {
                 L.j(data);
                 if (useCache) {
                     L.v(TAG, "缓存链接【" + url + "】的数据");
-                    mCacheUtil.putStringCache(url, data);
+                    mCacheUtil.putStringCache(url + L.m2s(params), data);
                 }
                 setOnResponse(data, absResponse);
             }
