@@ -199,13 +199,6 @@ public class HttpUtil {
         }
 
         OkHttpClient client = new OkHttpClient();
-        try {
-            if (!client.cache().isClosed()) {
-                client.cache().close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         final Request request = new Request.Builder().url(requestUrl).build();
         Call call = client.newCall(request);
         //请求加入调度
@@ -248,13 +241,6 @@ public class HttpUtil {
                      final boolean useCache) {
         L.v(TAG, "请求链接 >>>> " + url);
         OkHttpClient client = new OkHttpClient();
-        try {
-            if (!client.cache().isClosed()) {
-                client.cache().close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         FormBody.Builder formB = new FormBody.Builder();
         //头数据
         Headers.Builder hb = new Headers.Builder();
