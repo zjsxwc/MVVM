@@ -1,13 +1,16 @@
 package com.arialyy.frame.core;
 
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.arialyy.frame.module.AbsModule;
 import com.arialyy.frame.module.IOCProxy;
+import com.arialyy.frame.permission.PermissionManager;
 import com.arialyy.frame.util.StringUtil;
 import com.arialyy.frame.util.show.T;
 
@@ -28,6 +31,7 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
     protected AbsApplication mApp;
     protected View mRootView;
     private ModuleFactory mModuleF;
+    protected PermissionManager mPm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,7 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
         mModuleF = ModuleFactory.newInstance();
         ButterKnife.inject(this);
         mRootView = findViewById(android.R.id.content);
+        mPm = PermissionManager.getInstance();
         init(savedInstanceState);
     }
 
@@ -144,4 +149,15 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
         mApp.exitApp(false);
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        for (int state : grantResults) {
+            if (state == PackageManager.PERMISSION_GRANTED) {
+                mPm.onSuccess(permissions);
+            } else {
+                mPm.onFail(permissions);
+            }
+        }
+    }
 }
