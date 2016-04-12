@@ -23,8 +23,6 @@ import java.util.List;
  */
 @TargetApi(Build.VERSION_CODES.M)
 class PermissionUtil {
-    public static final int PERMISSION_ALERT_WINDOW = 0xadfff1;
-    public static final int PERMISSION_WRITE_SETTING = 0xadfff2;
     public static final Object LOCK = new Object();
     public volatile static PermissionUtil INSTANCE = null;
     private static final String TAG = "PermissionUtil";
@@ -155,12 +153,12 @@ class PermissionUtil {
      * 在onActivityResult里面添加以下代码
      * <p>
      * protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-     * super.onActivityResult(requestCode, resultCode, data);
-     * if (requestCode == PermissionUtil.REQUEST_CODE) {
-     * if (Settings.canDrawOverlays(this)) {       //在这判断是否请求权限成功
-     * Log.i(LOGTAG, "onActivityResult granted");
-     * }
-     * }
+     *      super.onActivityResult(requestCode, resultCode, data);
+     *      if (requestCode == OnPermissionCallback.PERMISSION_ALERT_WINDOW) {
+     *          if (Settings.canDrawOverlays(this)) {       //在这判断是否请求权限成功
+     *              Log.i(LOGTAG, "onActivityResult granted");
+     *          }
+     *       }
      * }
      * </p>
      *
@@ -172,23 +170,11 @@ class PermissionUtil {
         }
         Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
         intent.setData(Uri.parse("package:" + activity.getPackageName()));
-        activity.startActivityForResult(intent, PERMISSION_ALERT_WINDOW);
+        activity.startActivityForResult(intent, OnPermissionCallback.PERMISSION_ALERT_WINDOW);
     }
 
     /**
      * 请求修改系统设置权限
-     * 在onActivityResult里面添加以下代码
-     * <p>
-     * protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-     * super.onActivityResult(requestCode, resultCode, data);
-     * if (requestCode == PermissionUtil.PERMISSION_WRITE_SETTING) {
-     * if (Settings.canDrawOverlays(this)) {       //在这判断是否请求权限成功
-     * Log.i(LOGTAG, "onActivityResult granted");
-     * }
-     * }
-     * }
-     * </p>
-     *
      * @param activity
      */
     public void requestWriteSetting(Activity activity) {
@@ -197,6 +183,6 @@ class PermissionUtil {
         }
         Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
         intent.setData(Uri.parse("package:" + activity.getPackageName()));
-        activity.startActivityForResult(intent, PERMISSION_WRITE_SETTING);
+        activity.startActivityForResult(intent, OnPermissionCallback.PERMISSION_WRITE_SETTING);
     }
 }

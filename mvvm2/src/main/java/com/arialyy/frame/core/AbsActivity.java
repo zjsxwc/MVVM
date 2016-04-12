@@ -1,16 +1,20 @@
 package com.arialyy.frame.core;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.arialyy.frame.module.AbsModule;
 import com.arialyy.frame.module.IOCProxy;
+import com.arialyy.frame.permission.OnPermissionCallback;
 import com.arialyy.frame.permission.PermissionManager;
+import com.arialyy.frame.util.AndroidVersionUtil;
 import com.arialyy.frame.util.StringUtil;
 import com.arialyy.frame.util.show.T;
 
@@ -157,6 +161,26 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
                 mPm.onSuccess(permissions);
             } else {
                 mPm.onFail(permissions);
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (AndroidVersionUtil.hasM()) {
+            if (requestCode == OnPermissionCallback.PERMISSION_ALERT_WINDOW){
+                if (Settings.canDrawOverlays(this)) {       //在这判断是否请求权限成功
+                    mPm.onSuccess(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+                } else {
+                    mPm.onFail(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+                }
+            } else if (requestCode == OnPermissionCallback.PERMISSION_WRITE_SETTING){
+                if (Settings.System.canWrite(this)){
+                    mPm.onSuccess(Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                } else {
+                    mPm.onFail(Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                }
             }
         }
     }

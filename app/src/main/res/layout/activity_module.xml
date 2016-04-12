@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="str"
+            type="String" />
+
+        <variable
+            name="dialogStr"
+            type="String" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:id="@+id/msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{str}" />
+
+        <TextView
+            android:id="@+id/dialog_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{dialogStr}" />
+
+        <Button
+            android:id="@+id/get_ip_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:onClick="onClick"
+            android:text="获取IP信息" />
+
+        <Button
+            android:id="@+id/show_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/get_ip_info"
+            android:background="?android:attr/selectableItemBackground"
+            android:onClick="onClick"
+            android:text="显示对话框" />
+
+
+
+
+    </LinearLayout>
+</layout>

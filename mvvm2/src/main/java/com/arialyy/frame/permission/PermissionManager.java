@@ -40,7 +40,7 @@ public class PermissionManager implements OnPermissionCallback {
      * @param activity
      */
     public void requestAlertWindowPermission(Activity activity, OnPermissionCallback callback) {
-        int hashCode = Settings.ACTION_MANAGE_OVERLAY_PERMISSION.hashCode();
+        int hashCode = Arrays.hashCode(new String[]{Settings.ACTION_MANAGE_OVERLAY_PERMISSION});
         registerCallback(callback, hashCode);
         mPu.requestAlertWindowPermission(activity);
     }
@@ -51,7 +51,7 @@ public class PermissionManager implements OnPermissionCallback {
      * @param activity
      */
     public void requestWriteSettingPermission(Activity activity, OnPermissionCallback callback) {
-        int hashCode = Settings.ACTION_MANAGE_WRITE_SETTINGS.hashCode();
+        int hashCode = Arrays.hashCode(new String[]{Settings.ACTION_MANAGE_WRITE_SETTINGS});
         registerCallback(callback, hashCode);
         mPu.requestWriteSetting(activity);
     }
@@ -77,7 +77,7 @@ public class PermissionManager implements OnPermissionCallback {
         mPu.requestPermission(obj, 0, hint, registerCallback(obj, callback, permission));
     }
 
-    private void registerCallback(OnPermissionCallback callback, int hashCode){
+    private void registerCallback(OnPermissionCallback callback, int hashCode) {
         OnPermissionCallback c = mCallbacks.get(hashCode);
         if (c == null) {
             mCallbacks.append(hashCode, callback);

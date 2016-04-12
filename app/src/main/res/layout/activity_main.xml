@@ -1,100 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data>
-
-        <variable
-            name="str"
-            type="String" />
-
-        <variable
-            name="dialogStr"
-            type="String" />
-    </data>
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin">
-
-        <TextView
-            android:id="@+id/msg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{str}" />
-
-        <TextView
-            android:id="@+id/dialog_msg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/msg"
-            android:text="@{dialogStr}" />
+        android:orientation="vertical">
 
         <Button
-            android:id="@+id/get_ip_info"
+            android:id="@+id/base"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/dialog_msg"
             android:background="?android:attr/selectableItemBackground"
             android:onClick="onClick"
-            android:text="获取IP信息" />
-
-        <Button
-            android:id="@+id/show_dialog"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/get_ip_info"
-            android:background="?android:attr/selectableItemBackground"
-            android:onClick="onClick"
-            android:text="显示对话框" />
+            android:text="基础使用" />
 
         <Button
             android:id="@+id/permission"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/show_dialog"
             android:background="?android:attr/selectableItemBackground"
             android:onClick="onClick"
-            android:text="6.0权限申请" />
-
-        <Button
-            android:id="@+id/permissions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/permission"
-            android:background="?android:attr/selectableItemBackground"
-            android:onClick="onClick"
-            android:text="多条6.0权限申请" />
-
-        <Button
-            android:id="@+id/show_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/permissions"
-            android:background="?android:attr/selectableItemBackground"
-            android:onClick="onClick"
-            android:text="显示Fragment" />
-
-        <!--<FrameLayout-->
-        <!--android:id="@+id/content"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <FrameLayout
-            android:id="@+id/content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
-
-            <fragment
-                class="com.example.arial.mvvm.MainFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </FrameLayout>
-
-
-    </RelativeLayout>
+            android:text="6.0 权限使用" />
+    </LinearLayout>
 </layout>

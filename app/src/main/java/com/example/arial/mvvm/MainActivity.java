@@ -1,72 +1,38 @@
 package com.example.arial.mvvm;
 
-import android.Manifest;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.content.Intent;
 import android.view.View;
-import android.widget.FrameLayout;
 
 import com.arialyy.frame.core.AbsActivity;
-import com.arialyy.frame.permission.OnPermissionCallback;
-import com.arialyy.frame.permission.PermissionManager;
-import com.arialyy.frame.util.show.T;
 import com.example.arial.mvvm.databinding.ActivityMainBinding;
+import com.example.arial.mvvm.permission.PermissionActivity;
 
-import java.util.Arrays;
-
-import butterknife.InjectView;
-
-public class MainActivity extends AbsActivity<ActivityMainBinding> implements OnPermissionCallback {
-    @InjectView(R.id.content)
-    FrameLayout mContent;
-
+/**
+ * Created by lyy on 2016/4/12.
+ */
+public class MainActivity extends AbsActivity<ActivityMainBinding> {
     @Override
     protected int setLayoutId() {
         return R.layout.activity_main;
     }
 
-    @Override
-    protected void init(Bundle savedInstanceState) {
-        super.init(savedInstanceState);
-    }
-
     public void onClick(View view) {
+        Intent intent = null;
         switch (view.getId()) {
-            case R.id.show_dialog:
-                ShowDialog dialog = new ShowDialog(this);
-                dialog.show(getSupportFragmentManager(), "testDialog");
-                break;
-            case R.id.get_ip_info:
-                getModule(IPModule.class).getIpInfo();
+            case R.id.base:
+                intent = new Intent(this, ModuleActivity.class);
                 break;
             case R.id.permission:
-                PermissionManager.getInstance().requestPermission(this, this, Manifest.permission.CAMERA);
+                intent = new Intent(this, PermissionActivity.class);
                 break;
-            case R.id.permissions:
-                PermissionManager.getInstance().requestPermission(this, this, new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_PHONE_STATE});
-                break;
-            case R.id.show_fragment:
-//                mContent.setVisibility(View.VISIBLE);
-                break;
+        }
+        if (intent != null) {
+            startActivity(intent);
         }
     }
 
     @Override
-    protected void dataCallback(int resultCode, Object data) {
-        if (resultCode == 1) {
-            getBinding().setStr(data + "");
-        } else if (resultCode == 2) {
-            getBinding().setDialogStr(data + "");
-        }
-    }
+    protected void dataCallback(int result, Object data) {
 
-    @Override
-    public void onSuccess(String... permissions) {
-        T.showShort(MainActivity.this, "权限" + Arrays.toString(permissions) + " 申请成功");
-    }
-
-    @Override
-    public void onFail(String... permissions) {
-        T.showShort(MainActivity.this, "权限" + Arrays.toString(permissions) + " 申请失败");
     }
 }
