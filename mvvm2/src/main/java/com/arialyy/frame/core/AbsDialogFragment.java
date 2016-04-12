@@ -1,9 +1,11 @@
 package com.arialyy.frame.core;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
@@ -128,7 +130,6 @@ public abstract class AbsDialogFragment<VB extends ViewDataBinding> extends Dial
         return module;
     }
 
-
     /**
      * 统一的回调接口
      *
@@ -137,4 +138,15 @@ public abstract class AbsDialogFragment<VB extends ViewDataBinding> extends Dial
      */
     protected abstract void dataCallback(int result, Object data);
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        PermissionHelp.getInstance().handlePermissionCallback(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        PermissionHelp.getInstance().handleSpecialPermissionCallback(getContext(), requestCode, resultCode, data);
+    }
 }

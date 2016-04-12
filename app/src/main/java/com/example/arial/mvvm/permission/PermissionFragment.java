@@ -19,18 +19,18 @@ import butterknife.InjectView;
 /**
  * Created by lyy on 2016/4/11.
  */
-public class PermissionFragment extends AbsFragment<FragmentTestBinding> implements View.OnClickListener{
-
+public class PermissionFragment extends AbsFragment<FragmentTestBinding> implements View.OnClickListener, OnPermissionCallback {
     @InjectView(R.id.permission)
     Button mBt;
-
-    @InjectView(R.id.close)
-    Button mClose;
+    @InjectView(R.id.alert_window)
+    Button mAlert;
+    @InjectView(R.id.write_setting)
+    Button mSetting;
 
     public static PermissionFragment newInstance() {
-        
+
         Bundle args = new Bundle();
-        
+
         PermissionFragment fragment = new PermissionFragment();
         fragment.setArguments(args);
         return fragment;
@@ -39,7 +39,8 @@ public class PermissionFragment extends AbsFragment<FragmentTestBinding> impleme
     @Override
     protected void init(Bundle savedInstanceState) {
         mBt.setOnClickListener(this);
-        mClose.setOnClickListener(this);
+        mAlert.setOnClickListener(this);
+        mSetting.setOnClickListener(this);
     }
 
     @Override
@@ -59,23 +60,26 @@ public class PermissionFragment extends AbsFragment<FragmentTestBinding> impleme
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.permission:
-                PermissionManager.getInstance().requestPermission(PermissionFragment.this, new OnPermissionCallback() {
-                    @Override
-                    public void onSuccess(String... permissions) {
-                        T.showShort(getContext(), "权限" + Arrays.toString(permissions) + " 申请成功");
-                    }
-
-                    @Override
-                    public void onFail(String... permissions) {
-                        T.showShort(getContext(), "权限" + Arrays.toString(permissions) + " 申请失败");
-                    }
-                }, Manifest.permission.CAMERA);
+                PermissionManager.getInstance().requestPermission(PermissionFragment.this, this, Manifest.permission.CAMERA);
                 break;
-            case R.id.close:
-                onDestroy();
+            case R.id.alert_window:
+                PermissionManager.getInstance().requestAlertWindowPermission(mActivity, this);
+                break;
+            case R.id.write_setting:
+                PermissionManager.getInstance().requestWriteSettingPermission(mActivity, this);
                 break;
         }
+    }
+
+    @Override
+    public void onSuccess(String... permissions) {
+        T.showShort(getContext(), "权限" + Arrays.toString(permissions) + " 申请成功");
+    }
+
+    @Override
+    public void onFail(String... permissions) {
+        T.showShort(getContext(), "权限" + Arrays.toString(permissions) + " 申请失败");
     }
 }

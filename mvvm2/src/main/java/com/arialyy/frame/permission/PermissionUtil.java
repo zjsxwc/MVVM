@@ -117,11 +117,11 @@ class PermissionUtil {
             return null;
         }
         Activity activity = null;
-        if (obj instanceof Activity){
+        if (obj instanceof Activity) {
             activity = (Activity) obj;
-        }else if (obj instanceof Fragment){
+        } else if (obj instanceof Fragment) {
             activity = ((Fragment) obj).getActivity();
-        }else {
+        } else {
             L.e(TAG, "obj 只能是 Activity 或者 fragment 及其子类");
             return null;
         }
@@ -158,31 +158,62 @@ class PermissionUtil {
      *          if (Settings.canDrawOverlays(this)) {       //在这判断是否请求权限成功
      *              Log.i(LOGTAG, "onActivityResult granted");
      *          }
-     *       }
+     *      }
      * }
      * </p>
      *
-     * @param activity
+     * @param obj
      */
-    public void requestAlertWindowPermission(Activity activity) {
+    public void requestAlertWindowPermission(Object obj) {
         if (!AndroidVersionUtil.hasM()) {
+            return;
+        }
+        Activity activity = null;
+        Fragment fragment = null;
+        if (obj instanceof Activity) {
+            activity = (Activity) obj;
+        } else if (obj instanceof Fragment) {
+            fragment = (Fragment) obj;
+            activity = fragment.getActivity();
+        } else {
+            L.e(TAG, "obj 只能是 Activity 或者 fragment 及其衍生类");
             return;
         }
         Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
         intent.setData(Uri.parse("package:" + activity.getPackageName()));
-        activity.startActivityForResult(intent, OnPermissionCallback.PERMISSION_ALERT_WINDOW);
+        if (fragment != null) {
+            fragment.startActivityForResult(intent, OnPermissionCallback.PERMISSION_ALERT_WINDOW);
+        } else {
+            activity.startActivityForResult(intent, OnPermissionCallback.PERMISSION_ALERT_WINDOW);
+        }
     }
 
     /**
      * 请求修改系统设置权限
-     * @param activity
+     *
+     * @param obj
      */
-    public void requestWriteSetting(Activity activity) {
+    public void requestWriteSetting(Object obj) {
         if (!AndroidVersionUtil.hasM()) {
+            return;
+        }
+        Activity activity = null;
+        Fragment fragment = null;
+        if (obj instanceof Activity) {
+            activity = (Activity) obj;
+        } else if (obj instanceof Fragment) {
+            fragment = (Fragment) obj;
+            activity = fragment.getActivity();
+        } else {
+            L.e(TAG, "obj 只能是 Activity 或者 fragment 及其衍生类");
             return;
         }
         Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
         intent.setData(Uri.parse("package:" + activity.getPackageName()));
-        activity.startActivityForResult(intent, OnPermissionCallback.PERMISSION_WRITE_SETTING);
+        if (fragment != null) {
+            fragment.startActivityForResult(intent, OnPermissionCallback.PERMISSION_WRITE_SETTING);
+        } else {
+            activity.startActivityForResult(intent, OnPermissionCallback.PERMISSION_WRITE_SETTING);
+        }
     }
 }

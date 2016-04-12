@@ -156,32 +156,12 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        for (int state : grantResults) {
-            if (state == PackageManager.PERMISSION_GRANTED) {
-                mPm.onSuccess(permissions);
-            } else {
-                mPm.onFail(permissions);
-            }
-        }
+        PermissionHelp.getInstance().handlePermissionCallback(requestCode, permissions, grantResults);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (AndroidVersionUtil.hasM()) {
-            if (requestCode == OnPermissionCallback.PERMISSION_ALERT_WINDOW){
-                if (Settings.canDrawOverlays(this)) {       //在这判断是否请求权限成功
-                    mPm.onSuccess(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
-                } else {
-                    mPm.onFail(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
-                }
-            } else if (requestCode == OnPermissionCallback.PERMISSION_WRITE_SETTING){
-                if (Settings.System.canWrite(this)){
-                    mPm.onSuccess(Settings.ACTION_MANAGE_WRITE_SETTINGS);
-                } else {
-                    mPm.onFail(Settings.ACTION_MANAGE_WRITE_SETTINGS);
-                }
-            }
-        }
+       PermissionHelp.getInstance().handleSpecialPermissionCallback(this, requestCode, resultCode, data);
     }
 }

@@ -1,10 +1,12 @@
 package com.arialyy.frame.core;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,7 +16,9 @@ import android.view.ViewGroup;
 
 import com.arialyy.frame.module.AbsModule;
 import com.arialyy.frame.module.IOCProxy;
+import com.arialyy.frame.permission.OnPermissionCallback;
 import com.arialyy.frame.permission.PermissionManager;
+import com.arialyy.frame.util.AndroidVersionUtil;
 import com.arialyy.frame.util.StringUtil;
 
 import butterknife.ButterKnife;
@@ -124,12 +128,12 @@ public abstract class AbsFragment<VB extends ViewDataBinding> extends Fragment {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        for (int state : grantResults) {
-            if (state == PackageManager.PERMISSION_GRANTED) {
-                mPm.onSuccess(permissions);
-            } else {
-                mPm.onFail(permissions);
-            }
-        }
+        PermissionHelp.getInstance().handlePermissionCallback(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        PermissionHelp.getInstance().handleSpecialPermissionCallback(getContext(), requestCode, resultCode, data);
     }
 }

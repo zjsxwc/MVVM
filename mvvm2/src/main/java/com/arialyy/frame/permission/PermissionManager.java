@@ -37,23 +37,23 @@ public class PermissionManager implements OnPermissionCallback {
     /**
      * 申请悬浮框权限
      *
-     * @param activity
+     * @param obj 只能是Activity，和Fragment及其衍生类
      */
-    public void requestAlertWindowPermission(Activity activity, OnPermissionCallback callback) {
+    public void requestAlertWindowPermission(Object obj, OnPermissionCallback callback) {
         int hashCode = Arrays.hashCode(new String[]{Settings.ACTION_MANAGE_OVERLAY_PERMISSION});
         registerCallback(callback, hashCode);
-        mPu.requestAlertWindowPermission(activity);
+        mPu.requestAlertWindowPermission(obj);
     }
 
     /**
      * 申请修改系统设置权限
      *
-     * @param activity
+     * @param obj 只能是Activity，和Fragment及其衍生类
      */
-    public void requestWriteSettingPermission(Activity activity, OnPermissionCallback callback) {
+    public void requestWriteSettingPermission(Object obj, OnPermissionCallback callback) {
         int hashCode = Arrays.hashCode(new String[]{Settings.ACTION_MANAGE_WRITE_SETTINGS});
         registerCallback(callback, hashCode);
-        mPu.requestWriteSetting(activity);
+        mPu.requestWriteSetting(obj);
     }
 
     /**
