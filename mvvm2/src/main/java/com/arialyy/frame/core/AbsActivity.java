@@ -35,7 +35,6 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
     protected AbsApplication mApp;
     protected View mRootView;
     private ModuleFactory mModuleF;
-    protected PermissionManager mPm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +47,6 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
         mModuleF = ModuleFactory.newInstance();
         ButterKnife.inject(this);
         mRootView = findViewById(android.R.id.content);
-        mPm = PermissionManager.getInstance();
         init(savedInstanceState);
     }
 
