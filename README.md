@@ -49,7 +49,7 @@ public class BaseApplication extends AbsApplication {
 这是一个使用网络请求来解析本地IP的例子</br>
 框架是基于谷歌dataBinding的，布局里面动态设置数据的方法为谷歌 dataBinding的用法方法，想了解更多，可参考[谷歌官方文档](http://developer.android.com/intl/zh-cn/tools/data-binding/guide.html)</br>
 * 创建一个布局
->activity_main.xml
+activity_main.xml
 ```xml
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
