@@ -62,7 +62,7 @@ public class PermissionFragment extends AbsFragment<FragmentTestBinding> impleme
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.permission:
-                PermissionManager.getInstance().requestPermission(PermissionFragment.this, this, Manifest.permission.CAMERA);
+                PermissionManager.getInstance().requestPermission(PermissionFragment.this, this, Manifest.permission.READ_EXTERNAL_STORAGE);
                 break;
             case R.id.alert_window:
                 PermissionManager.getInstance().requestAlertWindowPermission(mActivity, this);

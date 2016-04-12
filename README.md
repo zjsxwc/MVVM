@@ -11,7 +11,8 @@
 
 # 下载
 [![Download](https://api.bintray.com/packages/arialyy/maven/MvvmFrame/images/download.svg)](https://bintray.com/arialyy/maven/MvvmFrame/_latestVersion)</br>
-compile 'com.arialyy.frame:MVVM2:1.0.7'
+compile 'com.arialyy.frame:MVVM2:1.0.8'
+
 # 使用
 * 在build.gradle 打开dataBinding 选项
 ```gradle
@@ -38,10 +39,17 @@ public class BaseApplication extends AbsApplication {
 </application>
 ```
 
-# 创建一个IP信息获取例子
-框架是基于谷歌dataBinding，布局里面动态设置数据的方法为谷歌 dataBinding的用法方法，想了解更多，可参考[谷歌官方文档](http://developer.android.com/intl/zh-cn/tools/data-binding/guide.html)</br>
+# Module使用
+![Module使用](https://github.com/AriaLyy/MVVM/blob/master/img/mvvm.gif "")
+
+# android 6.0 权限
+![android 6.0权限使用](https://github.com/AriaLyy/MVVM/blob/master/img/permission.gif)
+
+# 通过一个例子来介绍框架
+这是一个使用网络请求来解析本地IP的例子</br>
+框架是基于谷歌dataBinding的，布局里面动态设置数据的方法为谷歌 dataBinding的用法方法，想了解更多，可参考[谷歌官方文档](http://developer.android.com/intl/zh-cn/tools/data-binding/guide.html)</br>
 * 创建一个布局
-activity_main.xml
+>activity_main.xml
 ```xml
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
@@ -81,7 +89,7 @@ activity_main.xml
 </layout>
 ```
 * 创建一个Module
-Module里面用来处理一般的业务逻辑，比如网络操作，数据库操作，其它数据的获取等操作；这些都应该放在Module里面处理。</br>
+Module里面用来处理业务逻辑，比如网络操作，数据库操作，其它数据的获取等操作；这些都应该放在Module里面处理。</br>
 在Module里面处理业务逻辑，一个业务逻辑，可以多处使用，以达到复用的目的</br>
 
 IPtModule.java
@@ -116,10 +124,10 @@ public class IPModule extends AbsModule {
 ```
 
 * AbsActivity
-这就是Activity的所有代码，只需要简单的两行代码便能实现一个使用网络请求数据并展示的操作。所有的业务逻辑全部封装
+下面是Activity的所有代码，只需要简单的两行代码便能实现一个使用网络请求数据并展示的操作。所有的业务逻辑全部封装
 在一个Module里面，将来有该业务如果有新的需求，改变的也只是Module里面的代码，而不用过多修改Activity的代码。</br>
-由于Module是一个低耦合的模块，你可以在所有继承于AbsActivity、AbsFragment、AbsAlertDialog、AbsDialog、
-AbsDialogFragment、AbsPopupFragment等超类的子类调用同一个Module，而不需要编写重复的代码，这样可以达到代码复用的目的。
+由于Module是一个低耦合的模块，当你在多个地方使用同一个网络请求时，你可以在所有继承于AbsActivity、AbsFragment、AbsAlertDialog、AbsDialog、
+AbsDialogFragment、AbsPopupFragment等超类的子类调用同一个Module，而不需要编写重复的代码，这样可以达到代码复用的目的。</br>
 MainActivity.java
 ```java
 public class MainActivity extends AbsActivity<ActivityMainBinding> {
@@ -261,8 +269,73 @@ public class ShowDialog extends AbsDialogFragment<DialogShowBinding> implements 
 }
 ```
 
-# 示例
-![例子](https://github.com/AriaLyy/MVVM/blob/master/img/mvvm.gif "")
+# android 6.0 权限使用
+框架封装了android 6.0 的权限调用，例如请求一个使用摄像头的操作，你只需要使用以下代码便能实现权限请求以及权限请求回调。
+```java
+PermissionManager.getInstance().requestPermission(this, new OnPermissionCallback() {
+                    @Override
+                    public void onSuccess(String... permissions) {
+                          T.showShort(PermissionActivity.this, "权限" + Arrays.toString(permissions) + " 申请成功");
+                    }
+
+                    @Override
+                    public void onFail(String... permissions) {
+                          T.showShort(PermissionActivity.this, "权限" + Arrays.toString(permissions) + " 申请失败");
+                    }
+                }, Manifest.permission.CAMERA);
+```
+当同时请求多个权限时，你只需要给第三个参数传入一个权限数组
+```java
+PermissionManager.getInstance().requestPermission(this, new OnPermissionCallback() {
+                    @Override
+                    public void onSuccess(String... permissions) {
+                          T.showShort(PermissionActivity.this, "权限" + Arrays.toString(permissions) + " 申请成功");
+                    }
+
+                    @Override
+                    public void onFail(String... permissions) {
+                          T.showShort(PermissionActivity.this, "权限" + Arrays.toString(permissions) + " 申请失败");
+                    }
+                }, new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_PHONE_STATE});
+```
+除了普通权限的封装，本框架还封装了两个特殊的权限请求，分别是悬浮框权限和修改系统设置权限，使用方法和请求普通权限的方法一致
+* 悬浮框权限
+```java
+//obj 只能是Activity、Fragment 的子类及其衍生类
+PermissionManager.getInstance().requestAlertWindowPermission(Object obj, OnPermissionCallback callback);
+```
+* 修改系统设置的权限
+```java
+PermissionManager.getInstance().requestWriteSettingPermission(Object obj, OnPermissionCallback callback);
+```
+
+# 网络请求
+框架封装OKHTTP实现了网络请求及其网络请求回调，使用以下代码，便能实现一个网络请求及其回调</br>
+这是一个请求解析IP地址的例子
+```java
+//获取网络请求实例
+HttpUtil util = HttpUtil.getInstance(getContext());   
+util.get(IP_URL, new HttpUtil.AbsResponse() {
+    //成功的数据回调
+    @Override
+    public void onResponse(String data) {
+    super.onResponse(data);
+        try {
+            JSONObject obj = new JSONObject(data);
+            String country = obj.getString("country");
+            String province = obj.getString("province");
+            String city = obj.getString("city");
+        } catch (JSONException e) {
+             e.printStackTrace();
+        }
+    }
+    //失败的数据回调
+    @Override
+    public void onError(Object error) {
+        super.onError(error);
+    }
+});
+```
 
 License
 -------

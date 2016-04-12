@@ -26,7 +26,7 @@ public class PermissionActivity extends AbsActivity<ActivityPermissionBinding> i
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.permission:
-                PermissionManager.getInstance().requestPermission(this, this, Manifest.permission.CAMERA);
+                PermissionManager.getInstance().requestPermission(this, this, Manifest.permission.SEND_SMS);
                 break;
             case R.id.permissions:
                 PermissionManager.getInstance().requestPermission(this, this, new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_PHONE_STATE});

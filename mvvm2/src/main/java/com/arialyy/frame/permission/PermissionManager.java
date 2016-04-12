@@ -1,7 +1,6 @@
 package com.arialyy.frame.permission;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.os.Build;
 import android.provider.Settings;
 import android.util.SparseArray;
@@ -37,7 +36,7 @@ public class PermissionManager implements OnPermissionCallback {
     /**
      * 申请悬浮框权限
      *
-     * @param obj 只能是Activity，和Fragment及其衍生类
+     * @param obj obj 只能是Activity、Fragment 的子类及其衍生类
      */
     public void requestAlertWindowPermission(Object obj, OnPermissionCallback callback) {
         int hashCode = Arrays.hashCode(new String[]{Settings.ACTION_MANAGE_OVERLAY_PERMISSION});
@@ -48,7 +47,7 @@ public class PermissionManager implements OnPermissionCallback {
     /**
      * 申请修改系统设置权限
      *
-     * @param obj 只能是Activity，和Fragment及其衍生类
+     * @param obj obj 只能是Activity、Fragment 的子类及其衍生类
      */
     public void requestWriteSettingPermission(Object obj, OnPermissionCallback callback) {
         int hashCode = Arrays.hashCode(new String[]{Settings.ACTION_MANAGE_WRITE_SETTINGS});

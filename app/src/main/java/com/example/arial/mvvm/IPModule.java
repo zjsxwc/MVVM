@@ -38,6 +38,11 @@ public class IPModule extends AbsModule {
                     e.printStackTrace();
                 }
             }
+
+            @Override
+            public void onError(Object error) {
+                super.onError(error);
+            }
         });
     }
 }
