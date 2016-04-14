@@ -1,5 +1,5 @@
 # MVVM
-这是一个android MVVM 框架，基于谷歌dataBinding技术实现。dataBinding 实现的 V 和 VM的关联；使用IOC架构实现了 M 和 VM的关联。</br>
+这是一个android MVVM 框架，基于谷歌dataBinding技术实现。dataBinding 实现的 V 和 VM的关联；使用IOC架构实现了 M 和 V的关联。</br>
 框架具有以下功能：</br>
 * 业务逻辑层的分离。
 * 封装了android 6.0权限申请，在申请权限时，能像View一样设置事件监听。
