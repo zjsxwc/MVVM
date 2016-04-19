@@ -271,7 +271,7 @@ public class ShowDialog extends AbsDialogFragment<DialogShowBinding> implements 
 }
 ```
 
-# 创建Fragment
+## 创建Fragment
 AbsFragment继承于Fragment，同样的，AbsFragment也支持dataBinding数据绑定操作，也支持调用Module操作</br>
 同时，Fragmen支持延时操作，不需要复杂的代码，你只需要在onDelayLoad()编写你的代码，便能实现延时操作。
 ```java
@@ -303,7 +303,7 @@ public class PermissionFragment extends AbsFragment<FragmentTestBinding>{
 }
 ```
 
-# 创建popupwindow
+## 创建popupwindow
 AbsPopupwindow继承于PopupWindow，只需要简单的代码，便能实现完全自定义的popupwindow，同样的，AbsPopupWindow也支持调用Module操作</br>
 如下所示，你只需要编写简单的代码，便能实现一个完全自定义的popupwindow
 ```java
@@ -324,7 +324,7 @@ public class TestPopupwindow extends AbsPopupWindow {
 }
 ```
 
-# android 6.0 权限使用
+## android 6.0 权限使用
 框架封装了android 6.0 的权限调用，例如请求一个使用摄像头的操作，你只需要使用以下代码便能实现权限请求以及权限请求回调。
 ```java
 PermissionManager.getInstance().requestPermission(this, new OnPermissionCallback() {
@@ -364,7 +364,7 @@ PermissionManager.getInstance().requestAlertWindowPermission(Object obj, OnPermi
 PermissionManager.getInstance().requestWriteSettingPermission(Object obj, OnPermissionCallback callback);
 ```
 
-# 网络请求
+## 网络请求
 框架封装OKHTTP实现了网络请求及其网络请求回调，使用以下代码，便能实现一个网络请求及其回调</br>
 这是一个请求解析IP地址的例子
 ```java
