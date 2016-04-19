@@ -3,6 +3,7 @@
 框架具有以下功能：</br>
 * 业务逻辑层的分离。
 * 封装了android 6.0权限申请，在申请权限时，能像View一样设置事件监听。
+* 创建Fragment、Dialog、popupwindow都将变得极其简单。
 * 具有dataBinding的一切功能。
 * 封装了Okhttp网络请求，实现二级缓存，实现了网络回调监听。
 
@@ -163,7 +164,7 @@ public class MainActivity extends AbsActivity<ActivityMainBinding> {
 }
 ```
 
-* AbsDialogFragment
+* 创建Dialog
 AbsDialogFragment是继承于DialogFragment 的一个对话框，同样的，该对话框也支持dataBinding数据绑定操作，也支持调用Module操作</br>
 使用该对话框，继承该类，你能创建Activity一样，很容易创建一个完全自定义的Dialog对话框。</br>
 通过在AbsDialogFragment的子类里面调用getSimpleModule().onDialog(int result, Object data)，你将能很容易将对话的数据传递给
@@ -265,6 +266,59 @@ public class ShowDialog extends AbsDialogFragment<DialogShowBinding> implements 
                 break;
         }
         dismiss();
+    }
+}
+```
+
+#创建Fragment
+AbsFragment继承于Fragment，同样的，AbsFragment也支持dataBinding数据绑定操作，也支持调用Module操作</br>
+同时，Fragmen支持延时操作，不需要复杂的代码，你只需要在onDelayLoad()编写你的代码，便能实现延时操作。
+```java
+public class PermissionFragment extends AbsFragment<FragmentTestBinding>{
+    
+    //在这执行Fragmen初始化操作
+    @Override
+    protected void init(Bundle savedInstanceState) {
+        ...
+    }
+    
+    //在这执行Fragment延时操作
+    @Override
+    protected void onDelayLoad() {
+
+    }
+    
+    //设置布局Id
+    @Override
+    protected int setLayoutId() {
+        return R.layout.fragment_test;
+    }
+    
+    //数据回调
+    @Override
+    protected void dataCallback(int result, Object obj) {
+
+    }
+}
+```
+
+#创建popupwindow
+AbsPopupwindow继承于PopupWindow，只需要简单的代码，便能实现完全自定义的popupwindow，同样的，AbsPopupWindow也支持调用Module操作</br>
+如下所示，你只需要编写简单的代码，便能实现一个完全自定义的popupwindow
+```java
+public class TestPopupwindow extends AbsPopupWindow {
+    public TestPopupwindow(Context context) {
+        super(context);
+    }
+
+    @Override
+    protected int setLayoutId() {
+        return R.layout.popupwindow_test;
+    }
+
+    @Override
+    protected void dataCallback(int result, Object obj) {
+
     }
 }
 ```
