@@ -4,7 +4,7 @@
 - [业务逻辑层的分离](#通过一个例子来介绍框架)
 - [封装了android 6.0权限申请，在申请权限时，能像View一样设置事件监听](#android 6.0 权限使用)
 - [创建Fragment、Dialog、popupwindow都将变得极其简单](#创建Fragment)
-- [具有dataBinding的一切功能](#通过一个例子来介绍框架)
+- [具有dataBinding的一切功能](#使用)
 - [封装了Okhttp网络请求，实现二级缓存，实现了网络回调监听](#网络请求)
 
 
@@ -324,7 +324,7 @@ public class TestPopupwindow extends AbsPopupWindow {
 }
 ```
 
-# android 6.0 权限使用
+#android 6.0 权限使用
 框架封装了android 6.0 的权限调用，例如请求一个使用摄像头的操作，你只需要使用以下代码便能实现权限请求以及权限请求回调。
 ```java
 PermissionManager.getInstance().requestPermission(this, new OnPermissionCallback() {
