@@ -2,8 +2,8 @@
 这是一个android MVVM 框架，基于谷歌dataBinding技术实现。dataBinding 实现的 V 和 VM的关联；使用IOC架构实现了 M 和 V的关联。</br>
 框架具有以下功能：</br>
 - [业务逻辑层的分离](#通过一个例子来介绍框架)
-- [封装了android 6.0权限申请，在申请权限时，能像View一样设置事件监听](#android 6.0 权限使用)
-- [创建Fragment、Dialog、popupwindow都将变得极其简单](#创建Fragment)
+- [封装了android 6.0权限申请，在申请权限时，能像View一样设置事件监听](# android 6.0 权限使用)
+- [创建Fragment、Dialog、popupwindow都将变得极其简单](#创建popupwindow)
 - [具有dataBinding的一切功能](#使用)
 - [封装了Okhttp网络请求，实现二级缓存，实现了网络回调监听](#网络请求)
 
@@ -271,6 +271,27 @@ public class ShowDialog extends AbsDialogFragment<DialogShowBinding> implements 
 }
 ```
 
+## 创建popupwindow
+AbsPopupwindow继承于PopupWindow，只需要简单的代码，便能实现完全自定义的popupwindow，同样的，AbsPopupWindow也支持调用Module操作</br>
+如下所示，你只需要编写简单的代码，便能实现一个完全自定义的popupwindow
+```java
+public class TestPopupwindow extends AbsPopupWindow {
+    public TestPopupwindow(Context context) {
+        super(context);
+    }
+
+    @Override
+    protected int setLayoutId() {
+        return R.layout.popupwindow_test;
+    }
+
+    @Override
+    protected void dataCallback(int result, Object obj) {
+
+    }
+}
+```
+
 ## 创建Fragment
 AbsFragment继承于Fragment，同样的，AbsFragment也支持dataBinding数据绑定操作，也支持调用Module操作</br>
 同时，Fragmen支持延时操作，不需要复杂的代码，你只需要在onDelayLoad()编写你的代码，便能实现延时操作。
@@ -296,27 +317,6 @@ public class PermissionFragment extends AbsFragment<FragmentTestBinding>{
     }
     
     //数据回调
-    @Override
-    protected void dataCallback(int result, Object obj) {
-
-    }
-}
-```
-
-## 创建popupwindow
-AbsPopupwindow继承于PopupWindow，只需要简单的代码，便能实现完全自定义的popupwindow，同样的，AbsPopupWindow也支持调用Module操作</br>
-如下所示，你只需要编写简单的代码，便能实现一个完全自定义的popupwindow
-```java
-public class TestPopupwindow extends AbsPopupWindow {
-    public TestPopupwindow(Context context) {
-        super(context);
-    }
-
-    @Override
-    protected int setLayoutId() {
-        return R.layout.popupwindow_test;
-    }
-
     @Override
     protected void dataCallback(int result, Object obj) {
 
