@@ -1,6 +1,7 @@
 package com.example.arial.mvvm;
 
 import android.content.Intent;
+import android.view.Gravity;
 import android.view.View;
 
 import com.arialyy.frame.core.AbsActivity;
@@ -24,6 +25,10 @@ public class MainActivity extends AbsActivity<ActivityMainBinding> {
                 break;
             case R.id.permission:
                 intent = new Intent(this, PermissionActivity.class);
+                break;
+            case R.id.popupwindow:
+                TestPopupwindow p = new TestPopupwindow(this);
+                p.showAtLocation(mRootView, Gravity.NO_GRAVITY, 0, 0);
                 break;
         }
         if (intent != null) {
