@@ -3,7 +3,7 @@
 框架具有以下功能：</br>
 - [业务逻辑层的分离](#通过一个例子来介绍框架)
 - [封装了android 6.0权限申请，在申请权限时，能像View一样设置事件监听](#android 6.0 权限使用)
-- [创建Fragment、Dialog、popupwindow都将变得极其简单](#创建Fragment)
+- [创建Fragment、Dialog、popupwindow都将变得极其简单](#创建popupwindow)
 - [具有dataBinding的一切功能](#使用)
 - [封装了Okhttp网络请求，实现二级缓存，实现了网络回调监听](#网络请求)
 
@@ -41,13 +41,13 @@ public class BaseApplication extends AbsApplication {
 </application>
 ```
 
-# Module使用
+## Module使用
 ![Module使用](https://github.com/AriaLyy/MVVM/blob/master/img/mvvm.gif "")
 
-# android 6.0 权限
+## android 6.0 权限
 ![android 6.0权限使用](https://github.com/AriaLyy/MVVM/blob/master/img/permission.gif)
 
-# 通过一个例子来介绍框架
+## 通过一个例子来介绍框架
 这是一个使用网络请求来解析本地IP的例子</br>
 框架是基于谷歌dataBinding的，布局里面动态设置数据的方法为谷歌 dataBinding的用法方法，想了解更多，可参考[谷歌官方文档](http://developer.android.com/intl/zh-cn/tools/data-binding/guide.html)</br>
 * 创建一个布局
