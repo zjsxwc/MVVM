@@ -3,7 +3,7 @@
 框架具有以下功能：</br>
 - [业务逻辑层的分离](#通过一个例子来介绍框架)
 - [封装了android 6.0权限申请，在申请权限时，能像View一样设置事件监听](#android 6.0 权限使用)
-- [创建Fragment、Dialog、popupwindow都将变得极其简单](#创建popupwindow)
+- [创建Fragment、Dialog、popupwindow都将变得极其简单](#创建Fragment)
 - [具有dataBinding的一切功能](#使用)
 - [封装了Okhttp网络请求，实现二级缓存，实现了网络回调监听](#网络请求)
 
@@ -11,11 +11,11 @@
 目前该框架已经运用于公司的两个项目上，暂时没发现什么特别大的bug。</br>
 如果你觉得我的代码对你有帮助，请麻烦你在右上角给我一个star.^_^
 
-# 下载
+## 下载
 [![Download](https://api.bintray.com/packages/arialyy/maven/MvvmFrame/images/download.svg)](https://bintray.com/arialyy/maven/MvvmFrame/_latestVersion)</br>
 compile 'com.arialyy.frame:MVVM2:1.0.8'
 
-# 使用
+## 使用
 * 在build.gradle 打开dataBinding 选项
 ```gradle
 android{
