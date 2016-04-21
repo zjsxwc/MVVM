@@ -354,7 +354,7 @@ public class AndroidUtils {
         try {
             return context.getString(context.getApplicationInfo().labelRes);
         } catch (Resources.NotFoundException e) {
-            FL.e(TAG, FL.getPrintException(e));
+            FL.e(TAG, FL.getExceptionString(e));
             return "";
         }
     }
@@ -652,7 +652,7 @@ public class AndroidUtils {
                 // /sdcard/Android/data/<application package>/cache
                 if (context == null) {
                     NullPointerException ex = new NullPointerException("context == null");
-                    FL.e(TAG, FL.getPrintException(ex));
+                    FL.e(TAG, FL.getExceptionString(ex));
                     throw ex;
                 }
                 cacheDir = context.getExternalCacheDir();

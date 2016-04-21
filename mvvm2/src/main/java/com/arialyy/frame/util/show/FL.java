@@ -170,7 +170,7 @@ public class FL {
             writer.append(stringBuffer);
             writer.flush();
         } catch (Exception e) {
-            //            e.printStackTrace();
+            e.printStackTrace();
         } finally {
             if (writer != null) {
                 writer.close();
@@ -180,9 +180,9 @@ public class FL {
     }
 
     /**
-     * 设置打印的异常格式
+     * 将异常信息转换为字符串
      */
-    public static String getPrintException(Throwable ex) {
+    public static String getExceptionString(Throwable ex) {
         StringBuilder err = new StringBuilder();
         err.append("ExceptionDetailed:\n");
         err.append("====================Exception Info====================\n");

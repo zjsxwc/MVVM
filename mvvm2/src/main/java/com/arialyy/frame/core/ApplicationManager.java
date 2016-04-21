@@ -26,19 +26,58 @@ public class ApplicationManager {
         mContext = context;
     }
 
-    protected static ApplicationManager getInstance(Context context) {
+    /**
+     * 初始化框架
+     *
+     * @param applicationContext
+     * @return
+     */
+    public static ApplicationManager init(Context applicationContext) {
         if (mManager == null) {
             synchronized (LOCK) {
                 if (mManager == null) {
-                    mManager = new ApplicationManager(context);
+                    mManager = new ApplicationManager(applicationContext);
                 }
             }
         }
         return mManager;
     }
 
+    /**
+     * 获取AppManager管流程实例
+     *
+     * @return
+     */
+    public static ApplicationManager getInstance() {
+        if (mManager == null) {
+            throw new NullPointerException("请在application 的 onCreate 方法里面使用ApplicationManager.init()方法进行初始化操作");
+        }
+        return mManager;
+    }
+
     public Stack<AbsActivity> getActivityStack() {
         return mActivityStack;
+    }
+
+    /**
+     * 开启异常捕获
+     * 日志文件位于/data/data/<Package Name>/cache//crash/AbsExceptionFile.crash
+     */
+    public void openCrashHandler() {
+        openCrashHandler("", "");
+    }
+
+    /**
+     * 开启异常捕获
+     * 需要网络权限，get请求，异常参数
+     *
+     * @param serverHost 服务器地址
+     * @param key        数据传输键值
+     */
+    public void openCrashHandler(String serverHost, String key) {
+        CrashHandler handler = CrashHandler.getInstance(mContext);
+        handler.setServerHost(serverHost, key);
+        Thread.setDefaultUncaughtExceptionHandler(handler);
     }
 
     /**
@@ -126,14 +165,13 @@ public class ApplicationManager {
      *
      * @param isBackground 是否开开启后台运行
      */
-    public void AppExit(Context context, Boolean isBackground) {
+    public void exitApp(Boolean isBackground) {
         try {
             finishAllActivity();
-            ActivityManager activityMgr = (ActivityManager) context
-                    .getSystemService(Context.ACTIVITY_SERVICE);
-            activityMgr.restartPackage(context.getPackageName());
+            ActivityManager activityMgr = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+            activityMgr.restartPackage(mContext.getPackageName());
         } catch (Exception e) {
-            FL.e(TAG, FL.getPrintException(e));
+            FL.e(TAG, FL.getExceptionString(e));
         } finally {
             // 注意，如果您有后台程序运行，请不要支持此句子
             if (!isBackground) {

@@ -29,5 +29,13 @@
             android:background="?android:attr/selectableItemBackground"
             android:onClick="onClick"
             android:text="popupwindow" />
+
+        <Button
+            android:id="@+id/crash"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:onClick="onClick"
+            android:text="crash捕获" />
     </LinearLayout>
 </layout>

@@ -32,15 +32,15 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
      * 第一次点击返回的系统时间
      */
     private long mFirstClickTime = 0;
-    protected AbsApplication mApp;
+    protected ApplicationManager mAm;
     protected View mRootView;
     private ModuleFactory mModuleF;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mApp = (AbsApplication) getApplication();
-        mApp.getAppManager().addActivity(this);
+        mAm = ApplicationManager.getInstance();
+        mAm.addActivity(this);
         mBind = DataBindingUtil.setContentView(this, setLayoutId());
         mProxy = IOCProxy.newInstance(this);
         TAG = StringUtil.getClassName(this);
@@ -64,7 +64,7 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
     @Override
     public void finish() {
         super.finish();
-        mApp.getAppManager().removeActivity(this);
+        mAm.removeActivity(this);
         System.gc();
     }
 
@@ -95,13 +95,6 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
         M module = mModuleF.getModule(this, clazz);
         mProxy.changeModule(module);
         return module;
-    }
-
-    /**
-     * 获取应用管理器
-     */
-    public AbsApplication getApp() {
-        return mApp;
     }
 
     /**
@@ -141,14 +134,14 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
      * @param isBackground 是否开开启后台运行,如果为true则为后台运行
      */
     public void exitApp(Boolean isBackground) {
-        mApp.exitApp(isBackground);
+        mAm.exitApp(isBackground);
     }
 
     /**
      * 退出应用程序
      */
     public void exitApp() {
-        mApp.exitApp(false);
+        mAm.exitApp(false);
     }
 
     @Override

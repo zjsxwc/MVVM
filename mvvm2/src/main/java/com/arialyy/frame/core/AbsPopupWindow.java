@@ -23,10 +23,8 @@ public abstract class AbsPopupWindow extends PopupWindow {
 
     protected String TAG;
     private static Context mContext;
-    protected int mLayoutId = -1;
     private Drawable mBackground;
     protected View mView;
-
     private Object mObj;
     protected IOCProxy mProxy;
     protected DialogSimpleModule mSimpleModule;

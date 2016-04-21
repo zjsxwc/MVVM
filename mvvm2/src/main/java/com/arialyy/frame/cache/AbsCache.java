@@ -81,7 +81,7 @@ public abstract class AbsCache implements CacheParam {
             }
             mDiskLruCache = DiskLruCache.open(dir, AppUtils.getVersionNumber(mContext), valueCount, cacheSize);
         } catch (IOException e) {
-            FL.e(this, "createCacheFailed\n" + FL.getPrintException(e));
+            FL.e(this, "createCacheFailed\n" + FL.getExceptionString(e));
         }
     }
 
@@ -134,7 +134,7 @@ public abstract class AbsCache implements CacheParam {
                     }
                     mDiskLruCache = DiskLruCache.open(dir, AppUtils.getVersionNumber(mContext), valueCount, cacheSize);
                 } catch (IOException e) {
-                    FL.e(this, "createCacheFailed\n" + FL.getPrintException(e));
+                    FL.e(this, "createCacheFailed\n" + FL.getExceptionString(e));
                 }
             }
         }
@@ -166,7 +166,7 @@ public abstract class AbsCache implements CacheParam {
                     out.flush();
                     out.close();
                 } catch (IOException e) {
-                    FL.e(this, "writeDiskFailed[key:" + key + ",hashKey:" + hashKey + "]\n" + FL.getPrintException(e));
+                    FL.e(this, "writeDiskFailed[key:" + key + ",hashKey:" + hashKey + "]\n" + FL.getExceptionString(e));
                 } finally {
                     if (out != null) {
                         try {
@@ -209,9 +209,9 @@ public abstract class AbsCache implements CacheParam {
                     return data;
                 }
             } catch (IOException e) {
-                FL.e(this, "readDiskCacheFailed[key:" + key + ",hashKey:" + hashKey + "]\n" + FL.getPrintException(e));
+                FL.e(this, "readDiskCacheFailed[key:" + key + ",hashKey:" + hashKey + "]\n" + FL.getExceptionString(e));
             } catch (Exception e) {
-                FL.e(this, "readDiskCacheFailed[key:" + key + ",hashKey:" + hashKey + "]\n" + FL.getPrintException(e));
+                FL.e(this, "readDiskCacheFailed[key:" + key + ",hashKey:" + hashKey + "]\n" + FL.getExceptionString(e));
             } finally {
                 if (inputStream != null) {
                     try {
@@ -240,7 +240,7 @@ public abstract class AbsCache implements CacheParam {
                 try {
                     mDiskLruCache.remove(hashKey);
                 } catch (IOException e) {
-                    FL.e(this, "removeCacheFailed[key:" + key + ",hashKey:" + hashKey + "]\n" + FL.getPrintException(e));
+                    FL.e(this, "removeCacheFailed[key:" + key + ",hashKey:" + hashKey + "]\n" + FL.getExceptionString(e));
                 }
             }
         }
@@ -258,7 +258,7 @@ public abstract class AbsCache implements CacheParam {
                 try {
                     mDiskLruCache.delete();
                 } catch (IOException e) {
-                    FL.e(this, "clearCacheFailed" + FL.getPrintException(e));
+                    FL.e(this, "clearCacheFailed" + FL.getExceptionString(e));
                 }
             }
         }
@@ -276,7 +276,7 @@ public abstract class AbsCache implements CacheParam {
                 try {
                     mDiskLruCache.close();
                 } catch (IOException e) {
-                    FL.e(this, "closeDiskCacheFailed" + FL.getPrintException(e));
+                    FL.e(this, "closeDiskCacheFailed" + FL.getExceptionString(e));
                 }
             }
         }
@@ -293,7 +293,7 @@ public abstract class AbsCache implements CacheParam {
                 try {
                     mDiskLruCache.flush();
                 } catch (IOException e) {
-                    FL.e(this, "flushDiskCacheFailed" + FL.getPrintException(e));
+                    FL.e(this, "flushDiskCacheFailed" + FL.getExceptionString(e));
                 }
             }
         }

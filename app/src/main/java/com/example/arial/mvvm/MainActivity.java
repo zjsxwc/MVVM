@@ -30,6 +30,8 @@ public class MainActivity extends AbsActivity<ActivityMainBinding> {
                 TestPopupwindow p = new TestPopupwindow(this);
                 p.showAtLocation(mRootView, Gravity.NO_GRAVITY, 0, 0);
                 break;
+            case R.id.crash:
+                throw new NullPointerException("异常捕获测试");
         }
         if (intent != null) {
             startActivity(intent);

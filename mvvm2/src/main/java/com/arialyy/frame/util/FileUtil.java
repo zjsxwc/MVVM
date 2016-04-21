@@ -291,11 +291,11 @@ public class FileUtil {
             ois = new ObjectInputStream(fis);
             return ois.readObject();
         } catch (FileNotFoundException e) {
-            FL.e(TAG, FL.getPrintException(e));
+            FL.e(TAG, FL.getExceptionString(e));
         } catch (IOException e) {
-            FL.e(TAG, FL.getPrintException(e));
+            FL.e(TAG, FL.getExceptionString(e));
         } catch (ClassNotFoundException e) {
-            FL.e(TAG, FL.getPrintException(e));
+            FL.e(TAG, FL.getExceptionString(e));
         } finally {
             try {
                 if (fis != null) {
@@ -305,7 +305,7 @@ public class FileUtil {
                     ois.close();
                 }
             } catch (IOException e) {
-                FL.e(TAG, FL.getPrintException(e));
+                FL.e(TAG, FL.getExceptionString(e));
             }
         }
         return null;
@@ -326,9 +326,9 @@ public class FileUtil {
             oos = new ObjectOutputStream(fos);
             oos.writeObject(object);
         } catch (FileNotFoundException e) {
-            FL.e(TAG, FL.getPrintException(e));
+            FL.e(TAG, FL.getExceptionString(e));
         } catch (IOException e) {
-            FL.e(TAG, FL.getPrintException(e));
+            FL.e(TAG, FL.getExceptionString(e));
         } finally {
             try {
                 if (fos != null) {
@@ -338,7 +338,7 @@ public class FileUtil {
                     oos.close();
                 }
             } catch (IOException e) {
-                FL.e(TAG, FL.getPrintException(e));
+                FL.e(TAG, FL.getExceptionString(e));
             }
         }
     }

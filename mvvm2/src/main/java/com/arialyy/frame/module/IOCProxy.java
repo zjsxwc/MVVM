@@ -59,7 +59,7 @@ public class IOCProxy implements ModuleListener {
                 m.invoke(mObj, result, data);
             } catch (NoSuchMethodException e) {
                 L.e(TAG, "无法找到" + mMethod + "方法");
-                FL.e(TAG, FL.getPrintException(e));
+                FL.e(TAG, FL.getExceptionString(e));
             } catch (InvocationTargetException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
@@ -83,7 +83,7 @@ public class IOCProxy implements ModuleListener {
                 m.invoke(mObj);
             } catch (NoSuchMethodException e) {
                 L.e(TAG, "无法找到" + method + "方法");
-                FL.e(TAG, FL.getPrintException(e));
+                FL.e(TAG, FL.getExceptionString(e));
             } catch (InvocationTargetException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
@@ -109,7 +109,7 @@ public class IOCProxy implements ModuleListener {
                 m.invoke(mObj, data);
             } catch (NoSuchMethodException e) {
                 L.e(TAG, "无法找到" + method + "方法");
-                FL.e(TAG, FL.getPrintException(e));
+                FL.e(TAG, FL.getExceptionString(e));
             } catch (InvocationTargetException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
