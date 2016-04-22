@@ -24,6 +24,7 @@ import java.net.URL;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -45,6 +46,7 @@ public class HttpUtil {
     private static final Object LOCK = new Object();
     private CacheUtil mCacheUtil;
     private Handler mHandler;
+    private static final int TIME_OUT = 5000;
     public static final String CONTENT_TYPE_IMG = "image/*";
     public static final String CONTENT_TYPE_TEXT = "text/*";
     public static final String CONTENT_TYPE_FILE = "application/octet-stream";
@@ -198,9 +200,11 @@ public class HttpUtil {
             L.m(params);
         }
 
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(TIME_OUT, TimeUnit.MILLISECONDS)
+                .writeTimeout(TIME_OUT, TimeUnit.MILLISECONDS).readTimeout(300000, TimeUnit.MILLISECONDS).build();
         final Request request = new Request.Builder().url(requestUrl).build();
         Call call = client.newCall(request);
+
         //请求加入调度
         call.enqueue(new Callback() {
             @Override
@@ -240,7 +244,8 @@ public class HttpUtil {
                      final Map<String, String> header, @NonNull final IResponse absResponse,
                      final boolean useCache) {
         L.v(TAG, "请求链接 >>>> " + url);
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(TIME_OUT, TimeUnit.MILLISECONDS)
+                .writeTimeout(TIME_OUT, TimeUnit.MILLISECONDS).readTimeout(300000, TimeUnit.MILLISECONDS).build();
         FormBody.Builder formB = new FormBody.Builder();
         //头数据
         Headers.Builder hb = new Headers.Builder();

@@ -113,36 +113,31 @@ final class CrashHandler implements Thread.UncaughtExceptionHandler {
      * @param ex
      */
     private void sendExceptionInfo(final Throwable ex) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ExceptionInfo info = new ExceptionInfo();
-                info.time = CalendarUtils.getNowDataTime();
-                info.versionCode = AndroidUtils.getVersionCode(mContext);
-                info.versionName = AndroidUtils.getVersionName(mContext);
-                info.systemVersionCode = Build.VERSION.SDK_INT;
-                info.phoneModel = Build.MODEL;
-                info.exceptionMsg = FL.getExceptionString(ex);
-                if (AndroidUtils.checkPermission(mContext, Manifest.permission.INTERNET) &&
-                        AndroidUtils.checkPermission(mContext, Manifest.permission.ACCESS_NETWORK_STATE)) {
-                    if (NetUtils.isConnected(mContext) && !TextUtils.isEmpty(mServerHost) && TextUtils.isEmpty(mPramKey)) {
-                        String objStr = new Gson().toJson(info);
-                        HttpUtil util = HttpUtil.getInstance(mContext);
-                        Map<String, String> params = new WeakHashMap<>();
-                        params.put(mPramKey, objStr);
-                        util.get(mServerHost, params, new HttpUtil.AbsResponse());
-                    }
-                } else {
-                    L.e(TAG, "请在manifest文件定义android.permission.INTERNET和android.permission.ACCESS_NETWORK_STATE权限");
-                    return;
-                }
-                File file = new File(mContext.getCacheDir().getPath() + "/crash/" + mExceptionFileName);
-                if (!file.exists()) {
-                    FileUtil.createFile(file.getPath());
-                }
-                writeExceptionToFile(info.exceptionMsg, file);
+        ExceptionInfo info = new ExceptionInfo();
+        info.time = CalendarUtils.getNowDataTime();
+        info.versionCode = AndroidUtils.getVersionCode(mContext);
+        info.versionName = AndroidUtils.getVersionName(mContext);
+        info.systemVersionCode = Build.VERSION.SDK_INT;
+        info.phoneModel = Build.MODEL;
+        info.exceptionMsg = FL.getExceptionString(ex);
+        if (AndroidUtils.checkPermission(mContext, Manifest.permission.INTERNET) &&
+                AndroidUtils.checkPermission(mContext, Manifest.permission.ACCESS_NETWORK_STATE)) {
+            if (NetUtils.isConnected(mContext) && !TextUtils.isEmpty(mServerHost) && !TextUtils.isEmpty(mPramKey)) {
+                String objStr = new Gson().toJson(info);
+                HttpUtil util = HttpUtil.getInstance(mContext);
+                Map<String, String> params = new WeakHashMap<>();
+                params.put(mPramKey, objStr);
+                util.get(mServerHost, params, new HttpUtil.AbsResponse());
             }
-        }).start();
+        } else {
+            L.e(TAG, "请在manifest文件定义android.permission.INTERNET和android.permission.ACCESS_NETWORK_STATE权限");
+            return;
+        }
+        File file = new File(mContext.getCacheDir().getPath() + "/crash/" + mExceptionFileName);
+        if (!file.exists()) {
+            FileUtil.createFile(file.getPath());
+        }
+        writeExceptionToFile(info.exceptionMsg, file);
     }
 
     /**
