@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.StatFs;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
@@ -42,6 +43,16 @@ public class AndroidUtils {
 
     private AndroidUtils() {
 
+    }
+
+    /**
+     * 检查权限
+     *
+     * @param permission android.permission.WRITE_EXTERNAL_STORAGE
+     * @return manifest 已经定义了则返回true
+     */
+    public static boolean checkPermission(@NonNull Context context, @NonNull String permission) {
+        return context.checkCallingOrSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
     }
 
     /**

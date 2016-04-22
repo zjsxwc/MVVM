@@ -1,11 +1,14 @@
 package com.arialyy.frame.core;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Looper;
 import android.text.TextUtils;
 
 import com.arialyy.frame.http.HttpUtil;
+import com.arialyy.frame.permission.PermissionManager;
 import com.arialyy.frame.util.AndroidUtils;
 import com.arialyy.frame.util.CalendarUtils;
 import com.arialyy.frame.util.FileUtil;
@@ -25,7 +28,7 @@ import java.util.WeakHashMap;
  * Created by lyy on 2016/4/21.
  * 异常捕获
  */
-public class CrashHandler implements Thread.UncaughtExceptionHandler {
+final class CrashHandler implements Thread.UncaughtExceptionHandler {
     private static final Object LOCK = new Object();
     private static volatile CrashHandler INSTANCE = null;
     private static final String TAG = "CrashHandler";
@@ -91,7 +94,6 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         if (ex == null) {
             return false;
         }
-//        final String msg = ex.getLocalizedMessage();
         //在这里处理崩溃逻辑,将不再显示FC对话框
         new Thread() {
             @Override
@@ -114,7 +116,6 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                L.d(TAG, "hehede");
                 ExceptionInfo info = new ExceptionInfo();
                 info.time = CalendarUtils.getNowDataTime();
                 info.versionCode = AndroidUtils.getVersionCode(mContext);
@@ -122,12 +123,18 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
                 info.systemVersionCode = Build.VERSION.SDK_INT;
                 info.phoneModel = Build.MODEL;
                 info.exceptionMsg = FL.getExceptionString(ex);
-                String objStr = new Gson().toJson(info);
-                if (NetUtils.isConnected(mContext) && !TextUtils.isEmpty(mServerHost) && TextUtils.isEmpty(mPramKey)) {
-                    HttpUtil util = HttpUtil.getInstance(mContext);
-                    Map<String, String> params = new WeakHashMap<>();
-                    params.put(mPramKey, objStr);
-                    util.get(mServerHost, params, new HttpUtil.AbsResponse());
+                if (AndroidUtils.checkPermission(mContext, Manifest.permission.INTERNET) &&
+                        AndroidUtils.checkPermission(mContext, Manifest.permission.ACCESS_NETWORK_STATE)) {
+                    if (NetUtils.isConnected(mContext) && !TextUtils.isEmpty(mServerHost) && TextUtils.isEmpty(mPramKey)) {
+                        String objStr = new Gson().toJson(info);
+                        HttpUtil util = HttpUtil.getInstance(mContext);
+                        Map<String, String> params = new WeakHashMap<>();
+                        params.put(mPramKey, objStr);
+                        util.get(mServerHost, params, new HttpUtil.AbsResponse());
+                    }
+                } else {
+                    L.e(TAG, "请在manifest文件定义android.permission.INTERNET和android.permission.ACCESS_NETWORK_STATE权限");
+                    return;
                 }
                 File file = new File(mContext.getCacheDir().getPath() + "/crash/" + mExceptionFileName);
                 if (!file.exists()) {
