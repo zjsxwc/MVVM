@@ -191,6 +191,7 @@ public class HttpUtil {
         if (params != null && params.size() > 0) {
             Set set = params.entrySet();
             int i = 0;
+            requestUrl += "?";
             for (Object aSet : set) {
                 i++;
                 Map.Entry entry = (Map.Entry) aSet;

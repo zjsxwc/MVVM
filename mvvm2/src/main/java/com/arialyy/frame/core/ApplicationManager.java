@@ -76,10 +76,11 @@ public class ApplicationManager {
      * @param serverHost 服务器地址
      * @param key        数据传输键值
      */
-    public void openCrashHandler(String serverHost, String key) {
+    public ApplicationManager openCrashHandler(String serverHost, String key) {
         CrashHandler handler = CrashHandler.getInstance(mContext);
         handler.setServerHost(serverHost, key);
         Thread.setDefaultUncaughtExceptionHandler(handler);
+        return this;
     }
 
     /**
