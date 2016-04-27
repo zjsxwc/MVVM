@@ -29,6 +29,8 @@
         <activity android:name=".permission.FragmentContentActivity" />
         <activity android:name=".ModuleActivity" />
         <activity android:name=".permission.PermissionActivity" />
+        <activity android:name=".tempview.TempViewActivity" />
+        <activity android:name=".tempview.TVFContentActivity" />
     </application>
 
 </manifest>

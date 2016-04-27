@@ -27,6 +27,6 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.2.0'
-//    compile 'com.arialyy.frame:MVVM2:1.0.2'
+//    compile 'com.arialyy.frame:MVVM2:2.0.0_dev'
     compile project(':mvvm2')
 }

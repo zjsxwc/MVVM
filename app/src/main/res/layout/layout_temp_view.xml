@@ -1,50 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
+        <variable
+            name="str"
+            type="String" />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/base"
+            android:id="@+id/net_error"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
             android:onClick="onClick"
-            android:text="基础使用" />
+            android:text="网络错误_TempView" />
 
         <Button
-            android:id="@+id/permission"
+            android:id="@+id/loading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
             android:onClick="onClick"
-            android:text="6.0 权限使用" />
+            android:text="加载中_TempView" />
 
         <Button
-            android:id="@+id/popupwindow"
+            android:id="@+id/data_null"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
             android:onClick="onClick"
-            android:text="popupwindow" />
+            android:text="数据为空_TempView" />
 
         <Button
-            android:id="@+id/crash"
+            android:id="@+id/custom_temp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
             android:onClick="onClick"
-            android:text="crash捕获" />
+            android:text="自定义TempView" />
 
         <Button
-            android:id="@+id/temp"
+            android:id="@+id/bind_test"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
             android:onClick="onClick"
-            android:text="TempView测试" />
+            android:text="Bind 测试" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@{str}" />
     </LinearLayout>
 </layout>

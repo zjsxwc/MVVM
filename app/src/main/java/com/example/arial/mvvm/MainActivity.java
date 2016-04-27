@@ -7,11 +7,13 @@ import android.view.View;
 import com.arialyy.frame.core.AbsActivity;
 import com.example.arial.mvvm.databinding.ActivityMainBinding;
 import com.example.arial.mvvm.permission.PermissionActivity;
+import com.example.arial.mvvm.tempview.TempViewActivity;
 
 /**
  * Created by lyy on 2016/4/12.
  */
 public class MainActivity extends AbsActivity<ActivityMainBinding> {
+
     @Override
     protected int setLayoutId() {
         return R.layout.activity_main;
@@ -32,6 +34,9 @@ public class MainActivity extends AbsActivity<ActivityMainBinding> {
                 break;
             case R.id.crash:
                 throw new NullPointerException("异常捕获测试");
+            case R.id.temp:
+                intent = new Intent(this, TempViewActivity.class);
+                break;
         }
         if (intent != null) {
             startActivity(intent);

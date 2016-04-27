@@ -1,12 +1,10 @@
 package com.example.arial.mvvm;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.arialyy.frame.core.AbsActivity;
 import com.example.arial.mvvm.databinding.ActivityModuleBinding;
-import com.example.arial.mvvm.permission.FragmentContentActivity;
 
 public class ModuleActivity extends AbsActivity<ActivityModuleBinding> {
     @Override

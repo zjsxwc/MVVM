@@ -1,20 +1,19 @@
 package com.arialyy.frame.core;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.provider.Settings;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.arialyy.frame.module.AbsModule;
 import com.arialyy.frame.module.IOCProxy;
-import com.arialyy.frame.permission.OnPermissionCallback;
-import com.arialyy.frame.permission.PermissionManager;
-import com.arialyy.frame.util.AndroidVersionUtil;
+import com.arialyy.frame.temp.AbsTempView;
+import com.arialyy.frame.temp.OnTempBtClickListener;
+import com.arialyy.frame.temp.TempView;
 import com.arialyy.frame.util.StringUtil;
 import com.arialyy.frame.util.show.T;
 
@@ -24,7 +23,7 @@ import butterknife.ButterKnife;
  * Created by lyy on 2015/11/3.
  * 所有的 Activity都应该继承这个类
  */
-public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatActivity {
+public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatActivity implements OnTempBtClickListener {
     protected String TAG = "";
     private VB mBind;
     private IOCProxy mProxy;
@@ -35,10 +34,17 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
     protected ApplicationManager mAm;
     protected View mRootView;
     private ModuleFactory mModuleF;
+    protected AbsTempView mTempView;
+    protected boolean useTempView = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initialization();
+        init(savedInstanceState);
+    }
+
+    private void initialization() {
         mAm = ApplicationManager.getInstance();
         mAm.addActivity(this);
         mBind = DataBindingUtil.setContentView(this, setLayoutId());
@@ -47,9 +53,75 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
         mModuleF = ModuleFactory.newInstance();
         ButterKnife.inject(this);
         mRootView = findViewById(android.R.id.content);
-        init(savedInstanceState);
+        if (useTempView) {
+            mTempView = new TempView(this);
+            mTempView.setBtListener(this);
+        }
     }
 
+    /**
+     * 是否使用填充界面
+     *
+     * @param useTempView
+     */
+    protected void setUseTempView(boolean useTempView) {
+        this.useTempView = useTempView;
+    }
+
+    /**
+     * 设置自定义的TempView
+     *
+     * @param tempView
+     */
+    protected void setCustomTempView(AbsTempView tempView) {
+        mTempView = tempView;
+        mTempView.setBtListener(this);
+    }
+
+    /**
+     * 显示填充对话框
+     *
+     * @param type {@link TempView#ERROR}
+     *             {@link TempView#DATA_NULL}
+     *             {@link TempView#LOADING}
+     */
+    protected void showTempView(int type) {
+        if (mTempView == null || !useTempView) {
+            return;
+        }
+        mTempView.setVisibility(View.VISIBLE);
+        mTempView.setType(type);
+        setContentView(mTempView);
+    }
+
+    /**
+     * 关闭错误填充对话框
+     */
+    protected void hintTempView() {
+        hintTempView(0);
+    }
+
+    /**
+     * 延时关闭填充对话框
+     */
+    protected void hintTempView(int delay) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (mTempView == null || !useTempView) {
+                    return;
+                }
+                mTempView.clearFocus();
+                mTempView.setVisibility(View.GONE);
+                mBind = DataBindingUtil.setContentView(AbsActivity.this, setLayoutId());
+            }
+        }, delay);
+    }
+
+    @Override
+    public void onBtTempClick(int type) {
+
+    }
 
     @Override
     protected void onDestroy() {
@@ -153,6 +225,6 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-       PermissionHelp.getInstance().handleSpecialPermissionCallback(this, requestCode, resultCode, data);
+        PermissionHelp.getInstance().handleSpecialPermissionCallback(this, requestCode, resultCode, data);
     }
 }

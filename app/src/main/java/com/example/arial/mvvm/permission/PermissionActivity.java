@@ -7,6 +7,7 @@ import android.view.View;
 import com.arialyy.frame.core.AbsActivity;
 import com.arialyy.frame.permission.OnPermissionCallback;
 import com.arialyy.frame.permission.PermissionManager;
+import com.arialyy.frame.temp.AbsTempView;
 import com.arialyy.frame.util.show.T;
 import com.example.arial.mvvm.R;
 import com.example.arial.mvvm.databinding.ActivityPermissionBinding;

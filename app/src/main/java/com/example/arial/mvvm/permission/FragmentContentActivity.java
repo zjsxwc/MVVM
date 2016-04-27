@@ -1,6 +1,7 @@
 package com.example.arial.mvvm.permission;
 
 import com.arialyy.frame.core.AbsActivity;
+import com.arialyy.frame.temp.AbsTempView;
 import com.example.arial.mvvm.R;
 import com.example.arial.mvvm.databinding.ActivityFragmentContentBinding;
 
