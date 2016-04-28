@@ -11,6 +11,7 @@ public class Application extends android.app.Application {
     public void onCreate() {
         super.onCreate();
 //        ApplicationManager.init(this).openCrashHandler();
-        ApplicationManager.init(this).openCrashHandler("http://192.168.2.183/server.php", "params");
+//        ApplicationManager.init(this).openCrashHandler("http://192.168.2.183/server.php", "params");
+        ApplicationManager.init(this);
     }
 }
