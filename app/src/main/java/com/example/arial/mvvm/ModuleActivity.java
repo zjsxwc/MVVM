@@ -15,6 +15,7 @@ public class ModuleActivity extends AbsActivity<ActivityModuleBinding> {
     @Override
     protected void init(Bundle savedInstanceState) {
         super.init(savedInstanceState);
+        setTitle("Module 使用");
     }
 
     public void onClick(View view) {

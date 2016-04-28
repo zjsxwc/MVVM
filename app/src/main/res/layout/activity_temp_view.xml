@@ -14,8 +14,9 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/layout_temp_view"
-            bind:str="@{str}"/>
+        <include
+            layout="@layout/layout_temp_view"
+            bind:str="@{str}" />
 
         <Button
             android:id="@+id/ft"
@@ -23,7 +24,15 @@
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
             android:onClick="onClick"
-            android:text="Fragment TempView 测试" />
+            android:text="普通的 Fragment TempView 测试" />
+
+        <Button
+            android:id="@+id/vp_ft"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:onClick="onClick"
+            android:text="ViewPage 的 Fragment TempView 测试" />
 
     </LinearLayout>
 </layout>

@@ -9,9 +9,15 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentContainer;
+import android.support.v4.view.ViewPager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.arialyy.frame.module.AbsModule;
 import com.arialyy.frame.module.IOCProxy;
@@ -19,7 +25,13 @@ import com.arialyy.frame.permission.PermissionManager;
 import com.arialyy.frame.temp.AbsTempView;
 import com.arialyy.frame.temp.OnTempBtClickListener;
 import com.arialyy.frame.temp.TempView;
+import com.arialyy.frame.util.AndroidUtils;
+import com.arialyy.frame.util.ReflectionUtil;
 import com.arialyy.frame.util.StringUtil;
+import com.arialyy.frame.util.show.L;
+import com.google.repacked.kotlin.TypeCastException;
+
+import java.lang.reflect.Field;
 
 import butterknife.ButterKnife;
 
@@ -37,13 +49,12 @@ public abstract class AbsFragment<VB extends ViewDataBinding> extends Fragment i
     protected boolean isInit;
     protected AbsTempView mTempView;
     protected boolean useTempView = true;
-    protected ViewGroup mParent;
+    private ViewGroup mParent;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBind = DataBindingUtil.inflate(inflater, setLayoutId(), container, false);
-        mParent = container;
         initFragment();
         mRootView = mBind.getRoot();
         return mRootView;
@@ -72,6 +83,16 @@ public abstract class AbsFragment<VB extends ViewDataBinding> extends Fragment i
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Field field = ReflectionUtil.getField(getClass(), "mContainerId");
+        Field containerField = ReflectionUtil.getField(getFragmentManager().getClass(), "mContainer");
+        try {
+            int id = (int) field.get(this);
+            FragmentContainer container = (FragmentContainer) containerField.get(getFragmentManager());
+            mParent = (ViewGroup) container.onFindViewById(id);
+
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
         init(savedInstanceState);
         isInit = true;
         if (getUserVisibleHint()) {
@@ -126,10 +147,32 @@ public abstract class AbsFragment<VB extends ViewDataBinding> extends Fragment i
         if (mTempView == null || !useTempView) {
             return;
         }
-        mTempView.setVisibility(View.VISIBLE);
         mTempView.setType(type);
-        mParent.removeView(mRootView);
-        mParent.addView(mTempView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        if (mParent != null) {
+            int size = ViewGroup.LayoutParams.MATCH_PARENT;
+            ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(size, size);
+            if (mParent instanceof ViewPager) {
+                ViewPager vp = (ViewPager) mParent;
+                int position = vp.getCurrentItem();
+                View child = vp.getChildAt(position);
+                if (child != null) {
+                    if (child instanceof LinearLayout){
+                        LinearLayout ll = (LinearLayout) child;
+                        ll.removeView(mTempView);
+                        ll.addView(mTempView, 0, lp);
+                    }else if(child instanceof RelativeLayout || child instanceof FrameLayout){
+                        ViewGroup vg = (ViewGroup) child;
+                        vg.removeView(mTempView);
+                        vg.addView(mTempView, lp);
+                    }else {
+                        L.e(TAG, "框架的填充只支持，LinearLayout、RelativeLayout、FrameLayout");
+                    }
+                }
+            } else {
+                mParent.removeView(mTempView);
+                mParent.addView(mTempView, lp);
+            }
+        }
     }
 
     /**
@@ -150,16 +193,23 @@ public abstract class AbsFragment<VB extends ViewDataBinding> extends Fragment i
                     return;
                 }
                 mTempView.clearFocus();
-                mTempView.setVisibility(View.GONE);
-                mParent.removeView(mTempView);
-                mParent.addView(mRootView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                if (mParent != null) {
+                    if (mParent instanceof ViewPager) {
+                        ViewPager vp = (ViewPager) mParent;
+                        int position = vp.getCurrentItem();
+                        View child = vp.getChildAt(position);
+                        ViewGroup vg = (ViewGroup) child;
+                        vg.removeView(mTempView);
+                    } else {
+                        mParent.removeView(mTempView);
+                    }
+                }
             }
         }, delay);
     }
 
     @Override
-    public void onBtTempClick(int type) {
-
+    public void onBtTempClick(View view, int type) {
     }
 
     /**

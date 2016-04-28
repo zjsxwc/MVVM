@@ -119,7 +119,7 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
     }
 
     @Override
-    public void onBtTempClick(int type) {
+    public void onBtTempClick(View view, int type) {
 
     }
 

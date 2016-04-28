@@ -2,6 +2,7 @@ package com.example.arial.mvvm.permission;
 
 import android.Manifest;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 
 import com.arialyy.frame.core.AbsActivity;
@@ -19,7 +20,13 @@ import java.util.Arrays;
  * 权限测试Activity
  */
 public class PermissionActivity extends AbsActivity<ActivityPermissionBinding> implements OnPermissionCallback {
+
     @Override
+    protected void init(Bundle savedInstanceState) {
+        super.init(savedInstanceState);
+        setTitle("Activity 权限测试");
+    }
+
     protected int setLayoutId() {
         return R.layout.activity_permission;
     }

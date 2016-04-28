@@ -19,6 +19,7 @@ public class TempViewActivity extends AbsActivity<ActivityTempViewBinding> {
     protected void init(Bundle savedInstanceState) {
         super.init(savedInstanceState);
 //        setUseTempView(false);
+        setTitle("Activity 填充界面测试");
     }
 
     @Override
@@ -53,12 +54,15 @@ public class TempViewActivity extends AbsActivity<ActivityTempViewBinding> {
             case R.id.ft:
                 startActivity(new Intent(this, TVFContentActivity.class));
                 break;
+            case R.id.vp_ft:
+                startActivity(new Intent(this, TVVPContentActivity.class));
+                break;
         }
     }
 
     @Override
-    public void onBtTempClick(int type) {
-        super.onBtTempClick(type);
+    public void onBtTempClick(View view, int type) {
+        super.onBtTempClick(view, type);
         hintTempView();
     }
 }

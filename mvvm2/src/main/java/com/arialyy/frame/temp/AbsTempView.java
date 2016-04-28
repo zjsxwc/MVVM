@@ -55,9 +55,9 @@ public abstract class AbsTempView extends LinearLayout implements ITempView {
      *
      * @param type {@link ITempView}
      */
-    protected void onTempBtClick(int type) {
+    protected void onTempBtClick(View view, int type) {
         if (mBtListener != null) {
-            mBtListener.onBtTempClick(type);
+            mBtListener.onBtTempClick(view, type);
         }
     }
 

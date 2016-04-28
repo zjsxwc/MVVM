@@ -1,6 +1,5 @@
 package com.example.arial.mvvm.tempview;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,7 +9,6 @@ import com.arialyy.frame.temp.ITempView;
 import com.arialyy.frame.util.show.T;
 import com.example.arial.mvvm.R;
 import com.example.arial.mvvm.databinding.FragmentTempViewBinding;
-import com.example.arial.mvvm.databinding.LayoutTempViewBinding;
 
 import butterknife.InjectView;
 
@@ -20,15 +18,27 @@ import butterknife.InjectView;
 public class TempViewFragment extends AbsFragment<FragmentTempViewBinding> implements View.OnClickListener {
     @InjectView(R.id.net_error)
     Button mError;
+    @InjectView(R.id.data_null)
+    Button mNull;
+    @InjectView(R.id.loading)
+    Button mLoading;
+    @InjectView(R.id.bind_test)
+    Button mBindTest;
+    @InjectView(R.id.custom_temp)
+    Button mCustomBt;
+
 
     @Override
     protected void init(Bundle savedInstanceState) {
         mError.setOnClickListener(this);
+        mNull.setOnClickListener(this);
+        mLoading.setOnClickListener(this);
+        mBindTest.setOnClickListener(this);
+        mCustomBt.setOnClickListener(this);
     }
 
     @Override
     protected void onDelayLoad() {
-
     }
 
     @Override
@@ -39,6 +49,12 @@ public class TempViewFragment extends AbsFragment<FragmentTempViewBinding> imple
     @Override
     protected void dataCallback(int result, Object obj) {
 
+    }
+
+    @Override
+    public void onBtTempClick(View view, int type) {
+        super.onBtTempClick(view, type);
+        hintTempView();
     }
 
     @Override
@@ -60,9 +76,6 @@ public class TempViewFragment extends AbsFragment<FragmentTempViewBinding> imple
             case R.id.custom_temp:
                 setCustomTempView(new CustomTempView(getContext()));
                 T.showShort(getContext(), "自定义填充对话框设置成功");
-                break;
-            case R.id.ft:
-                startActivity(new Intent(getContext(), TVFContentActivity.class));
                 break;
         }
     }

@@ -43,7 +43,7 @@ public class CustomTempView extends AbsTempView {
         mBt.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                onTempBtClick(mType);
+                onTempBtClick(v, mType);
             }
         });
     }
