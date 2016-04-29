@@ -31,7 +31,7 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
      * 第一次点击返回的系统时间
      */
     private long mFirstClickTime = 0;
-    protected ApplicationManager mAm;
+    protected MVMVFrame mAm;
     protected View mRootView;
     private ModuleFactory mModuleF;
     protected AbsTempView mTempView;
@@ -45,7 +45,7 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
     }
 
     private void initialization() {
-        mAm = ApplicationManager.getInstance();
+        mAm = MVMVFrame.getInstance();
         mAm.addActivity(this);
         mBind = DataBindingUtil.setContentView(this, setLayoutId());
         mProxy = IOCProxy.newInstance(this);
@@ -57,6 +57,13 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
             mTempView = new TempView(this);
             mTempView.setBtListener(this);
         }
+    }
+
+    /**
+     * 获取填充View
+     */
+    protected AbsTempView getTempView() {
+        return mTempView;
     }
 
     /**
@@ -79,7 +86,7 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
     }
 
     /**
-     * 显示填充对话框
+     * 显示占位布局
      *
      * @param type {@link TempView#ERROR}
      *             {@link TempView#DATA_NULL}
@@ -95,14 +102,14 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
     }
 
     /**
-     * 关闭错误填充对话框
+     * 关闭占位布局
      */
     protected void hintTempView() {
         hintTempView(0);
     }
 
     /**
-     * 延时关闭填充对话框
+     * 延时关闭占位布局
      */
     protected void hintTempView(int delay) {
         new Handler().postDelayed(new Runnable() {

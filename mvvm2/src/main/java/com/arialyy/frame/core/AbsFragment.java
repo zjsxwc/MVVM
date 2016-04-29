@@ -137,7 +137,7 @@ public abstract class AbsFragment<VB extends ViewDataBinding> extends Fragment i
     }
 
     /**
-     * 显示填充对话框
+     * 显示占位布局
      *
      * @param type {@link TempView#ERROR}
      *             {@link TempView#DATA_NULL}
@@ -176,14 +176,14 @@ public abstract class AbsFragment<VB extends ViewDataBinding> extends Fragment i
     }
 
     /**
-     * 关闭错误填充对话框
+     * 关闭占位布局
      */
     protected void hintTempView() {
         hintTempView(0);
     }
 
     /**
-     * 延时关闭填充对话框
+     * 延时关闭占位布局
      */
     protected void hintTempView(int delay) {
         new Handler().postDelayed(new Runnable() {
@@ -210,6 +210,13 @@ public abstract class AbsFragment<VB extends ViewDataBinding> extends Fragment i
 
     @Override
     public void onBtTempClick(View view, int type) {
+    }
+
+    /**
+     * 获取填充View
+     */
+    protected AbsTempView getTempView() {
+        return mTempView;
     }
 
     /**
