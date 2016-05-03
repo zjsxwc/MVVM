@@ -46,7 +46,7 @@ public class BaseApplication extends AbsApplication {
 ## android 6.0 权限
 ![android 6.0权限使用](https://github.com/AriaLyy/MVVM/blob/v_2.0_dev/img/permission.gif)
 
-## 占位布局
+## 占位布局效果
 ![占位布局](https://github.com/AriaLyy/MVVM/blob/v_2.0_dev/img/tempview.gif)
 ## 业务逻辑层的分离
 框架是基于谷歌dataBinding的，布局里面动态设置数据的方法为谷歌 dataBinding的用法方法，想了解更多，可参考[谷歌官方文档](http://developer.android.com/intl/zh-cn/tools/data-binding/guide.html)</br>
