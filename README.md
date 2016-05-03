@@ -3,7 +3,7 @@
 框架具有以下功能：</br>
 - [业务逻辑层的分离](#业务逻辑层的分离)
 - [封装了android 6.0权限申请，在申请权限时，能像View一样设置事件监听](#权限使用)
-- [创建Fragment、Dialog、popupwindow都将变得极其简单](#AbsPopupwindow)
+- [创建Fragment、Dialog、popupwindow都将变得极其简单](#AbsDialogFragment)
 - [占位布局实现将变得极其简单](#占位布局)
 - [具有dataBinding的一切功能](#使用)
 - [封装了Okhttp网络请求，实现二级缓存，实现了网络回调监听](#网络请求)
@@ -388,6 +388,7 @@ PermissionManager.getInstance().requestWriteSettingPermission(Object obj, OnPerm
 
 ### 自定义填充布局
 如果你对框架自带占位布局不满意，你也可以自定义自己的占位布局。
+```
 1. 创建一个对象继承于AbsTempView
 2. 重写`protected int setLayoutId()`方法的`return` 为你的dialog布局ID，便能实现布局的加载。
 3. 重写`protected void init()`，在里面进行初始化操作。
@@ -395,6 +396,7 @@ PermissionManager.getInstance().requestWriteSettingPermission(Object obj, OnPerm
 5. 重写`public void onNull()`在该方法里编写`type = ITempView.DATA_NULL`的业务逻辑。
 6. 重写`public void onLoading()`在该方法里面编写`type = ITempView.LOADING`的业务逻辑。
 7. 在继承于AbsActivity或者AbsFragment的组件里面调用`setCustomTempView(AbsTempView tempView)`，tempView便是你创建的继承于AbsTempView的子类。
+```
 **上面的4、5、6根据你的需求，进行选择。**</br>
 注意，如果你的占位布局有控件事件，你将需要在控件的事件代码里面调用`onTempBtClick(v, mType);`方法，这样，你才能将控件的事件传递到Activity或者Fragment，如下所示</br>
 ```java
