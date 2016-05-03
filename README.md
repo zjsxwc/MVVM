@@ -3,7 +3,7 @@
 框架具有以下功能：</br>
 - [业务逻辑层的分离](#业务逻辑层的分离)
 - [封装了android 6.0权限申请，在申请权限时，能像View一样设置事件监听](#权限使用)
-- [创建Fragment、Dialog、popupwindow都将变得极其简单](#AbsDialogFragment)
+- [创建Fragment、Dialog、popupwindow都将变得极其简单](#其它组件使用)
 - [占位布局实现将变得极其简单](#占位布局)
 - [具有dataBinding的一切功能](#使用)
 - [封装了Okhttp网络请求，实现二级缓存，实现了网络回调监听](#网络请求)
@@ -223,6 +223,8 @@ public class MainActivity extends AbsActivity<ActivityMainBinding> {
     </RelativeLayout>
 </layout>
 ```
+
+## 其它组件使用
 * AbsDialogFragment
 `AbsDialogFragment`和`AbsActivity`同样的逻辑，都是可以调用Module，也支持dataBinding绑定数据操作。</br>
 使用`AbsDialogFragment`创建`DialogFragment`，你能像创建Activity一样简单，很容易创建一个完全自定义的`DialogFragment`对话框。</br>
@@ -275,7 +277,7 @@ public class ShowDialog extends AbsDialogFragment<DialogShowBinding> implements 
 上面的代码在`init(Bundle savedInstanceState)`请求`IPModule`执行了本地IP地址网络解析的操作，在`dataCallback(int result, Object data)`接收`IPModule`回调的数据，并将该数据通过dataBinding绑定到视图UI。</br>
 当点击确认按钮时，通过调用`getSimplerModule().onDialog(2, "对话框确认")`，`MainActivity`的将可以在`dataCallback(int result, Object data)`方法里面接收到`对话框确认`这个字符串。
 
-## AbsPopupwindow
+* AbsPopupwindow
 `popupwindow`和`AbsActivity`同样的逻辑，都是可以调用Module，也支持dataBinding绑定数据操作。</br>
 使用`AbsPopupwindow`创建`popupwindow`，你能像创建Activity一样简单，很容易创建一个完全自定义的`popupwindow`</br>
 重写`setLayoutId()`方法的`return` 为你的dialog布局ID，便能实现布局的加载。</br>
@@ -300,7 +302,7 @@ public class TestPopupwindow extends AbsPopupWindow {
 }
 ```
 
-## AbsFragment
+* AbsFragment
 `fragment`和`AbsActivity`同样的逻辑，都是可以调用Module，也支持dataBinding绑定数据操作。</br>
 使用`AbsFragment`创建`fragment`，你能像创建Activity一样简单，很容易创建一个`fragment`</br>
 重写`setLayoutId()`方法的`return` 为你的dialog布局ID，便能实现布局的加载。</br>
