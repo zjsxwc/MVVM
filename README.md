@@ -388,7 +388,7 @@ PermissionManager.getInstance().requestWriteSettingPermission(Object obj, OnPerm
 3. type = ITempView.LOADING;    ==> 加载等待的填充布局
 ```
 
-### 自定义填充布局
+### 自定义占位布局
 如果你对框架自带占位布局不满意，你也可以自定义自己的占位布局。
 ```
 1. 创建一个对象继承于AbsTempView
