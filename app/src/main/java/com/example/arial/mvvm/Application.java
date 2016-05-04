@@ -1,7 +1,7 @@
 package com.example.arial.mvvm;
 
 
-import com.arialyy.frame.core.MVMVFrame;
+import com.arialyy.frame.core.MVVMFrame;
 
 /**
  * Created by lyy on 2016/4/1.
@@ -10,8 +10,8 @@ public class Application extends android.app.Application {
     @Override
     public void onCreate() {
         super.onCreate();
-//        MVMVFrame.init(this).openCrashHandler();
-//        MVMVFrame.init(this).openCrashHandler("http://192.168.2.183/server.php", "params");
-        MVMVFrame.init(this);
+//        MVVMFrame.init(this).openCrashHandler();
+//        MVVMFrame.init(this).openCrashHandler("http://192.168.2.183/server.php", "params");
+        MVVMFrame.init(this);
     }
 }

@@ -31,7 +31,7 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
      * 第一次点击返回的系统时间
      */
     private long mFirstClickTime = 0;
-    protected MVMVFrame mAm;
+    protected MVVMFrame mAm;
     protected View mRootView;
     private ModuleFactory mModuleF;
     protected AbsTempView mTempView;
@@ -45,7 +45,7 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
     }
 
     private void initialization() {
-        mAm = MVMVFrame.getInstance();
+        mAm = MVVMFrame.getInstance();
         mAm.addActivity(this);
         mBind = DataBindingUtil.setContentView(this, setLayoutId());
         mProxy = IOCProxy.newInstance(this);

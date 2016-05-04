@@ -14,7 +14,7 @@
 
 ## 下载
 [![Download](https://api.bintray.com/packages/arialyy/maven/MvvmFrame/images/download.svg)](https://bintray.com/arialyy/maven/MvvmFrame/_latestVersion)</br>
-compile 'com.arialyy.frame:MVVM2:2.0.1_dev'
+compile 'com.arialyy.frame:MVVM2:2.0.1'
 
 ## 使用
 * 在build.gradle 打开dataBinding 选项
@@ -33,7 +33,7 @@ public class BaseApplication extends AbsApplication {
     @Override
    public void onCreate() {
        super.onCreate();
-       MVMVFrame.init(this);
+       MVvmFrame.init(this);
        //如果你需要打开异常捕获模块，去掉下面语句的注释，将两个参数改为你的接口和key，便可以将崩溃信息上传到后台服务器
        //MVMVFrame.init(this).openCrashHandler("http://192.168.2.183/server.php", "params");
    }

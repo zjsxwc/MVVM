@@ -11,18 +11,18 @@ import java.util.Stack;
  * Created by lyy on 2015/11/4.
  * APP生命周期管理类管理
  */
-public class MVMVFrame {
-    private static final String TAG = "MVMVFrame";
+public class MVVMFrame {
+    private static final String TAG = "MVVMFrame";
     private static final Object LOCK = new Object();
-    private volatile static MVMVFrame mManager = null;
+    private volatile static MVVMFrame mManager = null;
     private Context mContext;
     private Stack<AbsActivity> mActivityStack = new Stack<>();
 
-    private MVMVFrame() {
+    private MVVMFrame() {
 
     }
 
-    private MVMVFrame(Context context) {
+    private MVVMFrame(Context context) {
         mContext = context;
     }
 
@@ -32,11 +32,11 @@ public class MVMVFrame {
      * @param applicationContext
      * @return
      */
-    public static MVMVFrame init(Context applicationContext) {
+    public static MVVMFrame init(Context applicationContext) {
         if (mManager == null) {
             synchronized (LOCK) {
                 if (mManager == null) {
-                    mManager = new MVMVFrame(applicationContext);
+                    mManager = new MVVMFrame(applicationContext);
                 }
             }
         }
@@ -48,7 +48,7 @@ public class MVMVFrame {
      *
      * @return
      */
-    public static MVMVFrame getInstance() {
+    public static MVVMFrame getInstance() {
         if (mManager == null) {
             throw new NullPointerException("请在application 的 onCreate 方法里面使用ApplicationManager.init()方法进行初始化操作");
         }
@@ -76,7 +76,7 @@ public class MVMVFrame {
      * @param serverHost 服务器地址
      * @param key        数据传输键值
      */
-    public MVMVFrame openCrashHandler(String serverHost, String key) {
+    public MVVMFrame openCrashHandler(String serverHost, String key) {
         CrashHandler handler = CrashHandler.getInstance(mContext);
         handler.setServerHost(serverHost, key);
         Thread.setDefaultUncaughtExceptionHandler(handler);
