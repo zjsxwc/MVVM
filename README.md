@@ -503,6 +503,7 @@ util.get(IP_URL, new HttpUtil.AbsResponse() {
 ```
 
 # 混淆配置
+```
 -keep class com.arialyy.frame.**{*;}
 -dontwarn com.arialyy.frame.**
 -keepclassmembers class * extends com.arialyy.frame.module.AbsModule{
@@ -527,7 +528,7 @@ util.get(IP_URL, new HttpUtil.AbsResponse() {
 -keepclassmembers class * extends com.arialyy.frame.core.AbsDialog{
     protected void dataCallback(int, java.lang.Object);
 }
-
+```
 
 License
 -------
