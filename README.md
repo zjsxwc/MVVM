@@ -502,6 +502,33 @@ util.get(IP_URL, new HttpUtil.AbsResponse() {
 });
 ```
 
+# 混淆配置
+-keep class com.arialyy.frame.**{*;}
+-dontwarn com.arialyy.frame.**
+-keepclassmembers class * extends com.arialyy.frame.module.AbsModule{
+    public <init>(android.content.Context);
+}
+-keepclassmembers class * extends com.arialyy.frame.core.AbsActivity{
+    protected void dataCallback(int, java.lang.Object);
+}
+-keepclassmembers class * extends com.arialyy.frame.core.AbsPopupWindow{
+    protected void dataCallback(int, java.lang.Object);
+}
+-keepclassmembers class * extends com.arialyy.frame.core.AbsFragment{
+    protected void dataCallback(int, java.lang.Object);
+}
+-keepclassmembers class * extends com.arialyy.frame.core.AbsDialogFragment{
+    protected void dataCallback(int, java.lang.Object);
+}
+-keepclassmembers class * extends com.arialyy.frame.core.AbsAlertDialog{
+    protected void dataCallback(int, java.lang.Object);
+}
+
+-keepclassmembers class * extends com.arialyy.frame.core.AbsDialog{
+    protected void dataCallback(int, java.lang.Object);
+}
+
+
 License
 -------
 
