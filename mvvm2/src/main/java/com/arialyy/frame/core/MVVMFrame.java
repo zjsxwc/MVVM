@@ -50,7 +50,7 @@ public class MVVMFrame {
      */
     public static MVVMFrame getInstance() {
         if (mManager == null) {
-            throw new NullPointerException("请在application 的 onCreate 方法里面使用ApplicationManager.init()方法进行初始化操作");
+            throw new NullPointerException("请在application 的 onCreate 方法里面使用MVVMFrame.init()方法进行初始化操作");
         }
         return mManager;
     }

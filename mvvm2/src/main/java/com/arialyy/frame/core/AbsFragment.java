@@ -9,27 +9,18 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentContainer;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.arialyy.frame.module.AbsModule;
 import com.arialyy.frame.module.IOCProxy;
-import com.arialyy.frame.permission.PermissionManager;
 import com.arialyy.frame.temp.AbsTempView;
 import com.arialyy.frame.temp.OnTempBtClickListener;
 import com.arialyy.frame.temp.TempView;
-import com.arialyy.frame.util.AndroidUtils;
 import com.arialyy.frame.util.ReflectionUtil;
 import com.arialyy.frame.util.StringUtil;
-import com.arialyy.frame.util.show.L;
-import com.google.repacked.kotlin.TypeCastException;
 
 import java.lang.reflect.Field;
 
@@ -83,20 +74,33 @@ public abstract class AbsFragment<VB extends ViewDataBinding> extends Fragment i
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Field field = ReflectionUtil.getField(getClass(), "mContainerId");
-        Field containerField = ReflectionUtil.getField(getFragmentManager().getClass(), "mContainer");
-        try {
-            int id = (int) field.get(this);
-            FragmentContainer container = (FragmentContainer) containerField.get(getFragmentManager());
-            mParent = (ViewGroup) container.onFindViewById(id);
 
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+
+//        Field field = ReflectionUtil.getField(getClass(), "mContainerId");
+//        Field containerField = ReflectionUtil.getField(getFragmentManager().getClass(), "mContainer");
+//        try {
+//            int id = (int) field.get(this);
+//            FragmentContainer container = (FragmentContainer) containerField.get(getFragmentManager());
+//            mParent = (ViewGroup) container.onFindViewById(id);
+//
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        }
         init(savedInstanceState);
         isInit = true;
         if (getUserVisibleHint()) {
             onDelayLoad();
+        }
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Field field = ReflectionUtil.getField(getClass(), "mContainer");
+        try {
+            mParent = (ViewGroup) field.get(this);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
     }
 
@@ -144,35 +148,41 @@ public abstract class AbsFragment<VB extends ViewDataBinding> extends Fragment i
      *             {@link TempView#LOADING}
      */
     protected void showTempView(int type) {
-        if (mTempView == null || !useTempView) {
-            return;
+        Field field = ReflectionUtil.getField(getClass(), "mContainer");
+        try {
+            mParent = (ViewGroup) field.get(this);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
-        mTempView.setType(type);
-        if (mParent != null) {
-            int size = ViewGroup.LayoutParams.MATCH_PARENT;
-            ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(size, size);
-            if (mParent instanceof ViewPager) {
-                ViewPager vp = (ViewPager) mParent;
-                int position = vp.getCurrentItem();
-                View child = vp.getChildAt(position);
-                if (child != null) {
-                    if (child instanceof LinearLayout){
-                        LinearLayout ll = (LinearLayout) child;
-                        ll.removeView(mTempView);
-                        ll.addView(mTempView, 0, lp);
-                    }else if(child instanceof RelativeLayout || child instanceof FrameLayout){
-                        ViewGroup vg = (ViewGroup) child;
-                        vg.removeView(mTempView);
-                        vg.addView(mTempView, lp);
-                    }else {
-                        L.e(TAG, "框架的填充只支持，LinearLayout、RelativeLayout、FrameLayout");
-                    }
-                }
-            } else {
-                mParent.removeView(mTempView);
-                mParent.addView(mTempView, lp);
-            }
-        }
+//        if (mTempView == null || !useTempView) {
+//            return;
+//        }
+//        mTempView.setType(type);
+//        if (mParent != null) {
+//            int size = ViewGroup.LayoutParams.MATCH_PARENT;
+//            ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(size, size);
+//            if (mParent instanceof ViewPager) {
+//                ViewPager vp = (ViewPager) mParent;
+//                int position = vp.getCurrentItem();
+//                View child = vp.getChildAt(position);
+//                if (child != null) {
+//                    if (child instanceof LinearLayout){
+//                        LinearLayout ll = (LinearLayout) child;
+//                        ll.removeView(mTempView);
+//                        ll.addView(mTempView, 0, lp);
+//                    }else if(child instanceof RelativeLayout || child instanceof FrameLayout){
+//                        ViewGroup vg = (ViewGroup) child;
+//                        vg.removeView(mTempView);
+//                        vg.addView(mTempView, lp);
+//                    }else {
+//                        L.e(TAG, "框架的填充只支持，LinearLayout、RelativeLayout、FrameLayout");
+//                    }
+//                }
+//            } else {
+//                mParent.removeView(mTempView);
+//                mParent.addView(mTempView, lp);
+//            }
+//        }
     }
 
     /**
