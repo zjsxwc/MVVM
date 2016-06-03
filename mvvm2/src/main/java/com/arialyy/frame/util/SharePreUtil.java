@@ -18,8 +18,8 @@ public class SharePreUtil {
      * 删除键值对
      */
     public static void removeKey(String preName, Context context, String key) {
-        SharedPreferences pre = context.getSharedPreferences(preName, Context.MODE_PRIVATE);
-        Editor editor = pre.edit();
+        SharedPreferences pre    = context.getSharedPreferences(preName, Context.MODE_PRIVATE);
+        Editor            editor = pre.edit();
         editor.remove(key);
         editor.commit();
     }
@@ -75,7 +75,7 @@ public class SharePreUtil {
      */
     public static <T> T getObject(String preName, Context context, String key, Class<T> clazz) {
         SharedPreferences pre = context.getSharedPreferences(preName, Context.MODE_PRIVATE);
-        String str = pre.getString(key, "");
+        String            str = pre.getString(key, "");
         return TextUtils.isEmpty(str) ? null : new Gson().fromJson(str, clazz);
     }
 
@@ -89,8 +89,8 @@ public class SharePreUtil {
      * @return 成功标志
      */
     public static Boolean putString(String preName, Context context, String key, String value) {
-        SharedPreferences pre = context.getSharedPreferences(preName, Context.MODE_PRIVATE);
-        Editor editor = pre.edit();
+        SharedPreferences pre    = context.getSharedPreferences(preName, Context.MODE_PRIVATE);
+        Editor            editor = pre.edit();
         editor.putString(key, value);
         return editor.commit();
     }
@@ -99,8 +99,8 @@ public class SharePreUtil {
      * 保存Float数据到配置文件
      */
     public static Boolean putFloat(String preName, Context context, String key, float value) {
-        SharedPreferences pre = context.getSharedPreferences(preName, Context.MODE_PRIVATE);
-        Editor editor = pre.edit();
+        SharedPreferences pre    = context.getSharedPreferences(preName, Context.MODE_PRIVATE);
+        Editor            editor = pre.edit();
         editor.putFloat(key, value);
         return editor.commit();
     }
@@ -115,8 +115,8 @@ public class SharePreUtil {
      * @return 成功标志
      */
     public static Boolean putInt(String preName, Context context, String key, int value) {
-        SharedPreferences pre = context.getSharedPreferences(preName, Context.MODE_PRIVATE);
-        Editor editor = pre.edit();
+        SharedPreferences pre    = context.getSharedPreferences(preName, Context.MODE_PRIVATE);
+        Editor            editor = pre.edit();
         editor.putInt(key, value);
         return editor.commit();
     }
@@ -131,8 +131,8 @@ public class SharePreUtil {
      * @return
      */
     public static Boolean putBoolean(String preName, Context context, String key, Boolean value) {
-        SharedPreferences pre = context.getSharedPreferences(preName, Context.MODE_PRIVATE);
-        Editor editor = pre.edit();
+        SharedPreferences pre    = context.getSharedPreferences(preName, Context.MODE_PRIVATE);
+        Editor            editor = pre.edit();
         editor.putBoolean(key, value);
         return editor.commit();
     }
@@ -141,9 +141,9 @@ public class SharePreUtil {
      * 存放对象
      */
     public static Boolean putObject(String preName, Context context, String key, Class<?> clazz, Object obj) {
-        String str = new Gson().toJson(obj, clazz);
-        SharedPreferences pre = context.getSharedPreferences(preName, Context.MODE_PRIVATE);
-        Editor editor = pre.edit();
+        String            str    = new Gson().toJson(obj, clazz);
+        SharedPreferences pre    = context.getSharedPreferences(preName, Context.MODE_PRIVATE);
+        Editor            editor = pre.edit();
         editor.putString(key, str);
         return editor.commit();
     }

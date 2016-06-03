@@ -21,14 +21,14 @@ import butterknife.ButterKnife;
  */
 public abstract class AbsPopupWindow extends PopupWindow {
 
-    protected String TAG;
-    private static Context mContext;
-    private Drawable mBackground;
-    protected View mView;
-    private Object mObj;
-    protected IOCProxy mProxy;
-    protected DialogSimpleModule mSimpleModule;
-    private ModuleFactory mModuleF;
+    protected      String             TAG;
+    private static Context            mContext;
+    private        Drawable           mBackground;
+    protected      View               mView;
+    private        Object             mObj;
+    protected      IOCProxy           mProxy;
+    protected      DialogSimpleModule mSimpleModule;
+    private        ModuleFactory      mModuleF;
 
     public AbsPopupWindow(Context context) {
         this(context, null);

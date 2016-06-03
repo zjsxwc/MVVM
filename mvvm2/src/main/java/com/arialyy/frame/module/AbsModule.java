@@ -11,7 +11,7 @@ import com.arialyy.frame.module.inf.ModuleListener;
  */
 public class AbsModule {
     public String TAG = "";
-    private Context mContext;
+    private Context        mContext;
     private ModuleListener mModuleListener;
 
     public AbsModule(Context context) {
@@ -24,7 +24,7 @@ public class AbsModule {
      */
     private void init() {
         String className = getClass().getName();
-        String arrays[] = className.split("\\.");
+        String arrays[]  = className.split("\\.");
         TAG = arrays[arrays.length - 1];
     }
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background_color">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/background_color">
 
     <LinearLayout
         android:id="@+id/temp"
@@ -16,7 +16,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <LinearLayout
             android:id="@+id/error_temp"
@@ -29,7 +29,7 @@
                 android:layout_width="200dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
-                android:src="@mipmap/icon_empty" />
+                android:src="@mipmap/icon_empty"/>
 
             <TextView
                 android:layout_marginTop="10dp"
@@ -39,7 +39,7 @@
                 android:layout_gravity="center"
                 android:text="什么都没有"
                 android:textColor="@color/text_gray_color"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
 
             <Button
                 android:id="@+id/bt"
@@ -51,7 +51,7 @@
                 android:gravity="center"
                 android:text="看看别的"
                 android:textColor="@color/white"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
         </LinearLayout>
 
     </LinearLayout>

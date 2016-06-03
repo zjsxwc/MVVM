@@ -102,7 +102,7 @@ public class AndroidVersionUtil {
     /**
      * 当前是否在6.0以上
      */
-    public static boolean hasM(){
+    public static boolean hasM() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
     }
 

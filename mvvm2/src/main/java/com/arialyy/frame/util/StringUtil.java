@@ -33,9 +33,9 @@ import java.util.regex.Pattern;
  */
 public class StringUtil {
     public static final int APPLICATION = 0;
-    public static final int BROADCAST = 1;
-    public static final int SERVICE = 2;
-    public static final int ACTIVITY = 3;
+    public static final int BROADCAST   = 1;
+    public static final int SERVICE     = 2;
+    public static final int ACTIVITY    = 3;
 
     /**
      * 获取字体长度
@@ -54,8 +54,8 @@ public class StringUtil {
      */
     private static SpannableString underLineHight(String str, String underLineStr) {
         // 创建一个 SpannableString对象
-        SpannableString sp = new SpannableString(str);
-        int index = str.indexOf(underLineStr);
+        SpannableString sp    = new SpannableString(str);
+        int             index = str.indexOf(underLineStr);
         //设置背景颜色, StrikethroughSpan()是设置中划线
         sp.setSpan(new UnderlineSpan(), index, index + underLineStr.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return sp;
@@ -75,7 +75,7 @@ public class StringUtil {
 
         while (m.find()) {  //通过正则查找，逐个高亮
             int start = m.start();
-            int end = m.end();
+            int end   = m.end();
             sp.setSpan(new ForegroundColorSpan(highlightColor), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         return sp;
@@ -89,8 +89,8 @@ public class StringUtil {
      * @param url       超链接
      */
     public static SpannableString createLinkText(String text, String clickText, String url) {
-        SpannableString sp = new SpannableString(text);
-        int index = text.indexOf(clickText);
+        SpannableString sp    = new SpannableString(text);
+        int             index = text.indexOf(clickText);
         // 设置超链接
         sp.setSpan(new URLSpan(url), index, index + clickText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return sp;
@@ -240,7 +240,7 @@ public class StringUtil {
      * @return
      */
     public static SpannableStringBuilder highLightStr(String str, String highLightStr, int color) {
-        int start = str.indexOf(highLightStr);
+        int                    start = str.indexOf(highLightStr);
         SpannableStringBuilder style = new SpannableStringBuilder(str);
         // new BackgroundColorSpan(Color.RED)背景高亮
         // ForegroundColorSpan(Color.RED) 字体高亮

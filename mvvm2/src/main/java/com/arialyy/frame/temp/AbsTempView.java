@@ -17,8 +17,8 @@ import butterknife.ButterKnife;
  * 抽象的填充类
  */
 public abstract class AbsTempView extends LinearLayout implements ITempView {
-    private OnTempBtClickListener mBtListener;
-    private static String TAG;
+    private        OnTempBtClickListener mBtListener;
+    private static String                TAG;
     protected int mType = ERROR;
 
     public AbsTempView(Context context) {

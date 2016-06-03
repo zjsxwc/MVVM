@@ -11,27 +11,27 @@ import java.util.Date;
  * 日历工具类 Create by lyy on 13-7-8.
  */
 public class CalendarUtils {
-    private static final String TAG = "CalendarUtils";
+    private static final String TAG                      = "CalendarUtils";
     /**
      * 完整的日期时间格式
      */
-    public final static String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public final static  String DATE_TIME_FORMAT         = "yyyy-MM-dd HH:mm:ss";
     /**
      * 只有日期的格式
      */
-    public final static String DATE_FORMAT = "yyyy-MM-dd";
+    public final static  String DATE_FORMAT              = "yyyy-MM-dd";
     /**
      * 只有时间的格式
      */
-    public final static String TIME_FORMAT = "HH:mm:ss";
+    public final static  String TIME_FORMAT              = "HH:mm:ss";
     /**
      * 带中文的日期格式(2000年01月01日)
      */
-    public final static String DATE_FORMAT_WITH_CHINESE = "yyyy年MM月dd日";
+    public final static  String DATE_FORMAT_WITH_CHINESE = "yyyy年MM月dd日";
     /**
      * 短时间格式(HH:mm)
      */
-    public final static String SHORT_TIME_FORMAT = "HH:mm";
+    public final static  String SHORT_TIME_FORMAT        = "HH:mm";
 
     /**
      * 私有构造
@@ -58,8 +58,8 @@ public class CalendarUtils {
      * @return
      */
     public static Calendar transformStringToCalendar(String string, String format) {
-        SimpleDateFormat sdf = new SimpleDateFormat(format);
-        Date date = null;
+        SimpleDateFormat sdf  = new SimpleDateFormat(format);
+        Date             date = null;
         try {
             date = sdf.parse(string);
         } catch (ParseException e) {
@@ -124,7 +124,7 @@ public class CalendarUtils {
     public static String formatWithString(String src, String srcFormat, String targetFormat) {
         SimpleDateFormat sdf = new SimpleDateFormat(srcFormat);
         try {
-            Date date = sdf.parse(src);
+            Date             date      = sdf.parse(src);
             SimpleDateFormat targetSdf = new SimpleDateFormat(targetFormat);
             return targetSdf.format(date);
         } catch (Exception e) {
@@ -155,7 +155,7 @@ public class CalendarUtils {
     public static String formatDateTimeWithString(String srcDate, String srcDateFormat, String targetFormat) {
         SimpleDateFormat sdf = new SimpleDateFormat(srcDateFormat);
         try {
-            Date date = sdf.parse(srcDate);
+            Date             date     = sdf.parse(srcDate);
             SimpleDateFormat parseSdf = new SimpleDateFormat(targetFormat);
             return parseSdf.format(date);
         } catch (ParseException e) {
@@ -247,7 +247,7 @@ public class CalendarUtils {
      */
     public static Calendar transformStringTimeToCalendar(String time) {
         Calendar calendar = Calendar.getInstance();
-        String[] split = time.split(":");
+        String[] split    = time.split(":");
         if (split.length > 0) {
             calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(split[0]));
         }

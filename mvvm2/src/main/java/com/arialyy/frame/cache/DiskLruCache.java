@@ -98,18 +98,18 @@ import java.util.concurrent.TimeUnit;
  * responding appropriately.
  */
 public final class DiskLruCache implements Closeable {
-    static final String JOURNAL_FILE = "journal";
-    static final String JOURNAL_FILE_TMP = "journal.tmp";
-    static final String MAGIC = "libcore.io.DiskLruCache";
-    static final String VERSION_1 = "1";
-    static final long ANY_SEQUENCE_NUMBER = -1;
-    private static final String CLEAN = "CLEAN";
-    private static final String DIRTY = "DIRTY";
-    private static final String REMOVE = "REMOVE";
-    private static final String READ = "READ";
+    static final         String JOURNAL_FILE        = "journal";
+    static final         String JOURNAL_FILE_TMP    = "journal.tmp";
+    static final         String MAGIC               = "libcore.io.DiskLruCache";
+    static final         String VERSION_1           = "1";
+    static final         long   ANY_SEQUENCE_NUMBER = -1;
+    private static final String CLEAN               = "CLEAN";
+    private static final String DIRTY               = "DIRTY";
+    private static final String REMOVE              = "REMOVE";
+    private static final String READ                = "READ";
 
-    private static final Charset UTF_8 = Charset.forName("UTF-8");
-    private static final int IO_BUFFER_SIZE = 8 * 1024;
+    private static final Charset UTF_8          = Charset.forName("UTF-8");
+    private static final int     IO_BUFFER_SIZE = 8 * 1024;
 
     /*
      * This cache uses a journal file named "journal". A typical journal file
@@ -154,9 +154,9 @@ public final class DiskLruCache implements Closeable {
     private final File directory;
     private final File journalFile;
     private final File journalFileTmp;
-    private final int appVersion;
+    private final int  appVersion;
     private final long maxSize;
-    private final int valueCount;
+    private final int  valueCount;
     private long size = 0;
     private Writer journalWriter;
     private final LinkedHashMap<String, Entry> lruEntries = new LinkedHashMap<String, Entry>(0, 0.75f, true);
@@ -180,8 +180,8 @@ public final class DiskLruCache implements Closeable {
             throw new ArrayIndexOutOfBoundsException();
         }
         final int resultLength = end - start;
-        final int copyLength = Math.min(resultLength, originalLength - start);
-        final T[] result = (T[]) Array.newInstance(original.getClass().getComponentType(), resultLength);
+        final int copyLength   = Math.min(resultLength, originalLength - start);
+        final T[] result       = (T[]) Array.newInstance(original.getClass().getComponentType(), resultLength);
         System.arraycopy(original, start, result, 0, copyLength);
         return result;
     }
@@ -192,8 +192,8 @@ public final class DiskLruCache implements Closeable {
     public static String readFully(Reader reader) throws IOException {
         try {
             StringWriter writer = new StringWriter();
-            char[] buffer = new char[1024];
-            int count;
+            char[]       buffer = new char[1024];
+            int          count;
             while ((count = reader.read(buffer)) != -1) {
                 writer.write(buffer, 0, count);
             }
@@ -267,7 +267,7 @@ public final class DiskLruCache implements Closeable {
      * This cache uses a single background thread to evict entries.
      */
     private final ExecutorService executorService = new ThreadPoolExecutor(0, 1, 60L, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
-    private final Callable<Void> cleanupCallable = new Callable<Void>() {
+    private final Callable<Void>  cleanupCallable = new Callable<Void>() {
         @Override
         public Void call() throws Exception {
             synchronized (DiskLruCache.this) {
@@ -336,11 +336,11 @@ public final class DiskLruCache implements Closeable {
     private void readJournal() throws IOException {
         InputStream in = new BufferedInputStream(new FileInputStream(journalFile), IO_BUFFER_SIZE);
         try {
-            String magic = readAsciiLine(in);
-            String version = readAsciiLine(in);
+            String magic            = readAsciiLine(in);
+            String version          = readAsciiLine(in);
             String appVersionString = readAsciiLine(in);
             String valueCountString = readAsciiLine(in);
-            String blank = readAsciiLine(in);
+            String blank            = readAsciiLine(in);
             if (!MAGIC.equals(magic) || !VERSION_1.equals(version) || !Integer.toString(appVersion).equals(appVersionString) || !Integer.toString(valueCount).equals(valueCountString) || !"".equals(blank)) {
                 throw new IOException("unexpected journal header: [" + magic + ", " + version + ", " + valueCountString + ", " + blank + "]");
             }
@@ -717,8 +717,8 @@ public final class DiskLruCache implements Closeable {
      * A snapshot of the values for an entry.
      */
     public final class Snapshot implements Closeable {
-        private final String key;
-        private final long sequenceNumber;
+        private final String        key;
+        private final long          sequenceNumber;
         private final InputStream[] ins;
 
         private Snapshot(String key, long sequenceNumber, InputStream[] ins) {
@@ -762,8 +762,8 @@ public final class DiskLruCache implements Closeable {
      * Edits the values for an entry.
      */
     public final class Editor {
-        private final Entry entry;
-        private boolean hasErrors;
+        private final Entry   entry;
+        private       boolean hasErrors;
 
         private Editor(Entry entry) {
             this.entry = entry;

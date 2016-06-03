@@ -40,16 +40,16 @@ import okhttp3.Response;
  * 网络连接工具
  */
 public class HttpUtil {
-    private static final String TAG = "HttpUtil";
-    private Context mContext = null;
-    private static volatile HttpUtil mUtil = null;
-    private static final Object LOCK = new Object();
+    private static final    String   TAG      = "HttpUtil";
+    private                 Context  mContext = null;
+    private static volatile HttpUtil mUtil    = null;
+    private static final    Object   LOCK     = new Object();
     private CacheUtil mCacheUtil;
-    private Handler mHandler;
-    private static final int TIME_OUT = 5000;
-    public static final String CONTENT_TYPE_IMG = "image/*";
-    public static final String CONTENT_TYPE_TEXT = "text/*";
-    public static final String CONTENT_TYPE_FILE = "application/octet-stream";
+    private Handler   mHandler;
+    private static final int    TIME_OUT          = 5000;
+    public static final  String CONTENT_TYPE_IMG  = "image/*";
+    public static final  String CONTENT_TYPE_TEXT = "text/*";
+    public static final  String CONTENT_TYPE_FILE = "application/octet-stream";
 
     private HttpUtil() {
     }
@@ -113,9 +113,9 @@ public class HttpUtil {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                File file = new File(filePath);
-                String BOUNDARY = UUID.randomUUID().toString(); // 边界标识 随机生成
-                String PREFIX = "--", LINE_END = "\r\n";
+                File   file         = new File(filePath);
+                String BOUNDARY     = UUID.randomUUID().toString(); // 边界标识 随机生成
+                String PREFIX       = "--", LINE_END = "\r\n";
                 String CONTENT_TYPE = "multipart/form-data"; // 内容类型
                 try {
                     HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
@@ -136,9 +136,9 @@ public class HttpUtil {
                             conn.setRequestProperty(entry.getKey() + "", entry.getValue() + "");
                         }
                     }
-                    OutputStream outputSteam = conn.getOutputStream();
-                    DataOutputStream dos = new DataOutputStream(outputSteam);
-                    StringBuilder sb = new StringBuilder();
+                    OutputStream     outputSteam = conn.getOutputStream();
+                    DataOutputStream dos         = new DataOutputStream(outputSteam);
+                    StringBuilder    sb          = new StringBuilder();
                     sb.append(PREFIX);
                     sb.append(BOUNDARY);
                     sb.append(LINE_END);
@@ -146,9 +146,9 @@ public class HttpUtil {
                     sb.append("Content-Type:").append(contentType).append("; charset=utf-8").append(LINE_END);
                     sb.append(LINE_END);
                     dos.write(sb.toString().getBytes());
-                    InputStream is = new FileInputStream(file);
-                    byte[] bytes = new byte[1024];
-                    int len = 0;
+                    InputStream is    = new FileInputStream(file);
+                    byte[]      bytes = new byte[1024];
+                    int         len   = 0;
                     while ((len = is.read(bytes)) != -1) {
                         dos.write(bytes, 0, len);
                     }
@@ -159,9 +159,9 @@ public class HttpUtil {
                     dos.flush();
                     int res = conn.getResponseCode();
                     if (res == 200) {
-                        BufferedInputStream inputStream = new BufferedInputStream(conn.getInputStream());
-                        byte[] buf = new byte[1024];
-                        StringBuilder stringBuilder = new StringBuilder();
+                        BufferedInputStream inputStream   = new BufferedInputStream(conn.getInputStream());
+                        byte[]              buf           = new byte[1024];
+                        StringBuilder       stringBuilder = new StringBuilder();
                         while (inputStream.read(buf) > 0) {
                             stringBuilder.append(new String(buf, 0, buf.length));
                         }
@@ -190,7 +190,7 @@ public class HttpUtil {
         String requestUrl = url;
         if (params != null && params.size() > 0) {
             Set set = params.entrySet();
-            int i = 0;
+            int i   = 0;
             requestUrl += "?";
             for (Object aSet : set) {
                 i++;
@@ -204,7 +204,7 @@ public class HttpUtil {
         OkHttpClient client = new OkHttpClient.Builder().connectTimeout(TIME_OUT, TimeUnit.MILLISECONDS)
                 .writeTimeout(TIME_OUT, TimeUnit.MILLISECONDS).readTimeout(300000, TimeUnit.MILLISECONDS).build();
         final Request request = new Request.Builder().url(requestUrl).build();
-        Call call = client.newCall(request);
+        Call          call    = client.newCall(request);
 
         //请求加入调度
         call.enqueue(new Callback() {
@@ -273,7 +273,7 @@ public class HttpUtil {
         }
 
         Request request = new Request.Builder().url(url).post(formB.build()).headers(hb.build()).build();
-        Call call = client.newCall(request);
+        Call    call    = client.newCall(request);
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {

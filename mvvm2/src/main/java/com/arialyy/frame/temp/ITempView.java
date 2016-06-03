@@ -4,9 +4,9 @@ package com.arialyy.frame.temp;
  * Created by lyy on 2016/4/27.
  */
 public interface ITempView {
-    public static final int ERROR = 0xaff1;
+    public static final int ERROR     = 0xaff1;
     public static final int DATA_NULL = 0xaff2;
-    public static final int LOADING = 0xaff3;
+    public static final int LOADING   = 0xaff3;
 
     /**
      * 设置填充界面类型

@@ -25,13 +25,13 @@ import butterknife.ButterKnife;
  */
 public abstract class AbsDialogFragment<VB extends ViewDataBinding> extends DialogFragment {
     protected String TAG = "";
-    private VB mBind;
-    protected Object mObj;
-    protected View mRootView;
-    protected IOCProxy mProxy;
+    private   VB                 mBind;
+    protected Object             mObj;
+    protected View               mRootView;
+    protected IOCProxy           mProxy;
     protected DialogSimpleModule mSimpleModule;
-    protected AbsActivity mActivity;
-    private ModuleFactory mModuleF;
+    protected AbsActivity        mActivity;
+    private   ModuleFactory      mModuleF;
 
     public AbsDialogFragment() {
         this(null);

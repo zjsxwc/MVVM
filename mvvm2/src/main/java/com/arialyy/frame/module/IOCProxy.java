@@ -13,7 +13,7 @@ import java.lang.reflect.Method;
  * 代理对象
  */
 public class IOCProxy implements ModuleListener {
-    private static final String TAG = "IOCProxy";
+    private static final String TAG     = "IOCProxy";
     private static final String mMethod = "dataCallback";
 
     private Object mObj;

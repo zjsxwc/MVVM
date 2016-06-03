@@ -47,11 +47,11 @@ public class ModuleFactory {
      * 构造一个新的Module
      */
     private <T extends AbsModule> T newInstanceModule(Context context, Class<T> clazz) {
-        Class[] paramTypes = {Context.class};
-        Object[] params = {context};
+        Class[]  paramTypes = {Context.class};
+        Object[] params     = {context};
         try {
-            Constructor<T> con = clazz.getConstructor(paramTypes);
-            T module = con.newInstance(params);
+            Constructor<T> con    = clazz.getConstructor(paramTypes);
+            T              module = con.newInstance(params);
             mModules.put(clazz.hashCode(), module);
             return module;
         } catch (NoSuchMethodException e) {

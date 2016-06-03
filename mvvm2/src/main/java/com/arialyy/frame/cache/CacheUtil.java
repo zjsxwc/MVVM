@@ -98,7 +98,7 @@ public class CacheUtil extends AbsCache {
      */
     public String getStringCache(String key) {
         byte[] data = getByteCache(key);
-        String str = "";
+        String str  = "";
         if (data != null) {
             try {
                 str = new String(data, "utf-8");

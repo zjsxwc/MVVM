@@ -12,8 +12,8 @@ import java.util.Stack;
  * APP生命周期管理类管理
  */
 public class MVVMFrame {
-    private static final String TAG = "MVVMFrame";
-    private static final Object LOCK = new Object();
+    private static final    String    TAG      = "MVVMFrame";
+    private static final    Object    LOCK     = new Object();
     private volatile static MVVMFrame mManager = null;
     private Context mContext;
     private Stack<AbsActivity> mActivityStack = new Stack<>();

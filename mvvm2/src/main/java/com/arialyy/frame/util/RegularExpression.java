@@ -9,7 +9,7 @@ public class RegularExpression {
     /**
      * APK包
      */
-    public static String APK = "^(.*)\\.(apk)$";
+    public static String APK   = "^(.*)\\.(apk)$";
     /**
      * 视频
      */
@@ -27,31 +27,31 @@ public class RegularExpression {
     /**
      * 压缩包
      */
-    public static String ZIP = "^(.*)\\.(zip|rar|7z)$";
+    public static String ZIP  = "^(.*)\\.(zip|rar|7z)$";
     /**
      * DOC
      */
-    public static String DOC = "^(.*)\\.(doc|docx)";
+    public static String DOC  = "^(.*)\\.(doc|docx)";
     /**
      * PPT
      */
-    public static String PPT = "^(.*)\\.(ppt|pptx)";
+    public static String PPT  = "^(.*)\\.(ppt|pptx)";
     /**
      * xls
      */
-    public static String XLS = "^(.*)\\.(xls|xlsx)";
+    public static String XLS  = "^(.*)\\.(xls|xlsx)";
     /**
      * vcf
      */
-    public static String VCF = "^(.*)\\.(vcf)";
+    public static String VCF  = "^(.*)\\.(vcf)";
     /**
      * pdf
      */
-    public static String PDF = "^(.*)\\.(pdf)";
+    public static String PDF  = "^(.*)\\.(pdf)";
     /**
      * SQL
      */
-    public static String SQL = "^(.*)\\.(sql|db)";
+    public static String SQL  = "^(.*)\\.(sql|db)";
 
     /**
      * 图片

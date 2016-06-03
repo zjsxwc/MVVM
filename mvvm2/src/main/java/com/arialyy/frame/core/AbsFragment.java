@@ -32,13 +32,13 @@ import butterknife.ButterKnife;
  */
 public abstract class AbsFragment<VB extends ViewDataBinding> extends Fragment implements OnTempBtClickListener {
     protected String TAG = "";
-    private VB mBind;
-    private IOCProxy mProxy;
-    protected View mRootView;
-    protected AbsActivity mActivity;
-    private ModuleFactory mModuleF;
-    protected boolean isInit;
-    protected AbsTempView mTempView;
+    private   VB            mBind;
+    private   IOCProxy      mProxy;
+    protected View          mRootView;
+    protected AbsActivity   mActivity;
+    private   ModuleFactory mModuleF;
+    protected boolean       isInit;
+    protected AbsTempView   mTempView;
     protected boolean useTempView = true;
     private ViewGroup mParent;
 
@@ -205,10 +205,10 @@ public abstract class AbsFragment<VB extends ViewDataBinding> extends Fragment i
                 mTempView.clearFocus();
                 if (mParent != null) {
                     if (mParent instanceof ViewPager) {
-                        ViewPager vp = (ViewPager) mParent;
-                        int position = vp.getCurrentItem();
-                        View child = vp.getChildAt(position);
-                        ViewGroup vg = (ViewGroup) child;
+                        ViewPager vp       = (ViewPager) mParent;
+                        int       position = vp.getCurrentItem();
+                        View      child    = vp.getChildAt(position);
+                        ViewGroup vg       = (ViewGroup) child;
                         vg.removeView(mTempView);
                     } else {
                         mParent.removeView(mTempView);

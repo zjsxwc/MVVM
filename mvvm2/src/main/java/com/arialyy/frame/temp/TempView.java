@@ -18,17 +18,17 @@ import com.lyy.frame.R;
  */
 public class TempView extends AbsTempView {
     private ImageView mImg;
-    private Button mBt;
-    private TextView mText;
-    private int mErrorDrawable;
-    private int mTempDrawable;
-    private CharSequence mErrorStr = "重新加载";
-    private CharSequence mEmptyStr = "别处看看";
+    private Button    mBt;
+    private TextView  mText;
+    private int       mErrorDrawable;
+    private int       mTempDrawable;
+    private CharSequence mErrorStr     = "重新加载";
+    private CharSequence mEmptyStr     = "别处看看";
     private CharSequence mErrorHintStr = "网络错误";
     private CharSequence mEmptyHintStr = "什么都没找到";
     private LinearLayout mTemp;
     private LinearLayout mErrorTemp;
-    private ImageView mLoadingTemp;
+    private ImageView    mLoadingTemp;
 
     public TempView(Context context) {
         super(context);

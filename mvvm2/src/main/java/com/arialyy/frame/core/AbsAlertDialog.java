@@ -18,11 +18,11 @@ import com.arialyy.frame.util.StringUtil;
 public abstract class AbsAlertDialog extends DialogFragment {
     protected String TAG = "";
 
-    private Object mObj;    //被观察者
-    private IOCProxy mProxy;
+    private Object             mObj;    //被观察者
+    private IOCProxy           mProxy;
     private DialogSimpleModule mSimpleModule;
-    private Dialog mDialog;
-    private ModuleFactory mModuleF;
+    private Dialog             mDialog;
+    private ModuleFactory      mModuleF;
 
     public AbsAlertDialog() {
         this(null);

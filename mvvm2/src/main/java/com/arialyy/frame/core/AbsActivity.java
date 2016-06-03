@@ -25,16 +25,16 @@ import butterknife.ButterKnife;
  */
 public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatActivity implements OnTempBtClickListener {
     protected String TAG = "";
-    private VB mBind;
+    private VB       mBind;
     private IOCProxy mProxy;
     /**
      * 第一次点击返回的系统时间
      */
     private long mFirstClickTime = 0;
-    protected MVVMFrame mAm;
-    protected View mRootView;
-    private ModuleFactory mModuleF;
-    protected AbsTempView mTempView;
+    protected MVVMFrame     mAm;
+    protected View          mRootView;
+    private   ModuleFactory mModuleF;
+    protected AbsTempView   mTempView;
     protected boolean useTempView = true;
 
     @Override
@@ -52,7 +52,7 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
         TAG = StringUtil.getClassName(this);
         mModuleF = ModuleFactory.newInstance();
         ButterKnife.inject(this);
-        mRootView = findViewById(android.R.id.content);
+        mRootView = mBind.getRoot();
         if (useTempView) {
             mTempView = new TempView(this);
             mTempView.setBtListener(this);
@@ -120,7 +120,7 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
                 }
                 mTempView.clearFocus();
                 mTempView.setVisibility(View.GONE);
-                mBind = DataBindingUtil.setContentView(AbsActivity.this, setLayoutId());
+                setContentView(mRootView);
             }
         }, delay);
     }

@@ -71,10 +71,10 @@ public class TextUtil {
      * @return
      */
     public static List<String> getTextToList(File file) {
-        FileInputStream fileInputStream = null;
+        FileInputStream   fileInputStream   = null;
         InputStreamReader inputStreamReader = null;
-        BufferedReader bufferedReader = null;
-        List<String> list = new ArrayList<String>();
+        BufferedReader    bufferedReader    = null;
+        List<String>      list              = new ArrayList<String>();
         try {
             fileInputStream = new FileInputStream(file);
             inputStreamReader = new InputStreamReader(fileInputStream);
@@ -113,8 +113,8 @@ public class TextUtil {
      */
     public static List<String> getTextToList(InputStream inputStream) {
         InputStreamReader inputStreamReader = null;
-        BufferedReader bufferedReader = null;
-        List<String> list = new ArrayList<String>();
+        BufferedReader    bufferedReader    = null;
+        List<String>      list              = new ArrayList<String>();
         try {
             inputStreamReader = new InputStreamReader(inputStream);
             bufferedReader = new BufferedReader(inputStreamReader);

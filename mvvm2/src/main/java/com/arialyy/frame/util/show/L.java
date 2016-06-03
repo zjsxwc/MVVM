@@ -17,27 +17,27 @@ public class L {
     /**
      * Drawing toolbox
      */
-    private static final char TOP_LEFT_CORNER = '╔';
-    private static final char BOTTOM_LEFT_CORNER = '╚';
-    private static final char MIDDLE_CORNER = '╟';
-    private static final char HORIZONTAL_DOUBLE_LINE = '║';
-    private static final String DOUBLE_DIVIDER = "════════════════════════════════════════════";
-    private static final String SINGLE_DIVIDER = "────────────────────────────────────────────";
-    private static final String TOP_BORDER = TOP_LEFT_CORNER + DOUBLE_DIVIDER + DOUBLE_DIVIDER;
-    private static final String BOTTOM_BORDER = BOTTOM_LEFT_CORNER + DOUBLE_DIVIDER + DOUBLE_DIVIDER;
-    private static final String MIDDLE_BORDER = MIDDLE_CORNER + SINGLE_DIVIDER + SINGLE_DIVIDER;
-    private static final char I = 'I', W = 'W', D = 'D', E = 'E', V = 'V', A = 'A', M = 'M';
+    private static final char   TOP_LEFT_CORNER        = '╔';
+    private static final char   BOTTOM_LEFT_CORNER     = '╚';
+    private static final char   MIDDLE_CORNER          = '╟';
+    private static final char   HORIZONTAL_DOUBLE_LINE = '║';
+    private static final String DOUBLE_DIVIDER         = "════════════════════════════════════════════";
+    private static final String SINGLE_DIVIDER         = "────────────────────────────────────────────";
+    private static final String TOP_BORDER             = TOP_LEFT_CORNER + DOUBLE_DIVIDER + DOUBLE_DIVIDER;
+    private static final String BOTTOM_BORDER          = BOTTOM_LEFT_CORNER + DOUBLE_DIVIDER + DOUBLE_DIVIDER;
+    private static final String MIDDLE_BORDER          = MIDDLE_CORNER + SINGLE_DIVIDER + SINGLE_DIVIDER;
+    private static final char   I                      = 'I', W = 'W', D = 'D', E = 'E', V = 'V', A = 'A', M = 'M';
 
     static String LINE_SEPARATOR = System.getProperty("line.separator"); //等价于"\n\r"，唯一的作用是能装逼
-    static int JSON_INDENT = 4;
+    static int    JSON_INDENT    = 4;
 
     private L() {
         /* cannot be instantiated */
         throw new UnsupportedOperationException("cannot be instantiated");
     }
 
-    public static boolean isDebug = true;// 是否需要打印bug，可以在application的onCreate函数里面初始化
-    private static final String TAG = "lyy";
+    public static        boolean isDebug = true;// 是否需要打印bug，可以在application的onCreate函数里面初始化
+    private static final String  TAG     = "lyy";
 
     /**
      * map to str
@@ -47,8 +47,8 @@ public class L {
             if (map == null) {
                 return "";
             }
-            StringBuilder sb = new StringBuilder();
-            Set set = map.entrySet();
+            StringBuilder sb  = new StringBuilder();
+            Set           set = map.entrySet();
             for (Object aSet : set) {
                 Map.Entry entry = (Map.Entry) aSet;
                 sb.append(entry.getValue());
@@ -69,7 +69,7 @@ public class L {
                 return;
             }
 
-            int i = 0;
+            int      i = 0;
             String[] s = new String[set.size()];
             for (Object aSet : set) {
                 Map.Entry entry = (Map.Entry) aSet;
@@ -234,7 +234,7 @@ public class L {
      */
     private static void printLocation(char type, String... msg) {
         StackTraceElement[] stack = Thread.currentThread().getStackTrace();
-        int i = 0;
+        int                 i     = 0;
         for (StackTraceElement e : stack) {
             String name = e.getClassName();
             if (!name.equals(L.class.getName())) {
@@ -244,10 +244,10 @@ public class L {
             }
         }
         i += 3;
-        String className = stack[i].getFileName();
-        String methodName = stack[i].getMethodName();
-        int lineNumber = stack[i].getLineNumber();
-        StringBuilder sb = new StringBuilder();
+        String        className  = stack[i].getFileName();
+        String        methodName = stack[i].getMethodName();
+        int           lineNumber = stack[i].getLineNumber();
+        StringBuilder sb         = new StringBuilder();
         printHunk(type, HORIZONTAL_DOUBLE_LINE + "   Location:");
         sb.append(HORIZONTAL_DOUBLE_LINE)
                 .append("   (").append(className).append(":").append(lineNumber).append(")# ").append(methodName);

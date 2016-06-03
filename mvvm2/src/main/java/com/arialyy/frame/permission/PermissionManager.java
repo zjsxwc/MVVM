@@ -16,9 +16,9 @@ import java.util.List;
 public class PermissionManager implements OnPermissionCallback {
     private static final String TAG = "PermissionManager";
     private PermissionUtil mPu;
-    private SparseArray<OnPermissionCallback> mCallbacks = new SparseArray<>();
-    private static volatile PermissionManager INSTANCE = null;
-    private static final Object LOCK = new Object();
+    private                 SparseArray<OnPermissionCallback> mCallbacks = new SparseArray<>();
+    private static volatile PermissionManager                 INSTANCE   = null;
+    private static final    Object                            LOCK       = new Object();
 
     public static PermissionManager getInstance() {
         if (INSTANCE == null) {
@@ -88,9 +88,9 @@ public class PermissionManager implements OnPermissionCallback {
         if (list == null || list.size() == 0) {
             return null;
         }
-        String[] denyPermission = mPu.list2Array(list);
-        int hashCode = Arrays.hashCode(denyPermission);
-        OnPermissionCallback c = mCallbacks.get(hashCode);
+        String[]             denyPermission = mPu.list2Array(list);
+        int                  hashCode       = Arrays.hashCode(denyPermission);
+        OnPermissionCallback c              = mCallbacks.get(hashCode);
         if (c == null) {
             mCallbacks.append(hashCode, callback);
         }
@@ -99,8 +99,8 @@ public class PermissionManager implements OnPermissionCallback {
 
     @Override
     public void onSuccess(String... permissions) {
-        int hashCode = Arrays.hashCode(permissions);
-        OnPermissionCallback c = mCallbacks.get(hashCode);
+        int                  hashCode = Arrays.hashCode(permissions);
+        OnPermissionCallback c        = mCallbacks.get(hashCode);
         if (c != null) {
             c.onSuccess(permissions);
             mCallbacks.remove(hashCode);
@@ -109,8 +109,8 @@ public class PermissionManager implements OnPermissionCallback {
 
     @Override
     public void onFail(String... permissions) {
-        int hashCode = Arrays.hashCode(permissions);
-        OnPermissionCallback c = mCallbacks.get(hashCode);
+        int                  hashCode = Arrays.hashCode(permissions);
+        OnPermissionCallback c        = mCallbacks.get(hashCode);
         if (c != null) {
             c.onFail(permissions);
             mCallbacks.remove(hashCode);

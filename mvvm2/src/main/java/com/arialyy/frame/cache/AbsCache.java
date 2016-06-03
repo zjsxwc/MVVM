@@ -23,20 +23,20 @@ import java.io.OutputStream;
  * 缓存抽象类，封装了缓存的读写操作
  */
 public abstract class AbsCache implements CacheParam {
-    private static final String TAG = "AbsCache";
+    private static final String                   TAG           = "AbsCache";
     /**
      * 磁盘缓存工具
      */
-    private DiskLruCache mDiskLruCache = null;
+    private              DiskLruCache             mDiskLruCache = null;
     /**
      * 内存缓存工具
      */
-    private LruCache<String, byte[]> mMemoryCache = null;
+    private              LruCache<String, byte[]> mMemoryCache  = null;
     /**
      * 是否使用内存缓存
      */
-    private boolean useMemory = false;
-    private int mMaxMemory;
+    private              boolean                  useMemory     = false;
+    private int     mMaxMemory;
     private Context mContext;
     private static final Object mDiskCacheLock = new Object();
 
