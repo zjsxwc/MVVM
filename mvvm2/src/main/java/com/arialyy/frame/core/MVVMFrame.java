@@ -61,7 +61,7 @@ public class MVVMFrame {
 
     /**
      * 开启异常捕获
-     * 日志文件位于/data/data/<Package Name>/cache//crash/AbsExceptionFile.crash
+     * 日志文件位于/data/data/Package Name/cache//crash/AbsExceptionFile.crash
      */
     public void openCrashHandler() {
         openCrashHandler("", "");
@@ -70,8 +70,8 @@ public class MVVMFrame {
     /**
      * 开启异常捕获
      * 需要网络权限，get请求，异常参数，需要下面两个网络权限
-     * <uses-permission android:name="android.permission.INTERNET" />
-     * <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+     * android:name="android.permission.INTERNET"
+     * android:name="android.permission.ACCESS_NETWORK_STATE"
      *
      * @param serverHost 服务器地址
      * @param key        数据传输键值

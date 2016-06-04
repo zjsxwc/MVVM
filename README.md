@@ -14,7 +14,7 @@
 
 ## 下载
 [![Download](https://api.bintray.com/packages/arialyy/maven/MvvmFrame/images/download.svg)](https://bintray.com/arialyy/maven/MvvmFrame/_latestVersion)</br>
-compile 'com.arialyy.frame:MVVM2:2.0.1'
+compile 'com.arialyy.frame:MVVM2:2.0.2'
 
 ## 使用
 * 在build.gradle 打开dataBinding 选项
