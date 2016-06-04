@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
 import com.arialyy.frame.core.AbsActivity;
+import com.arialyy.frame.temp.ITempView;
 import com.example.arial.mvvm.R;
 import com.example.arial.mvvm.databinding.ActivityTempViewVpContentBinding;
 
