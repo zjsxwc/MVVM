@@ -21,6 +21,7 @@ import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -52,7 +53,10 @@ public class StringUtil {
     /**
      * 给某段支付设置下划线
      */
-    private static SpannableString underLineHight(String str, String underLineStr) {
+    public static SpannableString underLineHight(String str, String underLineStr) {
+        if (!str.contains(underLineStr)) {
+            return null;
+        }
         // 创建一个 SpannableString对象
         SpannableString sp    = new SpannableString(str);
         int             index = str.indexOf(underLineStr);
@@ -67,9 +71,12 @@ public class StringUtil {
      * @param str 这个字符串
      * @param key 关键字
      */
-    private static SpannableString highlightKeyword(String str, String key, int highlightColor) {
+    public static SpannableString highlightKeyword(String str, String key, int highlightColor) {
+        if (!str.contains(key)) {
+            return null;
+        }
         SpannableString sp = new SpannableString(str);
-
+        key = Pattern.quote(key);
         Pattern p = Pattern.compile(key);
         Matcher m = p.matcher(str);
 
@@ -89,6 +96,9 @@ public class StringUtil {
      * @param url       超链接
      */
     public static SpannableString createLinkText(String text, String clickText, String url) {
+        if (!text.contains(clickText)) {
+            return null;
+        }
         SpannableString sp    = new SpannableString(text);
         int             index = text.indexOf(clickText);
         // 设置超链接
@@ -216,9 +226,7 @@ public class StringUtil {
      */
     public static List<String> stringArray2List(String[] strArray) {
         List<String> list = new ArrayList<String>();
-        for (int i = 0; i < strArray.length; i++) {
-            list.add(strArray[i]);
-        }
+        Collections.addAll(list, strArray);
         return list;
     }
 
@@ -240,7 +248,10 @@ public class StringUtil {
      * @return
      */
     public static SpannableStringBuilder highLightStr(String str, String highLightStr, int color) {
-        int                    start = str.indexOf(highLightStr);
+        int start = str.indexOf(highLightStr);
+        if (start == -1) {
+            return null;
+        }
         SpannableStringBuilder style = new SpannableStringBuilder(str);
         // new BackgroundColorSpan(Color.RED)背景高亮
         // ForegroundColorSpan(Color.RED) 字体高亮
