@@ -205,7 +205,9 @@ public abstract class AbsFragment<VB extends ViewDataBinding> extends Fragment i
                         int       position = vp.getCurrentItem();
                         View      child    = vp.getChildAt(position);
                         ViewGroup vg       = (ViewGroup) child;
-                        vg.removeView(mTempView);
+                        if (vg != null){
+                            vg.removeView(mTempView);
+                        }
                     } else {
                         mParent.removeView(mTempView);
                     }
