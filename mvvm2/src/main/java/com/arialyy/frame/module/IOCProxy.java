@@ -2,6 +2,7 @@ package com.arialyy.frame.module;
 
 
 import com.arialyy.frame.module.inf.ModuleListener;
+import com.arialyy.frame.util.ReflectionUtil;
 import com.arialyy.frame.util.show.FL;
 import com.arialyy.frame.util.show.L;
 
@@ -54,13 +55,10 @@ public class IOCProxy implements ModuleListener {
     public void callback(int result, Object data) {
         synchronized (this) {
             try {
-                Method m = mObj.getClass().getDeclaredMethod(mMethod, int.class, Object.class);
+                Method m = ReflectionUtil.getMethod(mObj.getClass(), mMethod, int.class, Object.class);
                 m.setAccessible(true);
                 m.invoke(mObj, result, data);
-            } catch (NoSuchMethodException e) {
-                L.e(TAG, "无法找到" + mMethod + "方法");
-                FL.e(TAG, FL.getExceptionString(e));
-            } catch (InvocationTargetException e) {
+            }  catch (InvocationTargetException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
                 e.printStackTrace();

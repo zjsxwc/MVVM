@@ -302,13 +302,8 @@ public abstract class AbsCache implements CacheParam {
     /**
      * 获取缓存大小
      */
-    protected String getCacheSize() {
-        synchronized (mDiskCacheLock) {
-            if (mDiskLruCache != null) {
-                return FileUtil.formatFileSize(mDiskLruCache.size());
-            }
-            return "0kb";
-        }
+    protected long getCacheSize() {
+        return mDiskLruCache.size();
     }
 
 

@@ -7,6 +7,7 @@ import android.content.res.XmlResourceParser;
 import android.text.TextUtils;
 
 import com.arialyy.frame.util.show.FL;
+import com.arialyy.frame.util.show.L;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -115,6 +116,8 @@ public class ReflectionUtil {
                 method = clazz.getMethod(methodName, params);
             } catch (NoSuchMethodException ex) {
                 if (clazz.getSuperclass() == null) {
+                    L.e(TAG, "无法找到" + methodName + "方法");
+                    FL.e(TAG, FL.getExceptionString(e));
                     return method;
                 } else {
                     method = getMethod(clazz.getSuperclass(), methodName, params);

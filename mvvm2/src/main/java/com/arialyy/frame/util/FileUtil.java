@@ -46,6 +46,27 @@ public class FileUtil {
     private static final String TAG = "FileUtil";
 
     /**
+     * 获取文件夹大小
+     */
+    public static long getDirSize(String filePath) {
+        long size = 0;
+        File f = new File(filePath);
+        if (f.isDirectory()) {
+            File[] files = f.listFiles();
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    size += getDirSize(file.getPath());
+                    continue;
+                }
+                size += file.length();
+            }
+        } else {
+            size += f.length();
+        }
+        return size;
+    }
+
+    /**
      * 存储bitmap
      */
     public static void saveBitmap(@NonNull String filePath, @NonNull Bitmap bitmap) {
@@ -151,14 +172,14 @@ public class FileUtil {
         }
 
         byte[] buffer = new byte[8192];
-        int    read;
+        int read;
         try {
             while ((read = is.read(buffer)) > 0) {
                 digest.update(buffer, 0, read);
             }
-            byte[]     md5sum = digest.digest();
+            byte[] md5sum = digest.digest();
             BigInteger bigInt = new BigInteger(1, md5sum);
-            String     output = bigInt.toString(16);
+            String output = bigInt.toString(16);
             // Fill to 32 chars
             output = String.format("%32s", output).replace(' ', '0');
             return output;
@@ -185,8 +206,8 @@ public class FileUtil {
         try {
             zfile = new ZipFile(zipFile);
             Enumeration zList = zfile.entries();
-            ZipEntry    ze    = null;
-            byte[]      buf   = new byte[1024];
+            ZipEntry ze = null;
+            byte[] buf = new byte[1024];
             while (zList.hasMoreElements()) {
                 ze = (ZipEntry) zList.nextElement();
                 if (ze.isDirectory()) {
@@ -200,9 +221,9 @@ public class FileUtil {
                     continue;
                 }
 //                L.d(TAG, "ze.getName() = " + ze.getName());
-                OutputStream os      = new BufferedOutputStream(new FileOutputStream(getRealFileName(folderPath, ze.getName())));
-                InputStream  is      = new BufferedInputStream(zfile.getInputStream(ze));
-                int          readLen = 0;
+                OutputStream os = new BufferedOutputStream(new FileOutputStream(getRealFileName(folderPath, ze.getName())));
+                InputStream is = new BufferedInputStream(zfile.getInputStream(ze));
+                int readLen = 0;
                 while ((readLen = is.read(buf)) != -1) {
                     os.write(buf, 0, readLen);
                 }
@@ -225,9 +246,9 @@ public class FileUtil {
      * @return java.io.File 实际的文件
      */
     private static File getRealFileName(String baseDir, String absFileName) {
-        String[] dirs   = absFileName.split("/");
-        File     ret    = new File(baseDir);
-        String   substr = null;
+        String[] dirs = absFileName.split("/");
+        File ret = new File(baseDir);
+        String substr = null;
         if (dirs.length > 1) {
             for (int i = 0; i < dirs.length - 1; i++) {
                 substr = dirs[i];
@@ -266,7 +287,7 @@ public class FileUtil {
     public static void createFileFormInputStream(InputStream is, String path) {
         try {
             FileOutputStream fos = new FileOutputStream(path);
-            byte[]           buf = new byte[1376];
+            byte[] buf = new byte[1376];
             while (is.read(buf) > 0) {
                 fos.write(buf, 0, buf.length);
             }
@@ -284,7 +305,7 @@ public class FileUtil {
      * 从文件读取对象
      */
     public static Object readObj(String path) {
-        FileInputStream   fis = null;
+        FileInputStream fis = null;
         ObjectInputStream ois = null;
         try {
             fis = new FileInputStream(path);
@@ -315,9 +336,9 @@ public class FileUtil {
      * 存储对象到文件,只有实现了Serailiable接口的对象才能被存储
      */
     public static void writeObj(String path, Object object) {
-        FileOutputStream   fos  = null;
-        ObjectOutputStream oos  = null;
-        File               file = new File(path);
+        FileOutputStream fos = null;
+        ObjectOutputStream oos = null;
+        File file = new File(path);
         if (!file.getParentFile().exists()) {
             file.mkdirs();
         }
@@ -415,13 +436,13 @@ public class FileUtil {
      * @return
      */
     private static boolean copyFile(String fromFile, String toFile) {
-        InputStream  fosfrom = null;
-        OutputStream fosto   = null;
+        InputStream fosfrom = null;
+        OutputStream fosto = null;
         try {
             fosfrom = new FileInputStream(fromFile);
             fosto = new FileOutputStream(toFile);
             byte bt[] = new byte[1024];
-            int  c;
+            int c;
             while ((c = fosfrom.read(bt)) > 0) {
                 fosto.write(bt, 0, c);
             }
@@ -517,8 +538,8 @@ public class FileUtil {
      * @return
      */
     public static Drawable getApkIcon(Context context, String path) {
-        PackageManager pm   = context.getPackageManager();
-        PackageInfo    info = pm.getPackageArchiveInfo(path, PackageManager.GET_ACTIVITIES);
+        PackageManager pm = context.getPackageManager();
+        PackageInfo info = pm.getPackageArchiveInfo(path, PackageManager.GET_ACTIVITIES);
         if (info != null) {
             ApplicationInfo appInfo = info.applicationInfo;
             //android有bug，需要下面这两句话来修复才能获取apk图片
