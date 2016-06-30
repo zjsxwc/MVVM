@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -144,7 +145,6 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
     public void finish() {
         super.finish();
         mAm.removeActivity(this);
-        System.gc();
     }
 
     public View getRootView() {
