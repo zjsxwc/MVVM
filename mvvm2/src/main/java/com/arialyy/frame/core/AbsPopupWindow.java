@@ -104,12 +104,6 @@ public abstract class AbsPopupWindow extends PopupWindow {
         return mSimpleModule;
     }
 
-    @Override
-    public void dismiss() {
-        super.dismiss();
-        System.gc();
-    }
-
     public Context getContext() {
         return mContext;
     }
