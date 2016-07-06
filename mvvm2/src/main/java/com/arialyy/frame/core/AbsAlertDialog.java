@@ -66,12 +66,6 @@ public abstract class AbsAlertDialog extends DialogFragment {
         mDialog = initAlertDialog();
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        System.gc();
-    }
-
     /**
      * 获取Module
      *

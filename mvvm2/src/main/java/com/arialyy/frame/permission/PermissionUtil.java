@@ -142,10 +142,7 @@ class PermissionUtil {
      * @return true ==> 已经授权
      */
     public boolean checkPermission(Activity activity, String permission) {
-        if (!AndroidVersionUtil.hasM()) {
-            return false;
-        }
-        return activity.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
+        return AndroidVersionUtil.hasM() && activity.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
     }
 
     /*

@@ -82,12 +82,6 @@ public abstract class AbsDialogFragment<VB extends ViewDataBinding> extends Dial
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        System.gc();
-    }
-
-    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         init(savedInstanceState);

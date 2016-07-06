@@ -2,6 +2,7 @@ package com.arialyy.frame.temp;
 
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
+import android.support.annotation.DrawableRes;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -29,6 +30,7 @@ public class TempView extends AbsTempView {
     private LinearLayout mTemp;
     private LinearLayout mErrorTemp;
     private ImageView    mLoadingTemp;
+    private AnimationDrawable mAd;
 
     public TempView(Context context) {
         super(context);
@@ -107,10 +109,20 @@ public class TempView extends AbsTempView {
 
     @Override
     public void onLoading() {
-        AnimationDrawable ad = createLoadingAnim(getContext());
-        mLoadingTemp.setImageDrawable(ad);
-        ad.start();
+        if (mAd == null){
+            mAd = createLoadingAnim(getContext());
+        }
+        mLoadingTemp.setImageDrawable(mAd);
+        mAd.start();
         requestLayout();
+    }
+
+    public void setLoadingAnimation(AnimationDrawable animation){
+        mAd = animation;
+    }
+
+    public void setLoadingAnimation(@DrawableRes int animation){
+        mAd = (AnimationDrawable) getResources().getDrawable(animation);
     }
 
     public AnimationDrawable createLoadingAnim(Context context) {

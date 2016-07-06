@@ -58,12 +58,6 @@ public abstract class AbsDialog extends Dialog {
         return mSimpleModule;
     }
 
-    @Override
-    public void dismiss() {
-        super.dismiss();
-        System.gc();
-    }
-
     /**
      * 获取Module
      *

@@ -107,12 +107,6 @@ public abstract class AbsFragment<VB extends ViewDataBinding> extends Fragment i
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        System.gc();
-    }
-
-    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && isInit) {

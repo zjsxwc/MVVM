@@ -1,9 +1,13 @@
 package com.arialyy.frame.permission;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.v4.app.Fragment;
 import android.util.SparseArray;
+
+import com.arialyy.frame.util.show.L;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,9 +20,9 @@ import java.util.List;
 public class PermissionManager implements OnPermissionCallback {
     private static final String TAG = "PermissionManager";
     private PermissionUtil mPu;
-    private                 SparseArray<OnPermissionCallback> mCallbacks = new SparseArray<>();
-    private static volatile PermissionManager                 INSTANCE   = null;
-    private static final    Object                            LOCK       = new Object();
+    private SparseArray<OnPermissionCallback> mCallbacks = new SparseArray<>();
+    private static volatile PermissionManager INSTANCE = null;
+    private static final Object LOCK = new Object();
 
     public static PermissionManager getInstance() {
         if (INSTANCE == null) {
@@ -31,6 +35,28 @@ public class PermissionManager implements OnPermissionCallback {
 
     private PermissionManager() {
         mPu = PermissionUtil.getInstance();
+    }
+
+    /**
+     * 检查权限
+     *
+     * @param permission 需要检查的权限
+     * @return true:已经授权
+     */
+    public boolean checkPermission(Activity activity, String permission) {
+        return mPu.checkPermission(activity, permission);
+    }
+
+
+    /**
+     * 检查权限
+     *
+     * @param permission 需要检查的权限
+     * @return true:已经授权
+     */
+    public boolean checkPermission(Fragment fragment, String permission) {
+        Activity activity = fragment.getActivity();
+        return checkPermission(activity, permission);
     }
 
     /**
@@ -59,7 +85,7 @@ public class PermissionManager implements OnPermissionCallback {
      * 申请权限
      *
      * @param obj        Activity || Fragment
-     * @param permission
+     * @param permission 权限
      */
     public void requestPermission(Object obj, OnPermissionCallback callback, String... permission) {
         requestPermission(obj, callback, "", registerCallback(obj, callback, permission));
@@ -70,7 +96,7 @@ public class PermissionManager implements OnPermissionCallback {
      *
      * @param obj        Activity || Fragment
      * @param hint       如果框对话框包含“不再询问”选择框的时候的提示用语。
-     * @param permission
+     * @param permission 权限
      */
     private void requestPermission(Object obj, OnPermissionCallback callback, String hint, String... permission) {
         mPu.requestPermission(obj, 0, hint, registerCallback(obj, callback, permission));
@@ -88,9 +114,9 @@ public class PermissionManager implements OnPermissionCallback {
         if (list == null || list.size() == 0) {
             return null;
         }
-        String[]             denyPermission = mPu.list2Array(list);
-        int                  hashCode       = Arrays.hashCode(denyPermission);
-        OnPermissionCallback c              = mCallbacks.get(hashCode);
+        String[] denyPermission = mPu.list2Array(list);
+        int hashCode = Arrays.hashCode(denyPermission);
+        OnPermissionCallback c = mCallbacks.get(hashCode);
         if (c == null) {
             mCallbacks.append(hashCode, callback);
         }
@@ -99,8 +125,8 @@ public class PermissionManager implements OnPermissionCallback {
 
     @Override
     public void onSuccess(String... permissions) {
-        int                  hashCode = Arrays.hashCode(permissions);
-        OnPermissionCallback c        = mCallbacks.get(hashCode);
+        int hashCode = Arrays.hashCode(permissions);
+        OnPermissionCallback c = mCallbacks.get(hashCode);
         if (c != null) {
             c.onSuccess(permissions);
             mCallbacks.remove(hashCode);
@@ -109,8 +135,8 @@ public class PermissionManager implements OnPermissionCallback {
 
     @Override
     public void onFail(String... permissions) {
-        int                  hashCode = Arrays.hashCode(permissions);
-        OnPermissionCallback c        = mCallbacks.get(hashCode);
+        int hashCode = Arrays.hashCode(permissions);
+        OnPermissionCallback c = mCallbacks.get(hashCode);
         if (c != null) {
             c.onFail(permissions);
             mCallbacks.remove(hashCode);

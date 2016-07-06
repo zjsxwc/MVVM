@@ -205,25 +205,4 @@ public class FL {
         err.append("===================================================");
         return err.toString();
     }
-
-    /**
-     * 打印Map
-     */
-    public static String getMapString(Map map) {
-        Set set = map.keySet();
-        if (set.size() < 1) {
-            return "[]";
-        }
-        StringBuilder strBuilder = new StringBuilder();
-        Object[]      array      = set.toArray();
-        strBuilder.append("[").append(array[0]).append("=").append(map.get(array[0]));
-        for (int i = 1; i < array.length; ++i) {
-            strBuilder.append(", ");
-            strBuilder.append(array[i]).append("=");
-            strBuilder.append(map.get(array[i]));
-        }
-        strBuilder.append("]");
-        return strBuilder.toString();
-    }
-
 }
