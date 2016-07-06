@@ -142,25 +142,20 @@ class PermissionUtil {
      * @return true ==> 已经授权
      */
     public boolean checkPermission(Activity activity, String permission) {
-        if (!AndroidVersionUtil.hasM()) {
-            return false;
-        }
-        return activity.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
+        return AndroidVersionUtil.hasM() && activity.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
     }
 
-    /**
+    /*
      * 请求悬浮权限
      * 在onActivityResult里面添加以下代码
-     * <p>
      * protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-     * super.onActivityResult(requestCode, resultCode, data);
-     * if (requestCode == OnPermissionCallback.PERMISSION_ALERT_WINDOW) {
-     * if (Settings.canDrawOverlays(this)) {       //在这判断是否请求权限成功
-     * Log.i(LOGTAG, "onActivityResult granted");
+     *      super.onActivityResult(requestCode, resultCode, data);
+     *      if (requestCode == OnPermissionCallback.PERMISSION_ALERT_WINDOW) {
+     *          if (Settings.canDrawOverlays(this)) {       //在这判断是否请求权限成功
+     *              Log.i(LOGTAG, "onActivityResult granted");
+     *          }
+     *      }
      * }
-     * }
-     * }
-     * </p>
      *
      * @param obj
      */

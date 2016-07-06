@@ -11,8 +11,14 @@ import com.arialyy.frame.module.inf.ModuleListener;
  */
 public class AbsModule {
     public String TAG = "";
-    private Context        mContext;
+    private Context mContext;
     private ModuleListener mModuleListener;
+
+    public interface OnCallback {
+        public void onSuccess(Object success);
+
+        public void onError(Object error);
+    }
 
     public AbsModule(Context context) {
         mContext = context;
@@ -24,18 +30,26 @@ public class AbsModule {
      */
     private void init() {
         String className = getClass().getName();
-        String arrays[]  = className.split("\\.");
+        String arrays[] = className.split("\\.");
         TAG = arrays[arrays.length - 1];
     }
 
     public void setModuleListener(ModuleListener moduleListener) {
         if (moduleListener == null)
-            throw new NullPointerException("ModuleListener为空");
+            throw new NullPointerException("ModuleListener不能为空");
         this.mModuleListener = moduleListener;
     }
 
     public Context getContext() {
         return mContext;
+    }
+
+    /**
+     * module回调
+     */
+    public AbsModule regCallback(OnCallback callback) {
+
+        return this;
     }
 
     /**
