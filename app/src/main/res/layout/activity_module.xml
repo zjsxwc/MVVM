@@ -5,11 +5,11 @@
 
         <variable
             name="str"
-            type="String" />
+            type="String"/>
 
         <variable
             name="dialogStr"
-            type="String" />
+            type="String"/>
     </data>
 
     <LinearLayout
@@ -25,13 +25,13 @@
             android:id="@+id/msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{str}" />
+            android:text="@{str}"/>
 
         <TextView
             android:id="@+id/dialog_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{dialogStr}" />
+            android:text="@{dialogStr}"/>
 
         <Button
             android:id="@+id/get_ip_info"
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
             android:onClick="onClick"
-            android:text="获取IP信息" />
+            android:text="获取IP信息"/>
 
         <Button
             android:id="@+id/show_dialog"
@@ -48,10 +48,16 @@
             android:layout_below="@+id/get_ip_info"
             android:background="?android:attr/selectableItemBackground"
             android:onClick="onClick"
-            android:text="显示对话框" />
+            android:text="显示对话框"/>
 
-
-
+        <Button
+            android:id="@+id/get_ip_info_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/get_ip_info"
+            android:background="?android:attr/selectableItemBackground"
+            android:onClick="onClick"
+            android:text="获取IP1"/>
 
     </LinearLayout>
 </layout>

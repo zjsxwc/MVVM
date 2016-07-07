@@ -16,6 +16,7 @@ import com.arialyy.frame.temp.AbsTempView;
 import com.arialyy.frame.temp.OnTempBtClickListener;
 import com.arialyy.frame.temp.TempView;
 import com.arialyy.frame.util.StringUtil;
+import com.arialyy.frame.util.show.L;
 import com.arialyy.frame.util.show.T;
 
 import butterknife.ButterKnife;
@@ -26,16 +27,16 @@ import butterknife.ButterKnife;
  */
 public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatActivity implements OnTempBtClickListener {
     protected String TAG = "";
-    private VB       mBind;
+    private VB mBind;
     private IOCProxy mProxy;
     /**
      * 第一次点击返回的系统时间
      */
     private long mFirstClickTime = 0;
-    protected MVVMFrame     mAm;
-    protected View          mRootView;
-    private   ModuleFactory mModuleF;
-    protected AbsTempView   mTempView;
+    protected MVVMFrame mAm;
+    protected View mRootView;
+    private ModuleFactory mModuleF;
+    protected AbsTempView mTempView;
     protected boolean useTempView = true;
 
     @Override
@@ -100,6 +101,10 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
         mTempView.setVisibility(View.VISIBLE);
         mTempView.setType(type);
         setContentView(mTempView);
+    }
+
+    public ModuleFactory getModuleFactory() {
+        return mModuleF;
     }
 
     /**

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.arialyy.frame.core.AbsActivity;
+import com.arialyy.frame.module.AbsModule;
 import com.example.arial.mvvm.databinding.ActivityModuleBinding;
 
 public class ModuleActivity extends AbsActivity<ActivityModuleBinding> {
@@ -27,7 +28,19 @@ public class ModuleActivity extends AbsActivity<ActivityModuleBinding> {
             case R.id.get_ip_info:
                 getModule(IPModule.class).getIpInfo();
                 break;
-
+            case R.id.get_ip_info_1:
+//                getModule(IPModule.class).regCallback(1, new AbsModule.OnCallback() {
+//                    @Override
+//                    public void onSuccess(int key, Object success) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(int key, Object error) {
+//
+//                    }
+//                })
+                break;
         }
     }
 

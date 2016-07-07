@@ -2,12 +2,17 @@ package com.arialyy.frame.module;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.SparseIntArray;
 
+import com.arialyy.frame.core.AbsActivity;
 import com.arialyy.frame.module.inf.ModuleListener;
 import com.arialyy.frame.util.ObjUtil;
+import com.arialyy.frame.util.show.L;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -16,9 +21,9 @@ import java.util.Map;
  */
 public class AbsModule {
     public String TAG = "";
-    private Context        mContext;
+    private Context mContext;
     private ModuleListener mModuleListener;
-    private Map<String, OnCallback> mPool = new HashMap<>();
+
 
     public interface OnCallback {
         public void onSuccess(int key, Object success);
@@ -36,7 +41,7 @@ public class AbsModule {
      */
     private void init() {
         String className = getClass().getName();
-        String arrays[]  = className.split("\\.");
+        String arrays[] = className.split("\\.");
         TAG = arrays[arrays.length - 1];
     }
 
@@ -50,44 +55,30 @@ public class AbsModule {
         return mContext;
     }
 
-    /**
-     * 注册module回调
-     *
-     * @param key 一个key只能对应一个callback，而一个callback可对应多个key
-     */
-    public AbsModule regCallback(int key, OnCallback callback) {
-        if (mPool.containsValue(callback)) {
-            String oldMapKey = ObjUtil.getKeyByValue(mPool, callback);
-            if (!TextUtils.isEmpty(oldMapKey)){
-                String[] keys = oldMapKey.split(",");
-                for (String str : keys){
-                    if (str.equals(key + "")){
-                        return this;
-                    }
-                }
-                String newMapKey = oldMapKey + "," + key;
-                mPool.put(newMapKey, mPool.remove(oldMapKey));
-            }else {
-                mPool.put(key + "", callback);
-            }
-        } else {
-            mPool.put(key + "", callback);
-        }
-        return this;
-    }
-
-
-
-    /**
-     * 单一的module回调
-     */
-    protected SuperCallback callback(int key) {
-        OnCallback callback = mPool.get(key);
-        if (callback == null) {
-            throw new NullPointerException("请注册key = " + key + "的module回调");
-        }
-        return new SuperCallback(key, callback);
-    }
+//    /**
+//     * 注册module回调
+//     *
+//     * @param key 一个key只能对应一个callback，而一个callback可对应多个key
+//     */
+//    public <M extends AbsModule> M regCallback(int key, AbsModule.OnCallback callback) {
+//        M module = null;
+//        Class clazz = getClass();
+//        if (mContext instanceof AbsActivity) {
+//            module = (M) ((AbsActivity) mContext).getModuleFactory().getModule(mContext, clazz);
+//        }
+//        return module;
+//    }
+//
+//    /**
+//     * 单一的module回调
+//     */
+//    protected SuperCallback callback(int key) {
+//        OnCallback callback = mPool.get(key);
+//        if (callback == null) {
+//            throw new NullPointerException("请注册key = " + key + "的module回调");
+//        }
+//        return new SuperCallback(key, callback);
+//    }
 
     /**
      * 统一的回调
@@ -124,7 +115,7 @@ public class AbsModule {
 
     private static class SuperCallback {
         OnCallback callback;
-        int        key;
+        int key;
 
         public SuperCallback(int key, OnCallback callback) {
             this.callback = callback;
