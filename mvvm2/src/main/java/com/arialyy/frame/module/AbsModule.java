@@ -23,12 +23,12 @@ public class AbsModule {
     public String TAG = "";
     private Context mContext;
     private ModuleListener mModuleListener;
-
+    private OnCallback mCallback;
 
     public interface OnCallback {
-        public void onSuccess(int key, Object success);
+        public void onSuccess(int result, Object success);
 
-        public void onError(int key, Object error);
+        public void onError(int result, Object error);
     }
 
     public AbsModule(Context context) {
@@ -45,49 +45,69 @@ public class AbsModule {
         TAG = arrays[arrays.length - 1];
     }
 
+    /**
+     * 设置Module监听
+     *
+     * @param moduleListener Module监听
+     */
     public void setModuleListener(ModuleListener moduleListener) {
         if (moduleListener == null)
             throw new NullPointerException("ModuleListener不能为空");
         this.mModuleListener = moduleListener;
     }
 
+    /**
+     * 成功的回调
+     */
+    private void successCallback(int key, Object obj) {
+        if (mCallback == null) {
+            L.e(TAG, "OnCallback 为 null");
+            return;
+        }
+        mCallback.onSuccess(key, obj);
+    }
+
+    /**
+     * 失败的回调
+     */
+    public void errorCallback(int key, Object obj) {
+        if (mCallback == null) {
+            L.e(TAG, "OnCallback 为 null");
+            return;
+        }
+        mCallback.onError(key, obj);
+    }
+
+    /**
+     * 获取Context
+     *
+     * @return Context
+     */
     public Context getContext() {
         return mContext;
     }
 
-//    /**
-//     * 注册module回调
-//     *
-//     * @param key 一个key只能对应一个callback，而一个callback可对应多个key
-//     */
-//    public <M extends AbsModule> M regCallback(int key, AbsModule.OnCallback callback) {
-//        M module = null;
-//        Class clazz = getClass();
-//        if (mContext instanceof AbsActivity) {
-//            module = (M) ((AbsActivity) mContext).getModuleFactory().getModule(mContext, clazz);
-//        }
-//        return module;
-//    }
-//
-//    /**
-//     * 单一的module回调
-//     */
-//    protected SuperCallback callback(int key) {
-//        OnCallback callback = mPool.get(key);
-//        if (callback == null) {
-//            throw new NullPointerException("请注册key = " + key + "的module回调");
-//        }
-//        return new SuperCallback(key, callback);
-//    }
+    /**
+     * 设置Module回调
+     *
+     * @param callback Module 回调
+     */
+    public void setCallback(OnCallback callback) {
+        mCallback = callback;
+    }
 
     /**
-     * 统一的回调
+     * 统一的回调，如果已经设置了OnCallback，则使用OnCallback;
+     * 否则将使用dataCallback，{@link AbsActivity#dataCallback(int, Object)}
      *
      * @param result 返回码
      * @param data   回调数据
      */
-    @Deprecated
     protected void callback(final int result, final Object data) {
+        if (mCallback != null) {
+            successCallback(result, data);
+            return;
+        }
         mModuleListener.callback(result, data);
     }
 
@@ -111,23 +131,5 @@ public class AbsModule {
     @Deprecated
     protected void callback(String method, Class<?> dataClassType, Object data) {
         mModuleListener.callback(method, dataClassType, data);
-    }
-
-    private static class SuperCallback {
-        OnCallback callback;
-        int key;
-
-        public SuperCallback(int key, OnCallback callback) {
-            this.callback = callback;
-            this.key = key;
-        }
-
-        public void onSuccess(Object success) {
-            callback.onSuccess(key, success);
-        }
-
-        public void onError(Object error) {
-            callback.onError(key, error);
-        }
     }
 }

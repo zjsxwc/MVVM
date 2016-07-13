@@ -5,7 +5,6 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -16,7 +15,6 @@ import com.arialyy.frame.temp.AbsTempView;
 import com.arialyy.frame.temp.OnTempBtClickListener;
 import com.arialyy.frame.temp.TempView;
 import com.arialyy.frame.util.StringUtil;
-import com.arialyy.frame.util.show.L;
 import com.arialyy.frame.util.show.T;
 
 import butterknife.ButterKnife;
@@ -33,7 +31,7 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
      * 第一次点击返回的系统时间
      */
     private long mFirstClickTime = 0;
-    protected MVVMFrame mAm;
+    protected AbsFrame mAm;
     protected View mRootView;
     private ModuleFactory mModuleF;
     protected AbsTempView mTempView;
@@ -47,7 +45,7 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
     }
 
     private void initialization() {
-        mAm = MVVMFrame.getInstance();
+        mAm = AbsFrame.getInstance();
         mAm.addActivity(this);
         mBind = DataBindingUtil.setContentView(this, setLayoutId());
         mProxy = IOCProxy.newInstance(this);
@@ -175,8 +173,23 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
      *
      * @param clazz {@link AbsModule}
      */
-    protected <M extends AbsModule> M getModule(Class<M> clazz) {
+    protected <M extends AbsModule> M getModule(@NonNull Class<M> clazz) {
         M module = mModuleF.getModule(this, clazz);
+        mProxy.changeModule(module);
+        return module;
+    }
+
+    /**
+     * 获取Module
+     *
+     * @param clazz    Module class0
+     * @param callback Module回调函数
+     * @param <M>      {@link AbsModule}
+     * @return
+     */
+    protected <M extends AbsModule> M getModule(@NonNull Class<M> clazz, @NonNull AbsModule.OnCallback callback) {
+        M module = mModuleF.getModule(this, clazz);
+        module.setCallback(callback);
         mProxy.changeModule(module);
         return module;
     }

@@ -37,13 +37,13 @@ import butterknife.ButterKnife;
  */
 public abstract class AbsFragment<VB extends ViewDataBinding> extends Fragment implements OnTempBtClickListener {
     protected String TAG = "";
-    private   VB            mBind;
-    private   IOCProxy      mProxy;
-    protected View          mRootView;
-    protected AbsActivity   mActivity;
-    private   ModuleFactory mModuleF;
-    protected boolean       isInit;
-    protected AbsTempView   mTempView;
+    private VB mBind;
+    private IOCProxy mProxy;
+    protected View mRootView;
+    protected AbsActivity mActivity;
+    private ModuleFactory mModuleF;
+    protected boolean isInit;
+    protected AbsTempView mTempView;
     protected boolean useTempView = true;
     private ViewGroup mParent;
 
@@ -79,10 +79,10 @@ public abstract class AbsFragment<VB extends ViewDataBinding> extends Fragment i
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Field field          = ReflectionUtil.getField(getClass(), "mContainerId");
+        Field field = ReflectionUtil.getField(getClass(), "mContainerId");
         Field containerField = ReflectionUtil.getField(getFragmentManager().getClass(), "mContainer");
         try {
-            int               id        = (int) field.get(this);
+            int id = (int) field.get(this);
             FragmentContainer container = (FragmentContainer) containerField.get(getFragmentManager());
             mParent = (ViewGroup) container.onFindViewById(id);
         } catch (IllegalAccessException e) {
@@ -149,12 +149,12 @@ public abstract class AbsFragment<VB extends ViewDataBinding> extends Fragment i
         }
         mTempView.setType(type);
         if (mParent != null) {
-            int                    size = ViewGroup.LayoutParams.MATCH_PARENT;
-            ViewGroup.LayoutParams lp   = new ViewGroup.LayoutParams(size, size);
+            int size = ViewGroup.LayoutParams.MATCH_PARENT;
+            ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(size, size);
             if (mParent instanceof ViewPager) {
-                ViewPager vp       = (ViewPager) mParent;
-                int       position = vp.getCurrentItem();
-                View      child    = vp.getChildAt(position);
+                ViewPager vp = (ViewPager) mParent;
+                int position = vp.getCurrentItem();
+                View child = vp.getChildAt(position);
                 if (child != null) {
                     if (child instanceof LinearLayout) {
                         LinearLayout ll = (LinearLayout) child;
@@ -195,11 +195,11 @@ public abstract class AbsFragment<VB extends ViewDataBinding> extends Fragment i
                 mTempView.clearFocus();
                 if (mParent != null) {
                     if (mParent instanceof ViewPager) {
-                        ViewPager vp       = (ViewPager) mParent;
-                        int       position = vp.getCurrentItem();
-                        View      child    = vp.getChildAt(position);
-                        ViewGroup vg       = (ViewGroup) child;
-                        if (vg != null){
+                        ViewPager vp = (ViewPager) mParent;
+                        int position = vp.getCurrentItem();
+                        View child = vp.getChildAt(position);
+                        ViewGroup vg = (ViewGroup) child;
+                        if (vg != null) {
                             vg.removeView(mTempView);
                         }
                     } else {
@@ -233,8 +233,23 @@ public abstract class AbsFragment<VB extends ViewDataBinding> extends Fragment i
      *
      * @param clazz {@link AbsModule}
      */
-    protected <M extends AbsModule> M getModule(Class<M> clazz) {
+    protected <M extends AbsModule> M getModule(@NonNull Class<M> clazz) {
         M module = mModuleF.getModule(getContext(), clazz);
+        mProxy.changeModule(module);
+        return module;
+    }
+
+    /**
+     * 获取Module
+     *
+     * @param clazz    Module class0
+     * @param callback Module回调函数
+     * @param <M>      {@link AbsModule}
+     * @return
+     */
+    protected <M extends AbsModule> M getModule(@NonNull Class<M> clazz, @NonNull AbsModule.OnCallback callback) {
+        M module = mModuleF.getModule(getContext(), clazz);
+        module.setCallback(callback);
         mProxy.changeModule(module);
         return module;
     }
