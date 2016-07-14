@@ -37,6 +37,5 @@
             android:onClick="onClick"
             android:text="申请修改系统权限" />
 
-
     </LinearLayout>
 </layout>

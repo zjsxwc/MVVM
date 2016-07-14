@@ -34,7 +34,7 @@ public class IpDialog extends AbsDialogFragment<DialogShowBinding> implements Vi
 
     @Override
     protected int setLayoutId() {
-        return R.layout.dialog_show;
+        return R.layout.dialog_abs;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.example.arial.mvvm;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -13,8 +14,11 @@ import android.view.MenuItem;
 
 import com.arialyy.frame.core.AbsActivity;
 import com.arialyy.frame.core.AbsFragment;
+import com.example.arial.mvvm.activity.AbsActivityTest;
 import com.example.arial.mvvm.base.BaseFragment;
 import com.example.arial.mvvm.databinding.ActivityMainBinding;
+import com.example.arial.mvvm.fragment.AbsDialogFragmentTest;
+import com.example.arial.mvvm.fragment.AbsFragmentTest;
 import com.example.arial.mvvm.fragment.ModuleFragment;
 
 import java.util.ArrayList;
@@ -43,6 +47,8 @@ public class MainActivity extends AbsActivity<ActivityMainBinding> implements Na
         toggle.syncState();
         mNv.setNavigationItemSelectedListener(this);
         mFragments.add(ModuleFragment.newInstance());
+        mFragments.add(AbsFragmentTest.newInstance());
+        mFragments.add(AbsDialogFragmentTest.newInstance());
 
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
@@ -88,6 +94,7 @@ public class MainActivity extends AbsActivity<ActivityMainBinding> implements Na
                 mToolbar.setTitle(item.getTitle());
                 break;
             case R.id.activity:
+                startActivity(new Intent(this, AbsActivityTest.class));
                 break;
             case R.id.fragment:
                 break;
