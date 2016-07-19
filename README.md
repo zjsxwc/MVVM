@@ -18,6 +18,7 @@ compile 'com.squareup.okhttp3:okhttp:3.2.0'</br>
 compile 'com.arialyy.frame:MVVM2:2.1.0'</br>
 
 ## 用例
+![img](https://github.com/AriaLyy/MVVM/blob/v_2.1/img/AbsFrameImg.gif)
 
 ## 使用
 * 1、在build.gradle 打开dataBinding 选项
