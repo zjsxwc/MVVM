@@ -11,6 +11,7 @@ import com.arialyy.frame.permission.PermissionManager;
 import com.arialyy.frame.temp.AbsTempView;
 import com.arialyy.frame.util.show.T;
 import com.example.arial.mvvm.R;
+import com.example.arial.mvvm.base.BaseActivity;
 import com.example.arial.mvvm.databinding.ActivityPermissionBinding;
 
 import java.util.Arrays;
@@ -19,7 +20,7 @@ import java.util.Arrays;
  * Created by lyy on 2016/4/12.
  * 权限测试Activity
  */
-public class PermissionActivity extends AbsActivity<ActivityPermissionBinding> implements OnPermissionCallback {
+public class PermissionActivity extends BaseActivity<ActivityPermissionBinding> implements OnPermissionCallback {
 
     @Override
     protected void init(Bundle savedInstanceState) {
@@ -61,8 +62,4 @@ public class PermissionActivity extends AbsActivity<ActivityPermissionBinding> i
         T.showShort(PermissionActivity.this, "权限" + Arrays.toString(permissions) + " 申请失败");
     }
 
-    @Override
-    protected void dataCallback(int result, Object data) {
-
-    }
 }

@@ -8,7 +8,7 @@ import android.widget.Button;
 import com.arialyy.frame.core.AbsDialogFragment;
 import com.example.arial.mvvm.R;
 import com.example.arial.mvvm.config.Constance;
-import com.example.arial.mvvm.databinding.DialogShowBinding;
+import com.example.arial.mvvm.databinding.DialogAbsBinding;
 import com.example.arial.mvvm.module.IPModule;
 
 import butterknife.InjectView;
@@ -17,7 +17,7 @@ import butterknife.InjectView;
  * Created by lyy on 2016/4/6.
  */
 @SuppressLint("ValidFragment")
-public class IpDialog extends AbsDialogFragment<DialogShowBinding> implements View.OnClickListener {
+public class IpDialog extends AbsDialogFragment<DialogAbsBinding> implements View.OnClickListener {
     @InjectView(R.id.enter) Button mEnter;
     @InjectView(R.id.cancel) Button mCancel;
 
@@ -46,6 +46,7 @@ public class IpDialog extends AbsDialogFragment<DialogShowBinding> implements Vi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.enter:
+                //将数据回调给寄主
                 getSimplerModule().onDialog(Constance.KEY.IP_DIALOG, "对话框确认");
                 break;
             case R.id.cancel:

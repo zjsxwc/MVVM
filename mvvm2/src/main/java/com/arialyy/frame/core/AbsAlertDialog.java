@@ -78,6 +78,21 @@ public abstract class AbsAlertDialog extends DialogFragment {
     }
 
     /**
+     * 获取Module
+     *
+     * @param clazz    Module class0
+     * @param callback Module回调函数
+     * @param <M>      {@link AbsModule}
+     * @return
+     */
+    protected <M extends AbsModule> M getModule(@NonNull Class<M> clazz, @NonNull AbsModule.OnCallback callback) {
+        M module = mModuleF.getModule(getContext(), clazz);
+        module.setCallback(callback);
+        mProxy.changeModule(module);
+        return module;
+    }
+
+    /**
      * 获取简单打Moduel回调，这个一般用于回调数据给寄主
      */
     protected DialogSimpleModule getSimplerModule() {

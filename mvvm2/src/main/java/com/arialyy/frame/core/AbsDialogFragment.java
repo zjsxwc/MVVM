@@ -125,6 +125,21 @@ public abstract class AbsDialogFragment<VB extends ViewDataBinding> extends Dial
     }
 
     /**
+     * 获取Module
+     *
+     * @param clazz    Module class0
+     * @param callback Module回调函数
+     * @param <M>      {@link AbsModule}
+     * @return
+     */
+    protected <M extends AbsModule> M getModule(@NonNull Class<M> clazz, @NonNull AbsModule.OnCallback callback) {
+        M module = mModuleF.getModule(getContext(), clazz);
+        module.setCallback(callback);
+        mProxy.changeModule(module);
+        return module;
+    }
+
+    /**
      * 统一的回调接口
      *
      * @param result 返回码，用来判断是哪个接口进行回调

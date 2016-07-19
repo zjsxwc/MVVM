@@ -28,9 +28,9 @@
         </activity>
         <activity android:name=".permission.FragmentContentActivity"/>
         <activity android:name=".permission.PermissionActivity"/>
-        <activity android:name=".tempview.TempViewActivity"/>
-        <activity android:name=".tempview.TVFContentActivity"/>
-        <activity android:name=".tempview.TVVPContentActivity"/>
+        <activity android:name=".activity.TempViewActivity"/>
+        <activity android:name=".activity.TVFContentActivity"/>
+        <activity android:name=".activity.TVVPContentActivity"/>
         <activity android:name=".activity.AbsActivityTest"/>
     </application>
 
