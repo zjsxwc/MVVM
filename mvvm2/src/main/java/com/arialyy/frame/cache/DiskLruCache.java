@@ -54,62 +54,58 @@ import java.util.concurrent.TimeUnit;
  * or direct link:
  * https://android.googlesource.com/platform/libcore/+/android-4.1.1_r1/luni/src/main/java/libcore/io/DiskLruCache.java
  * *****************************************************************************
- * <p/>
+ *
  * A cache that uses a bounded amount of space on a filesystem. Each cache
  * entry has a string key and a fixed number of values. Values are byte
  * sequences, accessible as streams or files. Each value must be between {@code
  * 0} and {@code Integer.MAX_VALUE} bytes in length.
- * <p/>
- * <p>The cache stores its data in a directory on the filesystem. This
+ *
+ * The cache stores its data in a directory on the filesystem. This
  * directory must be exclusive to the cache; the cache may delete or overwrite
  * files from its directory. It is an error for multiple processes to use the
  * same cache directory at the same time.
- * <p/>
- * <p>This cache limits the number of bytes that it will store on the
+ *
+ * This cache limits the number of bytes that it will store on the
  * filesystem. When the number of stored bytes exceeds the limit, the cache will
  * remove entries in the background until the limit is satisfied. The limit is
  * not strict: the cache may temporarily exceed it while waiting for files to be
  * deleted. The limit does not include filesystem overhead or the cache
  * journal so space-sensitive applications should set a conservative limit.
- * <p/>
- * <p>Clients call {@link #edit} to create or update the values of an entry. An
+ *
+ * Clients call {@link #edit} to create or update the values of an entry. An
  * entry may have only one editor at one time; if a value is not available to be
  * edited then {@link #edit} will return null.
- * <ul>
- * <li>When an entry is being <strong>created</strong> it is necessary to
+ *
+ * When an entry is being <strong>created</strong> it is necessary to
  * supply a full set of values; the empty value should be used as a
  * placeholder if necessary.
- * <li>When an entry is being <strong>edited</strong>, it is not necessary
+ * When an entry is being <strong>edited</strong>, it is not necessary
  * to supply data for every value; values default to their previous
  * value.
- * </ul>
- * Every {@link #edit} call must be matched by a call to {@link com.example.android.displayingbitmaps.util.DiskLruCache.Editor#commit}
- * or {@link com.example.android.displayingbitmaps.util.DiskLruCache.Editor#abort}. Committing is atomic: a read observes the full set
- * of values as they were before or after the commit, but never a mix of values.
- * <p/>
- * <p>Clients call {@link #get} to read a snapshot of an entry. The read will
+ *
+ * Clients call {@link #get} to read a snapshot of an entry. The read will
  * observe the value at the time that {@link #get} was called. Updates and
  * removals after the call do not impact ongoing reads.
- * <p/>
- * <p>This class is tolerant of some I/O errors. If files are missing from the
+ *
+ * This class is tolerant of some I/O errors. If files are missing from the
  * filesystem, the corresponding entries will be dropped from the cache. If
  * an error occurs while writing a cache value, the edit will fail silently.
  * Callers should handle other problems by catching {@code IOException} and
  * responding appropriately.
  */
 public final class DiskLruCache implements Closeable {
-    static final String JOURNAL_FILE = "journal";
-    static final String JOURNAL_FILE_TMP = "journal.tmp";
-    static final String MAGIC = "libcore.io.DiskLruCache";
-    static final String VERSION_1 = "1";
-    static final long ANY_SEQUENCE_NUMBER = -1;
-    private static final String CLEAN = "CLEAN";
-    private static final String DIRTY = "DIRTY";
-    private static final String REMOVE = "REMOVE";
-    private static final String READ = "READ";
+    static final         String JOURNAL_FILE        = "journal";
+    static final         String JOURNAL_FILE_TMP    = "journal.tmp";
+    static final         String MAGIC               = "libcore.io.DiskLruCache";
+    static final         String VERSION_1           = "1";
+    static final         long   ANY_SEQUENCE_NUMBER = -1;
+    private static final String CLEAN               = "CLEAN";
+    private static final String DIRTY               = "DIRTY";
+    private static final String REMOVE              = "REMOVE";
+    private static final String READ                = "READ";
 
-    private static final Charset UTF_8 = Charset.forName("UTF-8");
-    private static final int IO_BUFFER_SIZE = 8 * 1024;
+    private static final Charset UTF_8          = Charset.forName("UTF-8");
+    private static final int     IO_BUFFER_SIZE = 8 * 1024;
 
     /*
      * This cache uses a journal file named "journal". A typical journal file
@@ -154,9 +150,9 @@ public final class DiskLruCache implements Closeable {
     private final File directory;
     private final File journalFile;
     private final File journalFileTmp;
-    private final int appVersion;
+    private final int  appVersion;
     private final long maxSize;
-    private final int valueCount;
+    private final int  valueCount;
     private long size = 0;
     private Writer journalWriter;
     private final LinkedHashMap<String, Entry> lruEntries = new LinkedHashMap<String, Entry>(0, 0.75f, true);
@@ -180,8 +176,8 @@ public final class DiskLruCache implements Closeable {
             throw new ArrayIndexOutOfBoundsException();
         }
         final int resultLength = end - start;
-        final int copyLength = Math.min(resultLength, originalLength - start);
-        final T[] result = (T[]) Array.newInstance(original.getClass().getComponentType(), resultLength);
+        final int copyLength   = Math.min(resultLength, originalLength - start);
+        final T[] result       = (T[]) Array.newInstance(original.getClass().getComponentType(), resultLength);
         System.arraycopy(original, start, result, 0, copyLength);
         return result;
     }
@@ -192,8 +188,8 @@ public final class DiskLruCache implements Closeable {
     public static String readFully(Reader reader) throws IOException {
         try {
             StringWriter writer = new StringWriter();
-            char[] buffer = new char[1024];
-            int count;
+            char[]       buffer = new char[1024];
+            int          count;
             while ((count = reader.read(buffer)) != -1) {
                 writer.write(buffer, 0, count);
             }
@@ -267,7 +263,7 @@ public final class DiskLruCache implements Closeable {
      * This cache uses a single background thread to evict entries.
      */
     private final ExecutorService executorService = new ThreadPoolExecutor(0, 1, 60L, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
-    private final Callable<Void> cleanupCallable = new Callable<Void>() {
+    private final Callable<Void>  cleanupCallable = new Callable<Void>() {
         @Override
         public Void call() throws Exception {
             synchronized (DiskLruCache.this) {
@@ -336,11 +332,11 @@ public final class DiskLruCache implements Closeable {
     private void readJournal() throws IOException {
         InputStream in = new BufferedInputStream(new FileInputStream(journalFile), IO_BUFFER_SIZE);
         try {
-            String magic = readAsciiLine(in);
-            String version = readAsciiLine(in);
+            String magic            = readAsciiLine(in);
+            String version          = readAsciiLine(in);
             String appVersionString = readAsciiLine(in);
             String valueCountString = readAsciiLine(in);
-            String blank = readAsciiLine(in);
+            String blank            = readAsciiLine(in);
             if (!MAGIC.equals(magic) || !VERSION_1.equals(version) || !Integer.toString(appVersion).equals(appVersionString) || !Integer.toString(valueCount).equals(valueCountString) || !"".equals(blank)) {
                 throw new IOException("unexpected journal header: [" + magic + ", " + version + ", " + valueCountString + ", " + blank + "]");
             }
@@ -717,8 +713,8 @@ public final class DiskLruCache implements Closeable {
      * A snapshot of the values for an entry.
      */
     public final class Snapshot implements Closeable {
-        private final String key;
-        private final long sequenceNumber;
+        private final String        key;
+        private final long          sequenceNumber;
         private final InputStream[] ins;
 
         private Snapshot(String key, long sequenceNumber, InputStream[] ins) {
@@ -762,8 +758,8 @@ public final class DiskLruCache implements Closeable {
      * Edits the values for an entry.
      */
     public final class Editor {
-        private final Entry entry;
-        private boolean hasErrors;
+        private final Entry   entry;
+        private       boolean hasErrors;
 
         private Editor(Entry entry) {
             this.entry = entry;

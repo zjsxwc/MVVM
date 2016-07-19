@@ -46,6 +46,27 @@ public class FileUtil {
     private static final String TAG = "FileUtil";
 
     /**
+     * 获取文件夹大小
+     */
+    public static long getDirSize(String filePath) {
+        long size = 0;
+        File f = new File(filePath);
+        if (f.isDirectory()) {
+            File[] files = f.listFiles();
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    size += getDirSize(file.getPath());
+                    continue;
+                }
+                size += file.length();
+            }
+        } else {
+            size += f.length();
+        }
+        return size;
+    }
+
+    /**
      * 存储bitmap
      */
     public static void saveBitmap(@NonNull String filePath, @NonNull Bitmap bitmap) {
@@ -291,11 +312,11 @@ public class FileUtil {
             ois = new ObjectInputStream(fis);
             return ois.readObject();
         } catch (FileNotFoundException e) {
-            FL.e(TAG, FL.getPrintException(e));
+            FL.e(TAG, FL.getExceptionString(e));
         } catch (IOException e) {
-            FL.e(TAG, FL.getPrintException(e));
+            FL.e(TAG, FL.getExceptionString(e));
         } catch (ClassNotFoundException e) {
-            FL.e(TAG, FL.getPrintException(e));
+            FL.e(TAG, FL.getExceptionString(e));
         } finally {
             try {
                 if (fis != null) {
@@ -305,7 +326,7 @@ public class FileUtil {
                     ois.close();
                 }
             } catch (IOException e) {
-                FL.e(TAG, FL.getPrintException(e));
+                FL.e(TAG, FL.getExceptionString(e));
             }
         }
         return null;
@@ -326,9 +347,9 @@ public class FileUtil {
             oos = new ObjectOutputStream(fos);
             oos.writeObject(object);
         } catch (FileNotFoundException e) {
-            FL.e(TAG, FL.getPrintException(e));
+            FL.e(TAG, FL.getExceptionString(e));
         } catch (IOException e) {
-            FL.e(TAG, FL.getPrintException(e));
+            FL.e(TAG, FL.getExceptionString(e));
         } finally {
             try {
                 if (fos != null) {
@@ -338,7 +359,7 @@ public class FileUtil {
                     oos.close();
                 }
             } catch (IOException e) {
-                FL.e(TAG, FL.getPrintException(e));
+                FL.e(TAG, FL.getExceptionString(e));
             }
         }
     }

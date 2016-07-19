@@ -25,13 +25,13 @@ import butterknife.ButterKnife;
  */
 public abstract class AbsDialogFragment<VB extends ViewDataBinding> extends DialogFragment {
     protected String TAG = "";
-    private VB mBind;
-    protected Object mObj;
-    protected View mRootView;
-    protected IOCProxy mProxy;
+    private   VB                 mBind;
+    protected Object             mObj;
+    protected View               mRootView;
+    protected IOCProxy           mProxy;
     protected DialogSimpleModule mSimpleModule;
-    protected AbsActivity mActivity;
-    private ModuleFactory mModuleF;
+    protected AbsActivity        mActivity;
+    private   ModuleFactory      mModuleF;
 
     public AbsDialogFragment() {
         this(null);
@@ -82,12 +82,6 @@ public abstract class AbsDialogFragment<VB extends ViewDataBinding> extends Dial
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        System.gc();
-    }
-
-    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         init(savedInstanceState);
@@ -126,6 +120,21 @@ public abstract class AbsDialogFragment<VB extends ViewDataBinding> extends Dial
      */
     protected <M extends AbsModule> M getModule(Class<M> clazz) {
         M module = mModuleF.getModule(getContext(), clazz);
+        mProxy.changeModule(module);
+        return module;
+    }
+
+    /**
+     * 获取Module
+     *
+     * @param clazz    Module class0
+     * @param callback Module回调函数
+     * @param <M>      {@link AbsModule}
+     * @return
+     */
+    protected <M extends AbsModule> M getModule(@NonNull Class<M> clazz, @NonNull AbsModule.OnCallback callback) {
+        M module = mModuleF.getModule(getContext(), clazz);
+        module.setCallback(callback);
         mProxy.changeModule(module);
         return module;
     }

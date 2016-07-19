@@ -23,9 +23,9 @@ import java.util.List;
  * @author <a href="http://www.trinea.cn" target="_blank">Trinea</a> 2013-5-16
  */
 public class ShellUtils {
-    public static final String COMMAND_SU = "su";
-    public static final String COMMAND_SH = "sh";
-    public static final String COMMAND_EXIT = "exit\n";
+    public static final String COMMAND_SU       = "su";
+    public static final String COMMAND_SH       = "sh";
+    public static final String COMMAND_EXIT     = "exit\n";
     public static final String COMMAND_LINE_END = "\n";
 
     /**
@@ -116,12 +116,12 @@ public class ShellUtils {
         if (commands == null || commands.length == 0) {
             return new CommandResult(result, null, null);
         }
-        Process process = null;
-        BufferedReader successResult = null;
-        BufferedReader errorResult = null;
-        StringBuilder successMsg = null;
-        StringBuilder errorMsg = null;
-        DataOutputStream os = null;
+        Process          process       = null;
+        BufferedReader   successResult = null;
+        BufferedReader   errorResult   = null;
+        StringBuilder    successMsg    = null;
+        StringBuilder    errorMsg      = null;
+        DataOutputStream os            = null;
         try {
             process = Runtime.getRuntime().exec(isRoot ? COMMAND_SU : COMMAND_SH);
             os = new DataOutputStream(process.getOutputStream());
@@ -192,7 +192,7 @@ public class ShellUtils {
         /**
          * result of command
          **/
-        public int result;
+        public int    result;
         /**
          * success message of command result
          **/

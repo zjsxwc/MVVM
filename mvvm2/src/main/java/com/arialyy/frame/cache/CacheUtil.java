@@ -194,7 +194,7 @@ public class CacheUtil extends AbsCache {
     /**
      * 获取缓存大小
      */
-    public String getCacheSize() {
+    public long getCacheSize() {
         return super.getCacheSize();
     }
 

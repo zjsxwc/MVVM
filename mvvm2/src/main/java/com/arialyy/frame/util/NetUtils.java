@@ -21,19 +21,19 @@ public class NetUtils {
     /**
      * wap网络
      */
-    public static final int NETWORK_TYPE_WAP = 1;
+    public static final int NETWORK_TYPE_WAP     = 1;
     /**
      * 2G网络
      */
-    public static final int NETWORK_TYPE_2G = 2;
+    public static final int NETWORK_TYPE_2G      = 2;
     /**
      * 3G和3G以上网络，或统称为快速网络
      */
-    public static final int NETWORK_TYPE_3G = 3;
+    public static final int NETWORK_TYPE_3G      = 3;
     /**
      * wifi网络
      */
-    public static final int NETWORK_TYPE_WIFI = 4;
+    public static final int NETWORK_TYPE_WIFI    = 4;
 
     private NetUtils() {
         /* cannot be instantiated */
@@ -48,7 +48,7 @@ public class NetUtils {
      */
     public static boolean isConnected(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo ni = cm.getActiveNetworkInfo();
+        NetworkInfo         ni = cm.getActiveNetworkInfo();
         return ni != null && ni.isConnectedOrConnecting();
     }
 
@@ -67,9 +67,9 @@ public class NetUtils {
      * {@link #NETWORK_TYPE_INVALID},{@link #NETWORK_TYPE_WAP},{@link #NETWORK_TYPE_WIFI}
      */
     public static int getNetWorkType(Context context) {
-        int netWorkType = -1;
-        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+        int                 netWorkType = -1;
+        ConnectivityManager manager     = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo         networkInfo = manager.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
             String type = networkInfo.getTypeName();
             if (type.equalsIgnoreCase("WIFI")) {
@@ -135,8 +135,8 @@ public class NetUtils {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         } else {
-            Intent intent = new Intent("/");
-            ComponentName cm = new ComponentName("com.android.settings", "com.android.settings.WirelessSettings");
+            Intent        intent = new Intent("/");
+            ComponentName cm     = new ComponentName("com.android.settings", "com.android.settings.WirelessSettings");
             intent.setComponent(cm);
             intent.setAction("android.intent.action.VIEW");
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

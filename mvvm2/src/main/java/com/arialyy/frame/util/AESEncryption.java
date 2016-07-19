@@ -57,7 +57,7 @@ public class AESEncryption {
      */
     public static String decryptString(String seed, String encrypted) throws Exception {
         byte[] rawKey = getRawKey(seed.getBytes());
-        byte[] enc = toByte(encrypted);
+        byte[] enc    = toByte(encrypted);
         byte[] result = decryptByte(rawKey, enc);
         return new String(result);
     }
@@ -96,7 +96,7 @@ public class AESEncryption {
      */
     private static byte[] encryptByte(byte[] raw, byte[] clear) throws Exception {
         SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
-        Cipher cipher = null;
+        Cipher        cipher   = null;
         if (android.os.Build.VERSION.SDK_INT > JELLY_BEAN_4_2) {
             cipher = Cipher.getInstance("AES/ECB/ZeroBytePadding");
         } else {
@@ -117,7 +117,7 @@ public class AESEncryption {
      */
     private static byte[] decryptByte(byte[] raw, byte[] encrypted) throws Exception {
         SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
-        Cipher cipher = null;
+        Cipher        cipher   = null;
         if (android.os.Build.VERSION.SDK_INT > JELLY_BEAN_4_2) {
             cipher = Cipher.getInstance("AES/ECB/ZeroBytePadding");
         } else {
@@ -136,7 +136,7 @@ public class AESEncryption {
     }
 
     public static byte[] toByte(String hexString) {
-        int len = hexString.length() / 2;
+        int    len    = hexString.length() / 2;
         byte[] result = new byte[len];
         for (int i = 0; i < len; i++)
             result[i] = Integer.valueOf(hexString.substring(2 * i, 2 * i + 2), 16).byteValue();

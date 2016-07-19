@@ -2,13 +2,16 @@ package com.example.arial.mvvm.permission;
 
 import android.Manifest;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 
 import com.arialyy.frame.core.AbsActivity;
 import com.arialyy.frame.permission.OnPermissionCallback;
 import com.arialyy.frame.permission.PermissionManager;
+import com.arialyy.frame.temp.AbsTempView;
 import com.arialyy.frame.util.show.T;
 import com.example.arial.mvvm.R;
+import com.example.arial.mvvm.base.BaseActivity;
 import com.example.arial.mvvm.databinding.ActivityPermissionBinding;
 
 import java.util.Arrays;
@@ -17,8 +20,14 @@ import java.util.Arrays;
  * Created by lyy on 2016/4/12.
  * 权限测试Activity
  */
-public class PermissionActivity extends AbsActivity<ActivityPermissionBinding> implements OnPermissionCallback {
+public class PermissionActivity extends BaseActivity<ActivityPermissionBinding> implements OnPermissionCallback {
+
     @Override
+    protected void init(Bundle savedInstanceState) {
+        super.init(savedInstanceState);
+        setTitle("Activity 权限测试");
+    }
+
     protected int setLayoutId() {
         return R.layout.activity_permission;
     }
@@ -53,8 +62,4 @@ public class PermissionActivity extends AbsActivity<ActivityPermissionBinding> i
         T.showShort(PermissionActivity.this, "权限" + Arrays.toString(permissions) + " 申请失败");
     }
 
-    @Override
-    protected void dataCallback(int result, Object data) {
-
-    }
 }

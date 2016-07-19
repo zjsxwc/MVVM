@@ -9,4 +9,5 @@
 /mvvm2/gradle.properties
 /mvvm2/build
 /javadoc
-app/build
+/app/build
+/cache

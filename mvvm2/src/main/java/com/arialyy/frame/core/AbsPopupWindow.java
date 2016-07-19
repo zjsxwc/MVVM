@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,16 +22,14 @@ import butterknife.ButterKnife;
  */
 public abstract class AbsPopupWindow extends PopupWindow {
 
-    protected String TAG;
-    private static Context mContext;
-    protected int mLayoutId = -1;
-    private Drawable mBackground;
-    protected View mView;
-
-    private Object mObj;
-    protected IOCProxy mProxy;
-    protected DialogSimpleModule mSimpleModule;
-    private ModuleFactory mModuleF;
+    protected      String             TAG;
+    private static Context            mContext;
+    private        Drawable           mBackground;
+    protected      View               mView;
+    private        Object             mObj;
+    protected      IOCProxy           mProxy;
+    protected      DialogSimpleModule mSimpleModule;
+    private        ModuleFactory      mModuleF;
 
     public AbsPopupWindow(Context context) {
         this(context, null);
@@ -97,6 +96,21 @@ public abstract class AbsPopupWindow extends PopupWindow {
     }
 
     /**
+     * 获取Module
+     *
+     * @param clazz    Module class0
+     * @param callback Module回调函数
+     * @param <M>      {@link AbsModule}
+     * @return
+     */
+    protected <M extends AbsModule> M getModule(@NonNull Class<M> clazz, @NonNull AbsModule.OnCallback callback) {
+        M module = mModuleF.getModule(getContext(), clazz);
+        module.setCallback(callback);
+        mProxy.changeModule(module);
+        return module;
+    }
+
+    /**
      * 获取简单打Moduel回调，这个一般用于回调数据给寄主
      */
     protected DialogSimpleModule getSimplerModule() {
@@ -104,12 +118,6 @@ public abstract class AbsPopupWindow extends PopupWindow {
             throw new NullPointerException("必须设置寄主对象");
         }
         return mSimpleModule;
-    }
-
-    @Override
-    public void dismiss() {
-        super.dismiss();
-        System.gc();
     }
 
     public Context getContext() {

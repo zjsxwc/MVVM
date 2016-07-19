@@ -1,8 +1,18 @@
 package com.arialyy.frame.module;
 
 import android.content.Context;
+import android.text.TextUtils;
+import android.util.SparseIntArray;
 
+import com.arialyy.frame.core.AbsActivity;
 import com.arialyy.frame.module.inf.ModuleListener;
+import com.arialyy.frame.util.ObjUtil;
+import com.arialyy.frame.util.show.L;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -13,6 +23,13 @@ public class AbsModule {
     public String TAG = "";
     private Context mContext;
     private ModuleListener mModuleListener;
+    private OnCallback mCallback;
+
+    public interface OnCallback {
+        public void onSuccess(int result, Object success);
+
+        public void onError(int result, Object error);
+    }
 
     public AbsModule(Context context) {
         mContext = context;
@@ -28,23 +45,69 @@ public class AbsModule {
         TAG = arrays[arrays.length - 1];
     }
 
+    /**
+     * 设置Module监听
+     *
+     * @param moduleListener Module监听
+     */
     public void setModuleListener(ModuleListener moduleListener) {
         if (moduleListener == null)
-            throw new NullPointerException("ModuleListener为空");
+            throw new NullPointerException("ModuleListener不能为空");
         this.mModuleListener = moduleListener;
     }
 
+    /**
+     * 成功的回调
+     */
+    private void successCallback(int key, Object obj) {
+        if (mCallback == null) {
+            L.e(TAG, "OnCallback 为 null");
+            return;
+        }
+        mCallback.onSuccess(key, obj);
+    }
+
+    /**
+     * 失败的回调
+     */
+    public void errorCallback(int key, Object obj) {
+        if (mCallback == null) {
+            L.e(TAG, "OnCallback 为 null");
+            return;
+        }
+        mCallback.onError(key, obj);
+    }
+
+    /**
+     * 获取Context
+     *
+     * @return Context
+     */
     public Context getContext() {
         return mContext;
     }
 
     /**
-     * 统一的回调
+     * 设置Module回调
+     *
+     * @param callback Module 回调
+     */
+    public void setCallback(OnCallback callback) {
+        mCallback = callback;
+    }
+
+    /**
+     * 统一的回调，如果已经设置了OnCallback，则使用OnCallback;
+     * 否则将使用dataCallback，{@link AbsActivity#dataCallback(int, Object)}
      *
      * @param result 返回码
      * @param data   回调数据
      */
     protected void callback(final int result, final Object data) {
+        if (mCallback != null) {
+            successCallback(result, data);
+            return;
+        }
         mModuleListener.callback(result, data);
     }
 
@@ -69,6 +132,4 @@ public class AbsModule {
     protected void callback(String method, Class<?> dataClassType, Object data) {
         mModuleListener.callback(method, dataClassType, data);
     }
-
-
 }

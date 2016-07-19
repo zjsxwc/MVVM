@@ -17,8 +17,8 @@ public class AppUtils {
     /**
      * 应用签名信息
      */
-    public final static String MD5 = "MD5";
-    public final static String SHA1 = "SHA1";
+    public final static String MD5    = "MD5";
+    public final static String SHA1   = "SHA1";
     public final static String SHA256 = "SHA256";
 
     /**
@@ -68,13 +68,13 @@ public class AppUtils {
      * 获取相应的类型的字符串（把签名的byte[]信息转换成16进制）
      */
     public static String getSignatureString(Signature sig, String type) {
-        byte[] hexBytes = sig.toByteArray();
+        byte[] hexBytes    = sig.toByteArray();
         String fingerprint = "error!";
         try {
             MessageDigest digest = MessageDigest.getInstance(type);
             if (digest != null) {
-                byte[] digestBytes = digest.digest(hexBytes);
-                StringBuilder sb = new StringBuilder();
+                byte[]        digestBytes = digest.digest(hexBytes);
+                StringBuilder sb          = new StringBuilder();
                 for (byte digestByte : digestBytes) {
                     sb.append((Integer.toHexString((digestByte & 0xFF) | 0x100)).substring(1, 3));
                 }

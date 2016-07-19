@@ -20,13 +20,13 @@ import java.util.Set;
  * 写入文件的log，由于使用到反射和文件流的操作，建议在需要的地方才去使用
  */
 public class FL {
-    static String LINE_SEPARATOR = System.getProperty("line.separator"); //等价于"\n\r"，唯一的作用是能装逼
-    static int JSON_INDENT = 4;
-    public static boolean isDebug = true;// 是否需要打印bug，可以在application的onCreate函数里面初始化
-    public static String PATH = "AriaFrame";    //log路径
+    static        String  LINE_SEPARATOR = System.getProperty("line.separator"); //等价于"\n\r"，唯一的作用是能装逼
+    static        int     JSON_INDENT    = 4;
+    public static boolean isDebug        = true;// 是否需要打印bug，可以在application的onCreate函数里面初始化
+    public static String  PATH           = "AriaFrame";    //log路径
 
     private static String printLine(String tag, boolean isTop) {
-        String top = "╔══════════════════════════════════════════ JSON ═══════════════════════════════════════";
+        String top    = "╔══════════════════════════════════════════ JSON ═══════════════════════════════════════";
         String bottom = "╚═══════════════════════════════════════════════════════════════════════════════════════";
         if (isTop) {
             Log.d(tag, top);
@@ -61,7 +61,7 @@ public class FL {
 
             writeLogToFile(tag, printLine(tag, true));
             message = LINE_SEPARATOR + message;
-            String temp = "";
+            String   temp  = "";
             String[] lines = message.split(LINE_SEPARATOR);
             for (String line : lines) {
                 temp += "║ " + line;
@@ -139,9 +139,9 @@ public class FL {
      * 获取类名
      */
     private static String getTag(Object object) {
-        Class<?> cls = object.getClass();
-        String tag = cls.getName();
-        String arrays[] = tag.split("\\.");
+        Class<?> cls      = object.getClass();
+        String   tag      = cls.getName();
+        String   arrays[] = tag.split("\\.");
         tag = arrays[arrays.length - 1];
         return tag;
     }
@@ -170,7 +170,7 @@ public class FL {
             writer.append(stringBuffer);
             writer.flush();
         } catch (Exception e) {
-            //            e.printStackTrace();
+            e.printStackTrace();
         } finally {
             if (writer != null) {
                 writer.close();
@@ -180,9 +180,9 @@ public class FL {
     }
 
     /**
-     * 设置打印的异常格式
+     * 将异常信息转换为字符串
      */
-    public static String getPrintException(Throwable ex) {
+    public static String getExceptionString(Throwable ex) {
         StringBuilder err = new StringBuilder();
         err.append("ExceptionDetailed:\n");
         err.append("====================Exception Info====================\n");
@@ -205,25 +205,4 @@ public class FL {
         err.append("===================================================");
         return err.toString();
     }
-
-    /**
-     * 打印Map
-     */
-    public static String getMapString(Map map) {
-        Set set = map.keySet();
-        if (set.size() < 1) {
-            return "[]";
-        }
-        StringBuilder strBuilder = new StringBuilder();
-        Object[] array = set.toArray();
-        strBuilder.append("[").append(array[0]).append("=").append(map.get(array[0]));
-        for (int i = 1; i < array.length; ++i) {
-            strBuilder.append(", ");
-            strBuilder.append(array[i]).append("=");
-            strBuilder.append(map.get(array[i]));
-        }
-        strBuilder.append("]");
-        return strBuilder.toString();
-    }
-
 }

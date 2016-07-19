@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.StatFs;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
@@ -45,13 +46,23 @@ public class AndroidUtils {
     }
 
     /**
+     * 检查权限
+     *
+     * @param permission android.permission.WRITE_EXTERNAL_STORAGE
+     * @return manifest 已经定义了则返回true
+     */
+    public static boolean checkPermission(@NonNull Context context, @NonNull String permission) {
+        return context.checkCallingOrSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    /**
      * 申请root权限
      *
      * @return 应用程序是/否获取Root权限
      */
     public static boolean getRootPermission(String pkgCodePath) {
-        Process process = null;
-        DataOutputStream os = null;
+        Process          process = null;
+        DataOutputStream os      = null;
         try {
             String cmd = "chmod 777 " + pkgCodePath;
             process = Runtime.getRuntime().exec("su"); //切换到root帐号
@@ -92,8 +103,8 @@ public class AndroidUtils {
      * 获取未安装软件包的包名
      */
     public static String getApkPackageName(Context context, String apkPath) {
-        PackageManager pm = context.getPackageManager();
-        PackageInfo info = pm.getPackageArchiveInfo(apkPath, PackageManager.GET_ACTIVITIES);
+        PackageManager pm   = context.getPackageManager();
+        PackageInfo    info = pm.getPackageArchiveInfo(apkPath, PackageManager.GET_ACTIVITIES);
         if (info != null) {
             ApplicationInfo appInfo = info.applicationInfo;
             appInfo.sourceDir = apkPath;
@@ -107,8 +118,8 @@ public class AndroidUtils {
      * 判断是否安装
      */
     public static boolean apkIsInstall(Context context, String apkPath) {
-        PackageManager pm = context.getPackageManager();
-        PackageInfo info = pm.getPackageArchiveInfo(apkPath, PackageManager.GET_ACTIVITIES);
+        PackageManager pm   = context.getPackageManager();
+        PackageInfo    info = pm.getPackageArchiveInfo(apkPath, PackageManager.GET_ACTIVITIES);
         if (info != null) {
             ApplicationInfo appInfo = info.applicationInfo;
             appInfo.sourceDir = apkPath;
@@ -131,10 +142,10 @@ public class AndroidUtils {
      * @return true 在运行 false 不在运行
      */
     public static boolean isServiceRun(Context context, Class<?> clazz) {
-        boolean isRun = false;
-        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningServiceInfo> serviceList = activityManager.getRunningServices(Integer.MAX_VALUE);
-        int size = serviceList.size();
+        boolean                                  isRun           = false;
+        ActivityManager                          activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningServiceInfo> serviceList     = activityManager.getRunningServices(Integer.MAX_VALUE);
+        int                                      size            = serviceList.size();
         for (int i = 0; i < size; i++) {
             if (serviceList.get(i).service.getClassName().equals(clazz.getName())) {
                 isRun = true;
@@ -148,8 +159,8 @@ public class AndroidUtils {
      * 启动另外一个App
      */
     public static void startOtherApp(Context context, String packageName) {
-        PackageManager pm = context.getPackageManager();
-        Intent launcherIntent = pm.getLaunchIntentForPackage(packageName);
+        PackageManager pm             = context.getPackageManager();
+        Intent         launcherIntent = pm.getLaunchIntentForPackage(packageName);
         context.startActivity(launcherIntent);
     }
 
@@ -159,7 +170,7 @@ public class AndroidUtils {
      * @return 有root权限返回true，否则返回false。
      */
     public static boolean isRoot() {
-        String binPath = "/system/bin/su";
+        String binPath  = "/system/bin/su";
         String xBinPath = "/system/xbin/su";
         return new File(binPath).exists() && isExecutable(binPath) || new File(xBinPath).exists() && isExecutable(xBinPath);
     }
@@ -192,9 +203,9 @@ public class AndroidUtils {
      * 静默卸载
      */
     public static boolean uninstallInBackground(String packageName) {
-        String command = "pm uninstall -k " + packageName + "\n";
-        ShellUtils.CommandResult result = ShellUtils.execCommand(command, true);
-        String errorMsg = result.errorMsg;
+        String                   command  = "pm uninstall -k " + packageName + "\n";
+        ShellUtils.CommandResult result   = ShellUtils.execCommand(command, true);
+        String                   errorMsg = result.errorMsg;
         L.d(TAG, "error msg = " + result.errorMsg);
         L.d(TAG, "success msg = " + result.successMsg);
         int res = result.result;
@@ -209,9 +220,9 @@ public class AndroidUtils {
      * @return 安装成功返回true，安装失败返回false。
      */
     public static boolean installInBackground(String apkPath) {
-        String command = "pm install -r " + apkPath + "\n";
-        ShellUtils.CommandResult result = ShellUtils.execCommand(command, true);
-        String errorMsg = result.errorMsg;
+        String                   command  = "pm install -r " + apkPath + "\n";
+        ShellUtils.CommandResult result   = ShellUtils.execCommand(command, true);
+        String                   errorMsg = result.errorMsg;
         L.d(TAG, "error msg = " + result.errorMsg);
         L.d(TAG, "success msg = " + result.successMsg);
         int res = result.result;
@@ -222,7 +233,7 @@ public class AndroidUtils {
      * 获取状态栏高度
      */
     public static int getStatusBarHeight(Context context) {
-        int result = 0;
+        int result     = 0;
         int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0) {
             result = context.getResources().getDimensionPixelSize(resourceId);
@@ -234,8 +245,8 @@ public class AndroidUtils {
      * 获取导航栏高度
      */
     public static int getNavigationBarHeight(Context context) {
-        Resources resources = context.getResources();
-        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+        Resources resources  = context.getResources();
+        int       resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
         if (resourceId > 0) {
             return resources.getDimensionPixelSize(resourceId);
         }
@@ -293,8 +304,8 @@ public class AndroidUtils {
      * @return
      */
     public static List<PackageInfo> getAllApps(Context context) {
-        List<PackageInfo> apps = new ArrayList<PackageInfo>();
-        PackageManager pManager = context.getPackageManager();
+        List<PackageInfo> apps     = new ArrayList<PackageInfo>();
+        PackageManager    pManager = context.getPackageManager();
         //获取手机内所有应用
         List<PackageInfo> paklist = pManager.getInstalledPackages(0);
         for (int i = 0; i < paklist.size(); i++) {
@@ -311,8 +322,8 @@ public class AndroidUtils {
      * @return
      */
     public static List<PackageInfo> getAllNoSystemApps(Context context) {
-        List<PackageInfo> apps = new ArrayList<PackageInfo>();
-        PackageManager pManager = context.getPackageManager();
+        List<PackageInfo> apps     = new ArrayList<PackageInfo>();
+        PackageManager    pManager = context.getPackageManager();
         //获取手机内所有应用
         List<PackageInfo> paklist = pManager.getInstalledPackages(0);
         for (int i = 0; i < paklist.size(); i++) {
@@ -354,7 +365,7 @@ public class AndroidUtils {
         try {
             return context.getString(context.getApplicationInfo().labelRes);
         } catch (Resources.NotFoundException e) {
-            FL.e(TAG, FL.getPrintException(e));
+            FL.e(TAG, FL.getExceptionString(e));
             return "";
         }
     }
@@ -440,7 +451,7 @@ public class AndroidUtils {
      * @param packageName 包名
      */
     public static void uninstall(Context context, String packageName) {
-        Uri packageURI = Uri.parse("package:" + packageName);
+        Uri    packageURI      = Uri.parse("package:" + packageName);
         Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
         uninstallIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(uninstallIntent);
@@ -471,11 +482,11 @@ public class AndroidUtils {
     public static boolean copyFileFromAssets(Context context, String fileName, String path) {
         boolean copyIsFinish = false;
         try {
-            InputStream is = context.getAssets().open(fileName);
-            File file = FileUtil.createFile(path);
-            FileOutputStream fos = new FileOutputStream(file);
-            byte[] temp = new byte[1024];
-            int i = 0;
+            InputStream      is   = context.getAssets().open(fileName);
+            File             file = FileUtil.createFile(path);
+            FileOutputStream fos  = new FileOutputStream(file);
+            byte[]           temp = new byte[1024];
+            int              i    = 0;
             while ((i = is.read(temp)) > 0) {
                 fos.write(temp, 0, i);
             }
@@ -580,10 +591,10 @@ public class AndroidUtils {
      * 应用是否启动
      */
     public static boolean appIsRunning(Context context) {
-        boolean isAppRunning = false;
-        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningTaskInfo> list = am.getRunningTasks(100);
-        String packageName = getPackageInfo(context).packageName;
+        boolean                               isAppRunning = false;
+        ActivityManager                       am           = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> list         = am.getRunningTasks(100);
+        String                                packageName  = getPackageInfo(context).packageName;
         for (ActivityManager.RunningTaskInfo info : list) {
             if (info.topActivity.getPackageName().equals(packageName) && info.baseActivity.getPackageName().equals(packageName)) {
                 isAppRunning = true;
@@ -598,8 +609,8 @@ public class AndroidUtils {
      * 检查系统是否有这个Intent，在启动Intent的时候需要检查，因为启动一个没有的Intent程序会Crash
      */
     public static boolean isIntentSafe(Context context, Intent intent) {
-        PackageManager packageManager = context.getPackageManager();
-        List<ResolveInfo> activities = packageManager.queryIntentActivities(intent, 0);
+        PackageManager    packageManager = context.getPackageManager();
+        List<ResolveInfo> activities     = packageManager.queryIntentActivities(intent, 0);
         return activities.size() > 0;
     }
 
@@ -652,7 +663,7 @@ public class AndroidUtils {
                 // /sdcard/Android/data/<application package>/cache
                 if (context == null) {
                     NullPointerException ex = new NullPointerException("context == null");
-                    FL.e(TAG, FL.getPrintException(ex));
+                    FL.e(TAG, FL.getExceptionString(ex));
                     throw ex;
                 }
                 cacheDir = context.getExternalCacheDir();

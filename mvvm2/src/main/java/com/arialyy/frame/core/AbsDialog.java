@@ -2,6 +2,7 @@ package com.arialyy.frame.core;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.Window;
 
 import com.arialyy.frame.module.AbsModule;
@@ -16,10 +17,10 @@ import butterknife.ButterKnife;
  */
 public abstract class AbsDialog extends Dialog {
     protected String TAG = "";
-    private Object mObj;    //被观察者
-    private IOCProxy mProxy;
+    private Object             mObj;    //被观察者
+    private IOCProxy           mProxy;
     private DialogSimpleModule mSimpleModule;
-    private ModuleFactory mModuleF;
+    private ModuleFactory      mModuleF;
 
     public AbsDialog(Context context) {
         this(context, null);
@@ -58,12 +59,6 @@ public abstract class AbsDialog extends Dialog {
         return mSimpleModule;
     }
 
-    @Override
-    public void dismiss() {
-        super.dismiss();
-        System.gc();
-    }
-
     /**
      * 获取Module
      *
@@ -71,6 +66,21 @@ public abstract class AbsDialog extends Dialog {
      */
     protected <M extends AbsModule> M getModule(Class<M> clazz) {
         M module = mModuleF.getModule(getContext(), clazz);
+        mProxy.changeModule(module);
+        return module;
+    }
+
+    /**
+     * 获取Module
+     *
+     * @param clazz    Module class0
+     * @param callback Module回调函数
+     * @param <M>      {@link AbsModule}
+     * @return
+     */
+    protected <M extends AbsModule> M getModule(@NonNull Class<M> clazz, @NonNull AbsModule.OnCallback callback) {
+        M module = mModuleF.getModule(getContext(), clazz);
+        module.setCallback(callback);
         mProxy.changeModule(module);
         return module;
     }

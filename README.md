@@ -1,19 +1,21 @@
 # MVVM
 这是一个android MVVM 框架，基于谷歌dataBinding技术实现。dataBinding 实现的 V 和 VM的关联；使用IOC架构实现了 M 和 V的关联。</br>
 框架具有以下功能：</br>
-- [业务逻辑层的分离](#通过一个例子来介绍框架)
+- [业务逻辑层的分离](#业务逻辑层的分离)
 - [封装了android 6.0权限申请，在申请权限时，能像View一样设置事件监听](#权限使用)
-- [创建Fragment、Dialog、popupwindow都将变得极其简单](#创建popupwindow)
+- [创建Fragment、Dialog、popupwindow都将变得极其简单](#其它组件使用)
+- [占位布局实现将变得极其简单](#占位布局)
 - [具有dataBinding的一切功能](#使用)
 - [封装了Okhttp网络请求，实现二级缓存，实现了网络回调监听](#网络请求)
 
-
-目前该框架已经运用于公司的两个项目上，暂时没发现什么特别大的bug。</br>
-如果你觉得我的代码对你有帮助，请麻烦你在右上角给我一个star.^_^
+如果你觉得我的代码对你有帮助，请麻烦你在右上角给我一个star.`^_^`
 
 ## 下载
 [![Download](https://api.bintray.com/packages/arialyy/maven/MvvmFrame/images/download.svg)](https://bintray.com/arialyy/maven/MvvmFrame/_latestVersion)</br>
-compile 'com.arialyy.frame:MVVM2:1.0.8'
+compile 'com.jakewharton:butterknife:6.1.0'</br>
+compile 'com.google.code.gson:gson:2.7'</br>
+compile 'com.squareup.okhttp3:okhttp:3.2.0'</br>
+compile 'com.arialyy.frame:MVVM2:2.0.4'</br>
 
 ## 使用
 * 在build.gradle 打开dataBinding 选项
@@ -26,31 +28,31 @@ android{
 }
 ```
 
-* 创建Application 并继承 AbsApplication
+* 在Application注册框架
 ```java
 public class BaseApplication extends AbsApplication {
-    ...
+    @Override
+   public void onCreate() {
+       super.onCreate();
+       MVvmFrame.init(this);
+       //如果你需要打开异常捕获模块，去掉下面语句的注释，将两个参数改为你的接口和key，便可以将崩溃信息上传到后台服务器
+       //MVMVFrame.init(this).openCrashHandler("http://192.168.2.183/server.php", "params");
+   }
 }
 ```
 
-* 修改AndroidManifest.xml文件, 指定Application对象为AbsApplication或者其子类。
-```xml
-<application
-        ...
-        android:name=".base.BaseApplication">
-</application>
-```
-
 ## Module使用
-![Module使用](https://github.com/AriaLyy/MVVM/blob/master/img/mvvm.gif "")
+![Module使用](https://github.com/AriaLyy/MVVM/blob/v_2.0_dev/img/mvvm.gif)
 
 ## android 6.0 权限
-![android 6.0权限使用](https://github.com/AriaLyy/MVVM/blob/master/img/permission.gif)
+![android 6.0权限使用](https://github.com/AriaLyy/MVVM/blob/v_2.0_dev/img/permission.gif)
 
-## 通过一个例子来介绍框架
-这是一个使用网络请求来解析本地IP的例子</br>
+## 占位布局效果
+![占位布局](https://github.com/AriaLyy/MVVM/blob/v_2.0_dev/img/tempview.gif)
+## 业务逻辑层的分离
 框架是基于谷歌dataBinding的，布局里面动态设置数据的方法为谷歌 dataBinding的用法方法，想了解更多，可参考[谷歌官方文档](http://developer.android.com/intl/zh-cn/tools/data-binding/guide.html)</br>
-* 创建一个布局
+这是一个使用网络请求来解析本地IP的例子，请求网络的业务逻辑将写在Moudule里面，Activity只需要调用Module只负责调用Module的业务逻辑以及接受Module的回调数据，不会执行任何与业务逻辑相关的操作</br>
+* 首先，为Activity创建一个布局
 activity_main.xml
 ```xml
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
@@ -59,7 +61,7 @@ activity_main.xml
         <variable name="dialogStr" type="String" />
     </data>
 
-    <RelativeLayout 
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="@dimen/activity_vertical_margin"
@@ -90,10 +92,10 @@ activity_main.xml
     </RelativeLayout>
 </layout>
 ```
-* 创建一个Module
-Module里面用来处理业务逻辑，比如网络操作，数据库操作，其它数据的获取等操作；这些都应该放在Module里面处理。</br>
-在Module里面处理业务逻辑，一个业务逻辑，可以多处使用，以达到复用的目的</br>
-
+* 创建一个用来处理业务逻辑的Module
+Module用来处理业务逻辑，比如网络操作，数据库操作，其它数据的获取等操作；这些都应该放在Module里面处理，这样，以后即使有新的需求发生修改，只要数据结构不发生改变，Module里面业务逻辑的任何操作都不会改变AbsActivity等组件原有的逻辑。</br>
+由于Module和框架里面的其它组件都是采用聚合的方式进行实现，因此，Moudle是一个低耦合的模块，一个Module，可以被多个不同的组件调用，达到了一处业务实现，可多处被调用的目的。</br>
+框架里面可以调用Module的组件有：AbsActivity、AbsFragment、AbsAlertDialog、AbsDialog、AbsDialogFragment、AbsPopupFragment。这些组件都可以在任意地方调用Module的业务逻辑。
 IPtModule.java
 ```java
 public class IPModule extends AbsModule {
@@ -124,16 +126,16 @@ public class IPModule extends AbsModule {
     }
 }
 ```
+这是一个获取IP信息的Module，`getIpInfo`实现了网络解析本地IP信息的业务逻辑，在其处理完业务逻辑后，通过`callback(1, "你的IP地址是：" + country + " " + province + " " + city);`方法将数据回调给调用IpModule的组件。
 
 * AbsActivity
-下面是Activity的所有代码，只需要简单的两行代码便能实现一个使用网络请求数据并展示的操作。所有的业务逻辑全部封装
-在一个Module里面，将来有该业务如果有新的需求，改变的也只是Module里面的代码，而不用过多修改Activity的代码。</br>
-由于Module是一个低耦合的模块，当你在多个地方使用同一个网络请求时，你可以在所有继承于AbsActivity、AbsFragment、AbsAlertDialog、AbsDialog、
-AbsDialogFragment、AbsPopupFragment等超类的子类调用同一个Module，而不需要编写重复的代码，这样可以达到代码复用的目的。</br>
+AbsActivity 继承于AppCompatActivity，该AbsActivity支持dataBinding的数据绑定操作，同时具有Module功能</br>
+通过`getModule(IPModule.class).getIpInfo();`方式，请求了一个类名为`IPModule`的Module执行`getIpInfo()`的方法里面的业务逻辑。</br>
+通过重写`protected void dataCallback(int result, Object data)`方法，将可以接收到Module执行完成业务逻辑后的回调数据,
 MainActivity.java
 ```java
 public class MainActivity extends AbsActivity<ActivityMainBinding> {
-    
+
     /**设置布局*/
     @Override
     protected int setLayoutId() {
@@ -146,12 +148,12 @@ public class MainActivity extends AbsActivity<ActivityMainBinding> {
         //调用Module请求IP信息
         getModule(IPModule.class).getIpInfo();
     }
-    
+
     public void onClick(View view) {
         ShowDialog dialog = new ShowDialog(this);
         dialog.show(getSupportFragmentManager(), "testDialog");
     }
-    
+
     /**接收数据回调*/
     @Override
     protected void dataCallback(int result, Object data) {
@@ -164,12 +166,9 @@ public class MainActivity extends AbsActivity<ActivityMainBinding> {
     }
 }
 ```
+上面的代码在`init(Bundle savedInstanceState)`请求`IPModule`执行了本地IP地址网络解析的操作，在`dataCallback(int result, Object data)`接收`IPModule`回调的数据，并将该数据通过dataBinding绑定到视图UI。
 
-* 创建Dialog
-AbsDialogFragment是继承于DialogFragment 的一个对话框，同样的，该对话框也支持dataBinding数据绑定操作，也支持调用Module操作</br>
-使用该对话框，继承该类，你能创建Activity一样，很容易创建一个完全自定义的Dialog对话框。</br>
-通过在AbsDialogFragment的子类里面调用getSimpleModule().onDialog(int result, Object data)，你将能很容易将对话的数据传递给
-生成该对话框的对象（例如Activity或Fragment）。
+* dialog布局
 ```xml
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
@@ -221,12 +220,18 @@ AbsDialogFragment是继承于DialogFragment 的一个对话框，同样的，该
                 android:layout_weight="1"
                 android:background="?android:attr/selectableItemBackground"
                 android:text="取消" />
-
         </LinearLayout>
     </RelativeLayout>
 </layout>
 ```
 
+## 其它组件使用
+* AbsDialogFragment
+`AbsDialogFragment`和`AbsActivity`同样的逻辑，都是可以调用Module，也支持dataBinding绑定数据操作。</br>
+使用`AbsDialogFragment`创建`DialogFragment`，你能像创建Activity一样简单，很容易创建一个完全自定义的`DialogFragment`对话框。</br>
+重写`setLayoutId()`方法的`return` 为你的dialog布局ID，便能实现布局的加载。</br>
+调用`getSimpleModule().onDialog(int result, Object data)`方法，你能将dialog的数据回调给生成它的组件（例如Activity或Fragment）</br>
+通过重写`protected void dataCallback(int result, Object data)`方法，将可以接收到Module执行完成业务逻辑后的回调数据。
 ShowDialog.java
 ```java
 public class ShowDialog extends AbsDialogFragment<DialogShowBinding> implements View.OnClickListener {
@@ -270,9 +275,15 @@ public class ShowDialog extends AbsDialogFragment<DialogShowBinding> implements 
     }
 }
 ```
+上面的代码在`init(Bundle savedInstanceState)`请求`IPModule`执行了本地IP地址网络解析的操作，在`dataCallback(int result, Object data)`接收`IPModule`回调的数据，并将该数据通过dataBinding绑定到视图UI。</br>
+当点击确认按钮时，通过调用`getSimplerModule().onDialog(2, "对话框确认")`，`MainActivity`的将可以在`dataCallback(int result, Object data)`方法里面接收到`对话框确认`这个字符串。
 
-## 创建popupwindow
-AbsPopupwindow继承于PopupWindow，只需要简单的代码，便能实现完全自定义的popupwindow，同样的，AbsPopupWindow也支持调用Module操作</br>
+* AbsPopupwindow
+`popupwindow`和`AbsActivity`同样的逻辑，都是可以调用Module，也支持dataBinding绑定数据操作。</br>
+使用`AbsPopupwindow`创建`popupwindow`，你能像创建Activity一样简单，很容易创建一个完全自定义的`popupwindow`</br>
+重写`setLayoutId()`方法的`return` 为你的dialog布局ID，便能实现布局的加载。</br>
+调用`getSimpleModule().onDialog(int result, Object data)`方法，你能将dialog的数据回调给生成它的组件（例如Activity或Fragment）</br>
+通过重写`protected void dataCallback(int result, Object data)`方法，将可以接收到Module执行完成业务逻辑后的回调数据。</br>
 如下所示，你只需要编写简单的代码，便能实现一个完全自定义的popupwindow
 ```java
 public class TestPopupwindow extends AbsPopupWindow {
@@ -292,30 +303,34 @@ public class TestPopupwindow extends AbsPopupWindow {
 }
 ```
 
-## 创建Fragment
-AbsFragment继承于Fragment，同样的，AbsFragment也支持dataBinding数据绑定操作，也支持调用Module操作</br>
-同时，Fragmen支持延时操作，不需要复杂的代码，你只需要在onDelayLoad()编写你的代码，便能实现延时操作。
+* AbsFragment
+`fragment`和`AbsActivity`同样的逻辑，都是可以调用Module，也支持dataBinding绑定数据操作。</br>
+使用`AbsFragment`创建`fragment`，你能像创建Activity一样简单，很容易创建一个`fragment`</br>
+重写`setLayoutId()`方法的`return` 为你的dialog布局ID，便能实现布局的加载。</br>
+重写`protected void dataCallback(int result, Object data)`方法，将可以接收到Module执行完成业务逻辑后的回调数据。</br>
+重写`onDelayLoad()`方法，你将能对某些逻辑实现延时操作，如: 在ViewPager里面，只有当Fragment处于可视状态时，Fragment才会执行`onDelayLoad()的代码`，使用延时技术，能在很大程度上优化app的性能(只有在需要的时候才加载需要的数据)。
 ```java
 public class PermissionFragment extends AbsFragment<FragmentTestBinding>{
-    
+
     //在这执行Fragmen初始化操作
     @Override
     protected void init(Bundle savedInstanceState) {
         ...
     }
-    
+
     //在这执行Fragment延时操作
     @Override
     protected void onDelayLoad() {
-
+        //你需要延时操作的代码
+        ...
     }
-    
+
     //设置布局Id
     @Override
     protected int setLayoutId() {
         return R.layout.fragment_test;
     }
-    
+
     //数据回调
     @Override
     protected void dataCallback(int result, Object obj) {
@@ -363,13 +378,109 @@ PermissionManager.getInstance().requestAlertWindowPermission(Object obj, OnPermi
 ```java
 PermissionManager.getInstance().requestWriteSettingPermission(Object obj, OnPermissionCallback callback);
 ```
+## 占位布局
+框架在AbsActivity、AbsFragment里面集成了错误填充布局，`你不需要在你的xml布局里面增加任何新代码`，只需要在继承与AbsActivity或者AbsFragment的Activty、fragment中调用`showTempView(int type)`方法，便能加载一个错误填充布局。</br>
+调用`hintTempView()`来关闭错误填充布局。</br>
+如果你需要响应布局的控件的事件，你将需要在Activty、fragment里面重写`public void onBtTempClick(View view, int type)`方法，在里面执行你的逻辑。
+目前框架有3种type可以使用
+```
+1. type = ITempView.ERROR;      ==> 错误的填充布局
+2. type = ITempView.DATA_NULL;  ==> 数据为空的填充布局
+3. type = ITempView.LOADING;    ==> 加载等待的填充布局
+```
+
+### 自定义占位布局
+如果你对框架自带占位布局不满意，你也可以自定义自己的占位布局。
+```
+1. 创建一个对象继承于AbsTempView
+2. 重写`protected int setLayoutId()`方法的`return` 为你的dialog布局ID，便能实现布局的加载。
+3. 重写`protected void init()`，在里面进行初始化操作。
+4. 重写`public void onError()`在该方法里编写`type == ITempView.ERROR`的业务逻辑。
+5. 重写`public void onNull()`在该方法里编写`type = ITempView.DATA_NULL`的业务逻辑。
+6. 重写`public void onLoading()`在该方法里面编写`type = ITempView.LOADING`的业务逻辑。
+7. 在继承于AbsActivity或者AbsFragment的组件里面调用`setCustomTempView(AbsTempView tempView)`，tempView便是你创建的继承于AbsTempView的子类。
+```
+**上面的4、5、6根据你的需求，进行选择。**</br>
+注意，如果你的占位布局有控件事件，你将需要在控件的事件代码里面调用`onTempBtClick(v, mType);`方法，这样，你才能将控件的事件传递到Activity或者Fragment，如下所示</br>
+```java
+mBt.setOnClickListener(new OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        //将事件传递到Activity或者Fragment
+        onTempBtClick(v, mType);
+    }
+});
+```
+例子：
+```java
+public class CustomTempView extends AbsTempView {
+    @InjectView(R.id.bt) Button mBt;
+    @InjectView(R.id.error_temp) LinearLayout mErrorTemp;
+    @InjectView(R.id.img) ImageView mErrorImg;
+    @InjectView(R.id.text) TextView mErrorText;
+    @InjectView(R.id.loading) ProgressBar mpb;
+
+    public CustomTempView(Context context) {
+        super(context);
+    }
+
+    @Override
+    protected void init() {
+        mBt.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onTempBtClick(v, mType);
+            }
+        });
+    }
+
+    @Override
+    protected int setLayoutId() {
+        return R.layout.layout_custom_view;
+    }
+
+    @Override
+    public void setType(int type) {
+        super.setType(type);
+        mpb.setVisibility(type == ITempView.LOADING ? VISIBLE : GONE);
+        mErrorTemp.setVisibility(type == ITempView.LOADING ? GONE : VISIBLE);
+    }
+
+    /**
+     * 处理type 为 error 时，tempView的页面逻辑
+     */
+    @Override
+    public void onError() {
+        mErrorText.setText("错误时的提示文本");
+        mBt.setText("error");
+    }
+
+    /**
+     * 处理type 为 null 时，tempView的页面逻辑
+     */
+    @Override
+    public void onNull() {
+        mErrorText.setText("数据为空时的提示文本");
+        mBt.setText("null");
+    }
+
+    /**
+     * 处理type 为 loading 时，tempView的页面逻辑
+     */
+    @Override
+    public void onLoading() {
+        //这里使用的是progress，如果使用动画，可以在这实现
+    }
+}
+```
+
 
 ## 网络请求
 框架封装OKHTTP实现了网络请求及其网络请求回调，使用以下代码，便能实现一个网络请求及其回调</br>
 这是一个请求解析IP地址的例子
 ```java
 //获取网络请求实例
-HttpUtil util = HttpUtil.getInstance(getContext());   
+HttpUtil util = HttpUtil.getInstance(getContext());
 util.get(IP_URL, new HttpUtil.AbsResponse() {
     //成功的数据回调
     @Override
@@ -392,6 +503,34 @@ util.get(IP_URL, new HttpUtil.AbsResponse() {
 });
 ```
 
+# 混淆配置
+```
+-keep class com.arialyy.frame.**{*;}
+-dontwarn com.arialyy.frame.**
+-keepclassmembers class * extends com.arialyy.frame.module.AbsModule{
+    public <init>(android.content.Context);
+}
+-keepclassmembers class * extends com.arialyy.frame.core.AbsActivity{
+    protected void dataCallback(int, java.lang.Object);
+}
+-keepclassmembers class * extends com.arialyy.frame.core.AbsPopupWindow{
+    protected void dataCallback(int, java.lang.Object);
+}
+-keepclassmembers class * extends com.arialyy.frame.core.AbsFragment{
+    protected void dataCallback(int, java.lang.Object);
+}
+-keepclassmembers class * extends com.arialyy.frame.core.AbsDialogFragment{
+    protected void dataCallback(int, java.lang.Object);
+}
+-keepclassmembers class * extends com.arialyy.frame.core.AbsAlertDialog{
+    protected void dataCallback(int, java.lang.Object);
+}
+
+-keepclassmembers class * extends com.arialyy.frame.core.AbsDialog{
+    protected void dataCallback(int, java.lang.Object);
+}
+```
+
 License
 -------
 
@@ -408,6 +547,3 @@ License
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-
-
-
