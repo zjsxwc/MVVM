@@ -143,8 +143,8 @@ public class CacheUtil extends AbsCache {
             L.e(TAG, "编码转换错误", e);
         }
     }
-
-    /**
+	
+	/**
      * 读取对象缓存
      *
      * @param clazz 对象类型
@@ -154,7 +154,11 @@ public class CacheUtil extends AbsCache {
     public <T> T getObjectCache(Class<T> clazz, String key) {
         T object = null;
         try {
-            object = new Gson().fromJson(new String(readDiskCache(key), "utf-8"), clazz);
+            byte[] data = readDiskCache(key);
+            if (data == null){
+                return null;
+            }
+            object = new Gson().fromJson(new String(data, "utf-8"), clazz);
         } catch (UnsupportedEncodingException e) {
             L.e(TAG, "编码转换错误", e);
         }
