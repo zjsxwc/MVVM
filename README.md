@@ -331,6 +331,8 @@ util.get(IP_URL, new HttpUtil.AbsResponse() {
 
 # 混淆配置
 ```
+-dontwarn android.support.**
+-keep class android.support.**{*;}
 -keep class com.arialyy.frame.**{*;}
 -dontwarn com.arialyy.frame.**
 -keepclassmembers class * extends com.arialyy.frame.module.AbsModule{
