@@ -1,5 +1,5 @@
 # AbsFrame
-AbsFrame是一个android应用开发框架，基于MVVM架构开发，VM和V的交互来自于谷歌dataBinding技术；IOC架构实现了 M 和 V的交互。</br>
+AbsFrame是一个android应用开发框架，基于MVVM架构开发，VM和V的交互来自于谷歌dataBinding技术；IOC架构实现了 M 和 VM的交互。</br>
 ![MVVM架构](https://github.com/AriaLyy/MVVM/blob/v_2.1/img/mvvm.png)</br>
 框架具有以下特点：</br>
 - [业务逻辑层的分离](#业务逻辑层的分离)
