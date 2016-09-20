@@ -49,7 +49,8 @@ public class BaseApplication extends AbsApplication {
 框架是基于谷歌dataBinding的，布局需要遵循dataBinding的使用原则，dataBinding使用可参考[谷歌官方文档](http://developer.android.com/intl/zh-cn/tools/data-binding/guide.html)</br>
 
 ## 业务逻辑层的分离
-1、AbsActivity的使用需要ViewDataBinding支持，而ViewDataBinding是自动生成的，如下所示，系统将会自动生成一个名为：ActivityMainBinding的java文件。</br>
+1、首先你需要一个Activity，在AbsFrame中AbsActivity的使用需要ViewDataBinding支持，**而ViewDataBinding是自动生成的**，如下所示，在布局根节点添加<layout>，系统将会根据xml的文件名自动生成一个ViewDataBinding的java文件。例如：</br>
+xml文件名为：activity_main.xml，在该xml的根节点加了<layout>后，将会自动生成一个名字为:ActivityMainBinding.java的文件</br>
 ```xml
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- 在layout包裹段里面编写布局文件，系统将自动生成ViewDataBinding -->
@@ -66,7 +67,7 @@ public class BaseApplication extends AbsApplication {
     </RelativeLayout>
 </layout>
 ```
-2、为了实现数据分离，需要创建一个Module用来处理数据或者业务逻辑，框架提供了两种处理业务逻辑的方法：
+2、其次，你还需要创建一个Module用来处理数据或者业务逻辑，框架提供了数据回调的方法：
 * 处理完业务逻辑后，通过`callback`方法，将你的数据回调给Activity，让Activity进行界面处理
 * 结合dataBinding技术，处理完成数据后，通过`getBinding`方法，调用指定的ViewDataBinding直接进行界面处理
 ```java
@@ -150,7 +151,8 @@ public class MainActivity extends AbsActivity<ActivityMainBinding>{
    }
 }
 ```
-现在，目前支持业务逻辑分离的组件有：
+以上，便是完整的业务逻辑分离的离职</br>
+ps:目前支持业务逻辑分离的组件有：</br>
 AbsActivity、AbsFragment、AbsDialog、AbsDialogFragment、AbsAlertDialog、AbsPopupWindow</br>
 
 ## Dialog、popupwindow的getSimplerModule使用
