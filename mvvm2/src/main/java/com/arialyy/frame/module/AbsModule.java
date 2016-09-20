@@ -1,12 +1,16 @@
 package com.arialyy.frame.module;
 
 import android.content.Context;
+import android.databinding.ViewDataBinding;
 import android.text.TextUtils;
 import android.util.SparseIntArray;
+import android.view.View;
 
 import com.arialyy.frame.core.AbsActivity;
+import com.arialyy.frame.core.BindingFactory;
 import com.arialyy.frame.module.inf.ModuleListener;
 import com.arialyy.frame.util.ObjUtil;
+import com.arialyy.frame.util.StringUtil;
 import com.arialyy.frame.util.show.L;
 
 import java.util.HashMap;
@@ -14,16 +18,17 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-
 /**
  * Created by AriaLyy on 2015/2/3.
  * 抽象的module
  */
 public class AbsModule {
     public String TAG = "";
-    private Context mContext;
+    private Context        mContext;
     private ModuleListener mModuleListener;
-    private OnCallback mCallback;
+    private OnCallback     mCallback;
+    private BindingFactory mBindingFactory;
+    private Object         mHost;
 
     public interface OnCallback {
         public void onSuccess(int result, Object success);
@@ -40,9 +45,8 @@ public class AbsModule {
      * 初始化一些东西
      */
     private void init() {
-        String className = getClass().getName();
-        String arrays[] = className.split("\\.");
-        TAG = arrays[arrays.length - 1];
+        TAG = StringUtil.getClassName(this);
+        mBindingFactory = BindingFactory.newInstance();
     }
 
     /**
@@ -54,6 +58,13 @@ public class AbsModule {
         if (moduleListener == null)
             throw new NullPointerException("ModuleListener不能为空");
         this.mModuleListener = moduleListener;
+    }
+
+    /**
+     * 为Binding设置寄主
+     */
+    public void setHost(Object host){
+        mHost = host;
     }
 
     /**
@@ -94,6 +105,17 @@ public class AbsModule {
      */
     public void setCallback(OnCallback callback) {
         mCallback = callback;
+    }
+
+    /**
+     * 获取ViewDataBinding
+     *
+     * @param clazz ViewDataBinding实例
+     * @param <VB>1
+     * @return
+     */
+    protected <VB extends ViewDataBinding> VB getBinding(Class<VB> clazz) {
+        return mBindingFactory.getBinding(mHost, clazz);
     }
 
     /**

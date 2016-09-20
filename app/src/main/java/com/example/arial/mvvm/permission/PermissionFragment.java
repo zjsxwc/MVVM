@@ -14,17 +14,17 @@ import com.example.arial.mvvm.databinding.FragmentTestBinding;
 
 import java.util.Arrays;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 
 /**
  * Created by lyy on 2016/4/11.
  */
 public class PermissionFragment extends AbsFragment<FragmentTestBinding> implements View.OnClickListener, OnPermissionCallback {
-    @InjectView(R.id.permission)
+    @Bind(R.id.permission)
     Button mBt;
-    @InjectView(R.id.alert_window)
+    @Bind(R.id.alert_window)
     Button mAlert;
-    @InjectView(R.id.write_setting)
+    @Bind(R.id.write_setting)
     Button mSetting;
 
     public static PermissionFragment newInstance() {

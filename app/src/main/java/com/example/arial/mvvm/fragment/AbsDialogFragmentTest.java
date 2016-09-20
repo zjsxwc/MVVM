@@ -7,13 +7,13 @@ import com.example.arial.mvvm.R;
 import com.example.arial.mvvm.base.BaseFragment;
 import com.example.arial.mvvm.databinding.FragmentAbsBinding;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 
 /**
  * Created by lyy on 2016/7/14.
  */
 public class AbsDialogFragmentTest extends BaseFragment<FragmentAbsBinding> {
-    @InjectView(R.id.list)
+    @Bind(R.id.list)
     RecyclerView mList;
 
     public static AbsDialogFragmentTest newInstance() {

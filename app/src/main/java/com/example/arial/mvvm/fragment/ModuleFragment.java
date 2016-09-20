@@ -11,19 +11,23 @@ import com.example.arial.mvvm.config.Constance;
 import com.example.arial.mvvm.databinding.FragmentModuleBinding;
 import com.example.arial.mvvm.dialog.IpDialog;
 import com.example.arial.mvvm.module.AddressModule;
+import com.example.arial.mvvm.module.BindingModule;
 import com.example.arial.mvvm.module.IPModule;
 
-import butterknife.InjectView;
+
+import butterknife.Bind;
 
 /**
  * Created by lyy on 2016/7/13.
  */
 public class ModuleFragment extends BaseFragment<FragmentModuleBinding> implements View.OnClickListener {
-    @InjectView(R.id.use_module_1)
+    @Bind(R.id.use_module_1)
     Button mUseModule1;
-    @InjectView(R.id.use_module_2)
+    @Bind(R.id.use_module_2)
     Button mUseModule2;
-    @InjectView(R.id.show_dialog)
+    @Bind(R.id.use_module_3)
+    Button mUseModule3;
+    @Bind(R.id.show_dialog)
     Button mShowDialog;
 
     public static ModuleFragment newInstance() {
@@ -39,6 +43,7 @@ public class ModuleFragment extends BaseFragment<FragmentModuleBinding> implemen
         super.init(savedInstanceState);
         mUseModule1.setOnClickListener(this);
         mUseModule2.setOnClickListener(this);
+        mUseModule3.setOnClickListener(this);
         mShowDialog.setOnClickListener(this);
     }
 
@@ -51,7 +56,18 @@ public class ModuleFragment extends BaseFragment<FragmentModuleBinding> implemen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.use_module_1:
-                getModule(IPModule.class).getIpInfo();
+//                getModule(IPModule.class).getIpInfo();
+                getModule(IPModule.class, new AbsModule.OnCallback() {
+                    @Override
+                    public void onSuccess(int result, Object success) {
+
+                    }
+
+                    @Override
+                    public void onError(int result, Object error) {
+
+                    }
+                }).getIpInfo();
                 break;
             case R.id.use_module_2:
                 getModule(AddressModule.class, new AbsModule.OnCallback() {
@@ -68,6 +84,9 @@ public class ModuleFragment extends BaseFragment<FragmentModuleBinding> implemen
 
                     }
                 }).getAddr();
+                break;
+            case R.id.use_module_3:
+                getModule(BindingModule.class).fragmentBindingTest();
                 break;
             case R.id.show_dialog:
                 IpDialog dialog = new IpDialog(this);

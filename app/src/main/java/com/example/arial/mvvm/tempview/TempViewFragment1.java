@@ -30,7 +30,18 @@ public class TempViewFragment1 extends AbsFragment<FragmentTempView1Binding> {
 
     @Override
     protected void init(Bundle savedInstanceState) {
-
+//        showTempView(ITempView.LOADING);
+//        //模拟延时操作
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                hintTempView();
+//                if (getView() != null) {
+//                    getView().setBackgroundColor(mColor);
+//                    getBinding().setStr("我是fragment");
+//                }
+//            }
+//        }, 1000);
     }
 
     @Override

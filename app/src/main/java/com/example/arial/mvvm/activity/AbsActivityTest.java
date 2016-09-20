@@ -1,31 +1,30 @@
 package com.example.arial.mvvm.activity;
 
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 
 import com.arialyy.frame.module.AbsModule;
-import com.arialyy.frame.util.show.T;
 import com.example.arial.mvvm.R;
 import com.example.arial.mvvm.base.BaseActivity;
 import com.example.arial.mvvm.config.Constance;
 import com.example.arial.mvvm.databinding.ActivityAbsBinding;
 import com.example.arial.mvvm.dialog.IpDialog;
 import com.example.arial.mvvm.module.AddressModule;
+import com.example.arial.mvvm.module.BindingModule;
 import com.example.arial.mvvm.module.IPModule;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 
 /**
  * Created by lyy on 2016/7/14.
  */
 public class AbsActivityTest extends BaseActivity<ActivityAbsBinding> implements View.OnClickListener {
-    @InjectView(R.id.use_module_1)
+    @Bind(R.id.use_module_1)
     Button mUseModule1;
-    @InjectView(R.id.use_module_2)
+    @Bind(R.id.use_module_2)
     Button mUseModule2;
-    @InjectView(R.id.show_dialog)
+    @Bind(R.id.show_dialog)
     Button mShowDialog;
 
     @Override
@@ -63,6 +62,9 @@ public class AbsActivityTest extends BaseActivity<ActivityAbsBinding> implements
 
                     }
                 }).getAddr();
+                break;
+            case R.id.use_module_3:
+                getModule(BindingModule.class).activityBindingTest();
                 break;
             case R.id.show_dialog:
                 IpDialog dialog = new IpDialog(this);

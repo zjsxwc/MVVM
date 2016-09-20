@@ -1,21 +1,23 @@
-# MVVM
-这是一个android IOC + MVVM的开发框架，MVVM部分来自于谷歌dataBinding技术；IOC架构实现了 M 和 V的关联。</br>
+# AbsFrame
+AbsFrame是一个android应用开发框架，基于MVVM架构开发，VM和V的交互来自于谷歌dataBinding技术；IOC架构实现了 M 和 V的交互。</br>
+![MVVM架构](https://github.com/AriaLyy/MVVM/blob/v_2.1/img/mvvm.png)</br>
 框架具有以下特点：</br>
-- [业务逻辑层的分离](#业务逻辑层使用)
+- [业务逻辑层的分离](#业务逻辑层的分离)
 - [封装了android 6.0权限申请，在申请权限时，能像View一样设置事件监听](#权限使用)
 - [创建Fragment、Dialog、popupwindow都将变得极其简单](#Dialog、popupwindow的getSimplerModule使用)
 - [占位布局实现将变得极其简单](#占位布局)
 - [具有dataBinding的一切功能](#使用)
 - [封装了Okhttp网络请求，实现二级缓存，实现了网络回调监听](#网络请求)
+- [开发日志](#开发日志)
 
 如果你觉得我的代码对你有帮助，请麻烦你在右上角给我一个star.`^_^`
 
 ## lib
 [![Download](https://api.bintray.com/packages/arialyy/maven/MvvmFrame/images/download.svg)](https://bintray.com/arialyy/maven/MvvmFrame/_latestVersion)</br>
-compile 'com.jakewharton:butterknife:6.1.0'</br>
+compile 'com.jakewharton:butterknife:7.0.1'</br>
 compile 'com.google.code.gson:gson:2.7'</br>
 compile 'com.squareup.okhttp3:okhttp:3.2.0'</br>
-compile 'com.arialyy.frame:MVVM2:2.1.0'</br>
+compile 'com.arialyy.frame:MVVM2:2.2.0'</br>
 
 ## 用例
 ![img](https://github.com/AriaLyy/MVVM/blob/v_2.1/img/AbsFrameImg.gif)
@@ -46,7 +48,7 @@ public class BaseApplication extends AbsApplication {
 * 3、注意事项：
 框架是基于谷歌dataBinding的，布局需要遵循dataBinding的使用原则，dataBinding使用可参考[谷歌官方文档](http://developer.android.com/intl/zh-cn/tools/data-binding/guide.html)</br>
 
-## AbsActivity使用
+## 业务逻辑层的分离
 1、AbsActivity的使用需要ViewDataBinding支持，而ViewDataBinding是自动生成的，如下所示，系统将会自动生成一个名为：ActivityMainBinding的java文件。</br>
 ```xml
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
@@ -64,7 +66,14 @@ public class BaseApplication extends AbsApplication {
     </RelativeLayout>
 </layout>
 ```
-2、为了实现数据分离，需要创建一个Module专门用来处理数据或者业务逻辑，如下：
+2、为了实现数据分离，需要创建一个Module用来处理数据或者业务逻辑，框架提供了两种处理业务逻辑的方法：
+* 处理完业务逻辑后，通过`callback`方法，将你的数据回调给Activity，让Activity进行界面处理
+* 结合dataBinding技术，处理完成数据后，通过`getBinding`方法，调用指定的ViewDataBinding直接进行界面处理
+```java
+  getBinding(FragmentModuleBinding.class).setModuleStr("fragment module binding测试");
+```
+
+如下所示：</br>
 ```java
 public class IPModule extends AbsModule {
     public IPModule(Context context) {
@@ -72,19 +81,31 @@ public class IPModule extends AbsModule {
     }
 
     /**
-     * 获取IP信息
+     * 通过callback方法将数据回调给Activity或Fragment处理
      */
     public void getIpInfo() {
-        //经常I数据或业务逻辑处理操作
+        //数据或业务逻辑处理操作
         ...
         //处理完毕后，使用callback将数据回调给AbsActivity
         callback(Constance.KEY.GET_IP, "你的IP地址是：" + country + " " + province + " " + city);
     }
+
+    /**
+     *  通过ViewDataBinding，在module中直接处理数据
+     */
+     public void bindindTest(){
+       String data = "你的IP地址是：" + country + " " + province + " " + city;
+       getBinding(ActivityAbsBinding.class).setModuleStr(data);
+     }
 }
 ```
 **ps：Module一处生成可被处处使用，如：一个业务逻辑只需要生成一次，便可以被多处不同的地方使用该逻辑**
 
-3、生成该文件后，便可以创建Activity，如：MainActivity
+3、有了ViewDataBinding文件，现在可以创建Activity了</br>
+ps：在Activity中，从module接收数据有两种方式：</br>
+* 通过在Module中设置`AbsModule.OnCallback`回调来获取数据
+* 在Activity中重写`@Override protected void dataCallback(int resultCode, Object obj)` 来回调数据，obj便是module中传递到Activity的数据
+
 ```java
 //ActivityMainBinding 为上面xml布局自动生成的ViewDataBinding
 public class MainActivity extends AbsActivity<ActivityMainBinding>{
@@ -114,13 +135,27 @@ public class MainActivity extends AbsActivity<ActivityMainBinding>{
             }
         }).getIpInfo();
     }
+
+  /**
+   * 重写dataCallback方法，可以获取来自于module的数据，同时，dataCallback方法也可以接收来自于Dialog或popupwindow回调的数据
+   */
+   @Override
+   protected void dataCallback(int result, Object obj) {
+       super.dataCallback(result, obj);
+       if (result == Constance.KEY.GET_IP) {
+           getBinding().setStr(obj + "");
+       } else if (result == Constance.KEY.IP_DIALOG) {
+           getBinding().setDialogStr(obj + "");
+       }
+   }
 }
 ```
 现在，目前支持业务逻辑分离的组件有：
 AbsActivity、AbsFragment、AbsDialog、AbsDialogFragment、AbsAlertDialog、AbsPopupWindow</br>
 
 ## Dialog、popupwindow的getSimplerModule使用
-在Dialog、popupwindow中调用getSimplerModule().onDialog(int. Object)方法，将可以将Object回调给生成该Dialog、popupwindow的类。
+在AbsFrame中，编写Dialog或PopupWindow 不仅是一件很简单的事，而且Dialog向Activity传递数据的操作也很简单。</br>
+例如：在Dialog中，你只需要调用getSimplerModule().onDialog(int. Object)方法，AbsFrame会自动将Object数据传递到Activity的`dataCallback`方法中，如下所示：
 ```java
 public class ShowDialog extends AbsDialogFragment<DialogShowBinding> implements View.OnClickListener {
 
@@ -132,7 +167,7 @@ public class ShowDialog extends AbsDialogFragment<DialogShowBinding> implements 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.enter:
-                //将数据回调给生成Dialog的类
+                //将数据回调给生成Dialog的类(Activity或Fragment)
                 getSimplerModule().onDialog(Constance.KEY.SHOW_DIALOG, "对话框确认");
                 break;
             case R.id.cancel:
@@ -155,6 +190,9 @@ public class MainActivity extends AbsActivity<ActivityMainBinding>{
         ShowDialog dialog = new ShowDialog(this);
         dialog.show(getSupportFragmentManager(), "ip_dialog");
     }
+    /**
+     * 在这里接收来自于Dialog的数据
+     */
     @Override
     protected void dataCallback(int result, Object data) {
          if (result == Constance.KEY.SHOW_DIALOG) {
@@ -358,6 +396,10 @@ util.get(IP_URL, new HttpUtil.AbsResponse() {
     protected void dataCallback(int, java.lang.Object);
 }
 ```
+
+## 开发日志
+* 2.2.0 修复ViewPager中Fragment空白填充页面位置错乱的bug，在module中支持ViewDataBinding调用
+* 2.1.0 butterknife 升级版本为7.0.1
 
 License
 -------

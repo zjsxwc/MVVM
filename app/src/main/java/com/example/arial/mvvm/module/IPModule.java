@@ -5,6 +5,7 @@ import android.content.Context;
 import com.arialyy.frame.http.HttpUtil;
 import com.arialyy.frame.module.AbsModule;
 import com.example.arial.mvvm.config.Constance;
+import com.example.arial.mvvm.databinding.ActivityAbsBinding;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,4 +47,5 @@ public class IPModule extends AbsModule {
             }
         });
     }
+
 }

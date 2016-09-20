@@ -12,8 +12,6 @@ import com.example.arial.mvvm.base.BaseActivity;
 import com.example.arial.mvvm.databinding.ActivityTempViewBinding;
 import com.example.arial.mvvm.tempview.CustomTempView;
 
-import butterknife.InjectView;
-
 /**
  * Created by lyy on 2016/4/27.
  */

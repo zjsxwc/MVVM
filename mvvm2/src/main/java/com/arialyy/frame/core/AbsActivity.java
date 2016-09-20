@@ -51,7 +51,7 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
         mProxy = IOCProxy.newInstance(this);
         TAG = StringUtil.getClassName(this);
         mModuleF = ModuleFactory.newInstance();
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         mRootView = mBind.getRoot();
         if (useTempView) {
             mTempView = new TempView(this);
@@ -175,6 +175,7 @@ public abstract class AbsActivity<VB extends ViewDataBinding> extends AppCompatA
      */
     protected <M extends AbsModule> M getModule(@NonNull Class<M> clazz) {
         M module = mModuleF.getModule(this, clazz);
+        module.setHost(this);
         mProxy.changeModule(module);
         return module;
     }

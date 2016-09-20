@@ -32,6 +32,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.2.0'
     compile 'com.android.support:design:23.2.0'
+    compile 'com.arialyy.absadapter:AbsAdapter:1.1.0'
 //    compile 'com.arialyy.frame:MVVM2:2.0.0_dev'
     compile project(':mvvm2')
 }

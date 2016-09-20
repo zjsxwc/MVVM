@@ -13,21 +13,21 @@ import com.arialyy.frame.temp.AbsTempView;
 import com.arialyy.frame.temp.ITempView;
 import com.example.arial.mvvm.R;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 
 /**
  * Created by lyy on 2016/4/27.
  */
 public class CustomTempView extends AbsTempView {
-    @InjectView(R.id.bt)
+    @Bind(R.id.bt)
     Button mBt;
-    @InjectView(R.id.error_temp)
+    @Bind(R.id.error_temp)
     LinearLayout mErrorTemp;
-    @InjectView(R.id.img)
+    @Bind(R.id.img)
     ImageView mErrorImg;
-    @InjectView(R.id.text)
+    @Bind(R.id.text)
     TextView mErrorText;
-    @InjectView(R.id.loading)
+    @Bind(R.id.loading)
     ProgressBar mpb;
 
     public CustomTempView(Context context) {

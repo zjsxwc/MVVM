@@ -13,15 +13,15 @@ import com.example.arial.mvvm.config.Constance;
 import com.example.arial.mvvm.module.AddressModule;
 import com.example.arial.mvvm.module.IPModule;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 
 /**
  * Created by lyy on 2016/4/19.
  */
 public class PopupWindowTest extends AbsPopupWindow implements View.OnClickListener {
-    @InjectView(R.id.bt)
+    @Bind(R.id.bt)
     Button mBt;
-    @InjectView(R.id.module)
+    @Bind(R.id.module)
     Button mModuleBt;
 
     public PopupWindowTest(Context context, Object obj) {

@@ -10,21 +10,21 @@ import com.arialyy.frame.util.show.T;
 import com.example.arial.mvvm.R;
 import com.example.arial.mvvm.databinding.FragmentTempViewBinding;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 
 /**
  * Created by lyy on 2016/4/27.
  */
 public class TempViewFragment extends AbsFragment<FragmentTempViewBinding> implements View.OnClickListener {
-    @InjectView(R.id.net_error)
+    @Bind(R.id.net_error)
     Button mError;
-    @InjectView(R.id.data_null)
+    @Bind(R.id.data_null)
     Button mNull;
-    @InjectView(R.id.loading)
+    @Bind(R.id.loading)
     Button mLoading;
-    @InjectView(R.id.bind_test)
+    @Bind(R.id.bind_test)
     Button mBindTest;
-    @InjectView(R.id.custom_temp)
+    @Bind(R.id.custom_temp)
     Button mCustomBt;
 
 

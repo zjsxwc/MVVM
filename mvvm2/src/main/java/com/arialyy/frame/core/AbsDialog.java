@@ -35,7 +35,7 @@ public abstract class AbsDialog extends Dialog {
         mObj = obj;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(setLayoutId());
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initDialog();
     }
 

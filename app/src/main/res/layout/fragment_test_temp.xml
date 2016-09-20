@@ -29,6 +29,6 @@
             android:background="?android:attr/selectableItemBackground"
             android:onClick="onClick"
             android:text="多个fragment 使用"
-            android:visibility="gone"/>
+            android:visibility="visible"/>
     </LinearLayout>
 </layout>

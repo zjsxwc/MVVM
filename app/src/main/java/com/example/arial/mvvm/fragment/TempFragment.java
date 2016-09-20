@@ -12,17 +12,17 @@ import com.example.arial.mvvm.activity.TempViewActivity;
 import com.example.arial.mvvm.base.BaseFragment;
 import com.example.arial.mvvm.databinding.FragmentTestBinding;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 
 /**
  * Created by lyy on 2016/7/19.
  */
 public class TempFragment extends BaseFragment<FragmentTestBinding> implements View.OnClickListener {
-    @InjectView(R.id.temp_activity)
+    @Bind(R.id.temp_activity)
     Button mActivityTestBt;
-    @InjectView(R.id.temp_fragment)
+    @Bind(R.id.temp_fragment)
     Button mFragmentTestBt;
-    @InjectView(R.id.temp_fragment_1)
+    @Bind(R.id.temp_fragment_1)
     Button mMoreFragmentTestBt;
 
 

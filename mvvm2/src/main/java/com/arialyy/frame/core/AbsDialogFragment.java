@@ -74,7 +74,7 @@ public abstract class AbsDialogFragment<VB extends ViewDataBinding> extends Dial
         TAG = StringUtil.getClassName(this);
         mProxy = IOCProxy.newInstance(this);
         mModuleF = ModuleFactory.newInstance();
-        ButterKnife.inject(this, mBind.getRoot());
+        ButterKnife.bind(this, mBind.getRoot());
         if (mObj != null) {
             mSimpleModule = new DialogSimpleModule(getContext());
             IOCProxy.newInstance(mObj, mSimpleModule);
@@ -120,6 +120,7 @@ public abstract class AbsDialogFragment<VB extends ViewDataBinding> extends Dial
      */
     protected <M extends AbsModule> M getModule(Class<M> clazz) {
         M module = mModuleF.getModule(getContext(), clazz);
+        module.setHost(this);
         mProxy.changeModule(module);
         return module;
     }
