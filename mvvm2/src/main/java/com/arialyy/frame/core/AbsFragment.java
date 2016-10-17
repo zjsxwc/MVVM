@@ -153,8 +153,12 @@ public abstract class AbsFragment<VB extends ViewDataBinding> extends Fragment i
             ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(size, size);
             if (mParent instanceof ViewPager) {
                 ViewPager vp = (ViewPager) mParent;
+                //int position = vp.getAdapter().getItemPosition(this);
                 int position = vp.getCurrentItem();
-                View child = vp.getChildAt(position);
+                L.d(TAG, "position ==> " + position);
+                //L.d(TAG, "hashCode ==> " + hashCode());
+                //View child = vp.getChildAt(position);
+                View child = mRootView;
                 if (child != null) {
                     if (child instanceof LinearLayout) {
                         LinearLayout ll = (LinearLayout) child;

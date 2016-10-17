@@ -1,37 +1,43 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
-
-    defaultConfig {
-        applicationId "com.example.arial.mvvm"
-        minSdkVersion 15
-        targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+  signingConfigs {
+    relealse {
+      keyAlias 'ariaLyy'
+      keyPassword '123456'
+      storeFile file('D:/test/AbsFrame.jks')
+      storePassword '123456'
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
+  }
+  compileSdkVersion 23
+  buildToolsVersion '24.0.1'
+  defaultConfig {
+    applicationId "com.example.arial.mvvm"
+    minSdkVersion 15
+    targetSdkVersion 23
+    versionCode 1
+    versionName "1.0"
+  }
+  buildTypes {
+    release {
+      minifyEnabled true
+      signingConfig signingConfigs.relealse
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
-
-    packagingOptions {
-        exclude 'META-INF/services/javax.annotation.processing.Processor'
-    }
-
-    dataBinding {
-        enabled = true
-    }
+  }
+  packagingOptions {
+    exclude 'META-INF/services/javax.annotation.processing.Processor'
+  }
+  dataBinding {
+    enabled = true
+  }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.2.0'
-    compile 'com.android.support:design:23.2.0'
-//    compile 'com.arialyy.frame:MVVM2:2.0.0_dev'
-    compile project(':mvvm2')
+  compile fileTree(include: ['*.jar'], dir: 'libs')
+  testCompile 'junit:junit:4.12'
+  compile 'com.android.support:appcompat-v7:23.2.0'
+  compile 'com.android.support:design:23.2.0'
+  //    compile 'com.arialyy.frame:MVVM2:2.0.0_dev'
+  compile project(':mvvm2')
 }

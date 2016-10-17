@@ -33,6 +33,10 @@ public class SimpleViewPagerAdapter extends FragmentPagerAdapter {
         return mFragmentList.get(position);
     }
 
+    //@Override public int getItemPosition(Object object) {
+    //    return mFragmentList.indexOf(object);
+    //}
+
     @Override
     public int getCount() {
         return mFragmentList.size();
