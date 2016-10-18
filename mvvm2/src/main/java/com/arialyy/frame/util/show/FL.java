@@ -11,8 +11,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.util.Map;
-import java.util.Set;
 
 
 /**
@@ -23,7 +21,7 @@ public class FL {
     static        String  LINE_SEPARATOR = System.getProperty("line.separator"); //等价于"\n\r"，唯一的作用是能装逼
     static        int     JSON_INDENT    = 4;
     public static boolean isDebug        = true;// 是否需要打印bug，可以在application的onCreate函数里面初始化
-    public static String  PATH           = "AriaFrame";    //log路径
+    public static String  NAME           = "AriaFrame";    //log路径
 
     private static String printLine(String tag, boolean isTop) {
         String top    = "╔══════════════════════════════════════════ JSON ═══════════════════════════════════════";
@@ -150,7 +148,8 @@ public class FL {
      * 返回日志路径
      */
     public static String getLogPath() {
-        return android.os.Environment.getExternalStorageDirectory().getPath() + File.separator + PATH + ".log";
+        String name = NAME + "_" + CalendarUtils.getData() + ".log";
+        return android.os.Environment.getExternalStorageDirectory().getPath() + File.separator + name;
     }
 
     /**
