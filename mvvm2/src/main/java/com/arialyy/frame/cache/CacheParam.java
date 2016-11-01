@@ -1,7 +1,7 @@
 package com.arialyy.frame.cache;
 
 /**
- * Created by Lyy on 2015/4/9.
+ * Created by “AriaLyy@outlook.com” on 2015/4/9.
  * 缓存参数
  */
 public interface CacheParam {
@@ -17,7 +17,7 @@ public interface CacheParam {
     /**
      * 内存缓存
      */
-    public static final int    MEMORY_CACHE_SIZE          = 1;
+    public static final int    MEMORY_CACHE_SIZE          = 4 * 1024 * 1024;
     /**
      * 小容量磁盘缓存
      */

@@ -36,7 +36,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
- * Created by lyy on 2015/11/5.
+ * Created by “AriaLyy@outlook.com” on 2015/11/5.
  * 网络连接工具
  */
 public class HttpUtil {
@@ -56,7 +56,7 @@ public class HttpUtil {
 
     private HttpUtil(Context context) {
         mContext = context;
-        mCacheUtil = new CacheUtil(mContext, false);
+        mCacheUtil = new CacheUtil.Builder(context).openDiskCache().build();
         mHandler = new Handler(Looper.getMainLooper());
     }
 
@@ -80,7 +80,7 @@ public class HttpUtil {
     }
 
     public void get(final @NonNull String url, final Map<String, String> params,
-                    @NonNull final IResponse absResponse) {
+        @NonNull final IResponse absResponse) {
         get(url, params, absResponse, false);
     }
 
@@ -89,17 +89,17 @@ public class HttpUtil {
     }
 
     public void post(final @NonNull String url, final Map<String, String> params,
-                     @NonNull final IResponse absResponse) {
+        @NonNull final IResponse absResponse) {
         post(url, params, null, absResponse, false);
     }
 
     public void post(final @NonNull String url, final Map<String, String> params,
-                     @NonNull final IResponse absResponse, final boolean useCache) {
+        @NonNull final IResponse absResponse, final boolean useCache) {
         post(url, params, null, absResponse, useCache);
     }
 
     public void post(final @NonNull String url, final Map<String, String> params,
-                     final Map<String, String> header, @NonNull final IResponse absResponse) {
+        final Map<String, String> header, @NonNull final IResponse absResponse) {
         post(url, params, header, absResponse, false);
     }
 
@@ -109,7 +109,7 @@ public class HttpUtil {
      * @param key 上传文件键值
      */
     public void uploadFile(@NonNull final String url, @NonNull final String filePath, @NonNull final String key,
-                           final String contentType, final Map<String, String> header, @NonNull final IResponse absResponse) {
+        final String contentType, final Map<String, String> header, @NonNull final IResponse absResponse) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -185,7 +185,7 @@ public class HttpUtil {
      * 基本get方法
      */
     public void get(final @NonNull String url, final Map<String, String> params,
-                    @NonNull final IResponse absResponse, final boolean useCache) {
+        @NonNull final IResponse absResponse, final boolean useCache) {
         L.v(TAG, "请求链接 >>>> " + url);
         String requestUrl = url;
         if (params != null && params.size() > 0) {
@@ -202,7 +202,7 @@ public class HttpUtil {
         }
 
         OkHttpClient client = new OkHttpClient.Builder().connectTimeout(TIME_OUT, TimeUnit.MILLISECONDS)
-                .writeTimeout(TIME_OUT, TimeUnit.MILLISECONDS).readTimeout(300000, TimeUnit.MILLISECONDS).build();
+            .writeTimeout(TIME_OUT, TimeUnit.MILLISECONDS).readTimeout(300000, TimeUnit.MILLISECONDS).build();
         final Request request = new Request.Builder().url(requestUrl).build();
         Call          call    = client.newCall(request);
 
@@ -242,11 +242,11 @@ public class HttpUtil {
      * 基本的Post方法
      */
     public void post(final @NonNull String url, final Map<String, String> params,
-                     final Map<String, String> header, @NonNull final IResponse absResponse,
-                     final boolean useCache) {
+        final Map<String, String> header, @NonNull final IResponse absResponse,
+        final boolean useCache) {
         L.v(TAG, "请求链接 >>>> " + url);
         OkHttpClient client = new OkHttpClient.Builder().connectTimeout(TIME_OUT, TimeUnit.MILLISECONDS)
-                .writeTimeout(TIME_OUT, TimeUnit.MILLISECONDS).readTimeout(300000, TimeUnit.MILLISECONDS).build();
+            .writeTimeout(TIME_OUT, TimeUnit.MILLISECONDS).readTimeout(300000, TimeUnit.MILLISECONDS).build();
         FormBody.Builder formB = new FormBody.Builder();
         //头数据
         Headers.Builder hb = new Headers.Builder();
