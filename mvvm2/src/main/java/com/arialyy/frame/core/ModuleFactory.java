@@ -35,7 +35,7 @@ public class ModuleFactory {
     /**
      * 获取Module
      */
-    public  <M extends AbsModule> M getModule(Context context, Class<M> clazz) {
+    public <M extends AbsModule> M getModule(Context context, Class<M> clazz) {
         M module = (M) mModules.get(clazz.hashCode());
         if (module == null) {
             return newInstanceModule(context, clazz);

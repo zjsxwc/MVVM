@@ -13,15 +13,15 @@ import com.example.arial.mvvm.databinding.ActivityTempViewVpContentBinding;
 import com.example.arial.mvvm.tempview.SimpleViewPagerAdapter;
 import com.example.arial.mvvm.tempview.TempViewFragment1;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 
 /**
  * Created by lyy on 2016/4/28.
  */
 public class TVVPContentActivity extends BaseActivity<ActivityTempViewVpContentBinding> {
-    @InjectView(R.id.vp)
+    @Bind(R.id.vp)
     ViewPager mVp;
-    @InjectView(R.id.tool_bar)
+    @Bind(R.id.tool_bar)
     TabLayout mTb;
 
     @Override

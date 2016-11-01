@@ -60,13 +60,12 @@ public abstract class AbsFragment<VB extends ViewDataBinding> extends Fragment i
         TAG = StringUtil.getClassName(this);
         mProxy = IOCProxy.newInstance(this);
         mModuleF = ModuleFactory.newInstance();
-        ButterKnife.inject(this, mBind.getRoot());
+        ButterKnife.bind(this, mBind.getRoot());
         if (useTempView) {
             mTempView = new TempView(getContext());
             mTempView.setBtListener(this);
         }
     }
-
 
     @Override
     public void onAttach(Context context) {
@@ -152,12 +151,19 @@ public abstract class AbsFragment<VB extends ViewDataBinding> extends Fragment i
             int size = ViewGroup.LayoutParams.MATCH_PARENT;
             ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(size, size);
             if (mParent instanceof ViewPager) {
+<<<<<<< HEAD
                 ViewPager vp = (ViewPager) mParent;
                 //int position = vp.getAdapter().getItemPosition(this);
                 int position = vp.getCurrentItem();
                 L.d(TAG, "position ==> " + position);
                 //L.d(TAG, "hashCode ==> " + hashCode());
                 //View child = vp.getChildAt(position);
+=======
+//                ViewPager vp = (ViewPager) mParent;
+//                int position = vp.getCurrentItem();
+//                View child = vp.getChildAt(position);
+//                L.d(TAG, "hashcode ==> " + child.hashCode());
+>>>>>>> 45f272d3eb773140e874b2d3e14a6e7da0a9bc63
                 View child = mRootView;
                 if (child != null) {
                     if (child instanceof LinearLayout) {
@@ -199,9 +205,10 @@ public abstract class AbsFragment<VB extends ViewDataBinding> extends Fragment i
                 mTempView.clearFocus();
                 if (mParent != null) {
                     if (mParent instanceof ViewPager) {
-                        ViewPager vp = (ViewPager) mParent;
-                        int position = vp.getCurrentItem();
-                        View child = vp.getChildAt(position);
+//                        ViewPager vp = (ViewPager) mParent;
+//                        int position = vp.getCurrentItem();
+//                        View child = vp.getChildAt(position);
+                        View child = mRootView;
                         ViewGroup vg = (ViewGroup) child;
                         if (vg != null) {
                             vg.removeView(mTempView);
@@ -239,6 +246,7 @@ public abstract class AbsFragment<VB extends ViewDataBinding> extends Fragment i
      */
     protected <M extends AbsModule> M getModule(@NonNull Class<M> clazz) {
         M module = mModuleF.getModule(getContext(), clazz);
+        module.setHost(this);
         mProxy.changeModule(module);
         return module;
     }

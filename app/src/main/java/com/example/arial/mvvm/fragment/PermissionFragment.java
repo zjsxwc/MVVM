@@ -14,15 +14,16 @@ import com.example.arial.mvvm.databinding.FragmentTestBinding;
 import com.example.arial.mvvm.permission.FragmentContentActivity;
 import com.example.arial.mvvm.permission.PermissionActivity;
 
-import butterknife.InjectView;
+import butterknife.Bind;
+
 
 /**
  * Created by lyy on 2016/7/19.
  */
 public class PermissionFragment extends BaseFragment<FragmentTestBinding> implements View.OnClickListener {
-    @InjectView(R.id.temp_activity)
+    @Bind(R.id.temp_activity)
     Button mActivityTestBt;
-    @InjectView(R.id.temp_fragment)
+    @Bind(R.id.temp_fragment)
     Button mFragmentTestBt;
 
 

@@ -9,7 +9,6 @@ import com.example.arial.mvvm.R;
 import com.example.arial.mvvm.base.BaseActivity;
 import com.example.arial.mvvm.databinding.ActivityFragmentContentBinding;
 
-import butterknife.InjectView;
 
 /**
  * Created by lyy on 2016/4/12.

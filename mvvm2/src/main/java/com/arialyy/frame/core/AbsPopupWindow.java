@@ -60,7 +60,7 @@ public abstract class AbsPopupWindow extends PopupWindow {
     private void initPopupWindow() {
         mView = LayoutInflater.from(mContext).inflate(setLayoutId(), null);
         setContentView(mView);
-        ButterKnife.inject(this, mView);
+        ButterKnife.bind(this, mView);
         TAG = StringUtil.getClassName(this);
         // 设置SelectPicPopupWindow弹出窗体的宽
         setWidth(ViewGroup.LayoutParams.MATCH_PARENT);

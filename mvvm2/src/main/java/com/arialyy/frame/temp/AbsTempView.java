@@ -32,7 +32,7 @@ public abstract class AbsTempView extends LinearLayout implements ITempView {
 
     private void initView(Context context) {
         View view = LayoutInflater.from(context).inflate(setLayoutId(), this);
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
         TAG = StringUtil.getClassName(this);
         init();
     }

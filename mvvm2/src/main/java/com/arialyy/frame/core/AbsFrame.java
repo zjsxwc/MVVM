@@ -12,8 +12,8 @@ import java.util.Stack;
  * APP生命周期管理类管理
  */
 public class AbsFrame {
-    private static final    String    TAG      = "AbsFrame";
-    private static final    Object    LOCK     = new Object();
+    private static final    String   TAG      = "AbsFrame";
+    private static final    Object   LOCK     = new Object();
     private volatile static AbsFrame mManager = null;
     private Context mContext;
     private Stack<AbsActivity> mActivityStack = new Stack<>();
@@ -55,6 +55,10 @@ public class AbsFrame {
         return mManager;
     }
 
+    /**
+     * 获取Activity栈
+     * @return
+     */
     public Stack<AbsActivity> getActivityStack() {
         return mActivityStack;
     }

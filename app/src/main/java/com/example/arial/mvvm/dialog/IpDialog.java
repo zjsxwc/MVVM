@@ -9,17 +9,18 @@ import com.arialyy.frame.core.AbsDialogFragment;
 import com.example.arial.mvvm.R;
 import com.example.arial.mvvm.config.Constance;
 import com.example.arial.mvvm.databinding.DialogAbsBinding;
+import com.example.arial.mvvm.module.BindingModule;
 import com.example.arial.mvvm.module.IPModule;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 
 /**
  * Created by lyy on 2016/4/6.
  */
 @SuppressLint("ValidFragment")
 public class IpDialog extends AbsDialogFragment<DialogAbsBinding> implements View.OnClickListener {
-    @InjectView(R.id.enter) Button mEnter;
-    @InjectView(R.id.cancel) Button mCancel;
+    @Bind(R.id.enter)        Button mEnter;
+    @Bind(R.id.cancel) Button mCancel;
 
     public IpDialog(Object obj) {
         super(obj);
@@ -27,7 +28,8 @@ public class IpDialog extends AbsDialogFragment<DialogAbsBinding> implements Vie
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        getModule(IPModule.class).getIpInfo();
+//        getModule(IPModule.class).getIpInfo();
+        getModule(BindingModule.class).dialogBindingTest();
         mEnter.setOnClickListener(this);
         mCancel.setOnClickListener(this);
     }

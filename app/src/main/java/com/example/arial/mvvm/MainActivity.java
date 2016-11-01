@@ -28,17 +28,18 @@ import com.example.arial.mvvm.fragment.TempFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.InjectView;
+import butterknife.Bind;
+
 
 /**
  * Created by lyy on 2016/4/12.
  */
 public class MainActivity extends AbsActivity<ActivityMainBinding> implements NavigationView.OnNavigationItemSelectedListener {
-    @InjectView(R.id.drawer_layout)
+    @Bind(R.id.drawer_layout)
     DrawerLayout   mDLayout;
-    @InjectView(R.id.nav_view)
+    @Bind(R.id.nav_view)
     NavigationView mNv;
-    @InjectView(R.id.toolbar)
+    @Bind(R.id.toolbar)
     Toolbar        mToolbar;
     List<AbsFragment> mFragments = new ArrayList<>();
 
