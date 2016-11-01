@@ -34,14 +34,6 @@ android {
 }
 
 dependencies {
-<<<<<<< HEAD
-  compile fileTree(include: ['*.jar'], dir: 'libs')
-  testCompile 'junit:junit:4.12'
-  compile 'com.android.support:appcompat-v7:23.2.0'
-  compile 'com.android.support:design:23.2.0'
-  //    compile 'com.arialyy.frame:MVVM2:2.0.0_dev'
-  compile project(':mvvm2')
-=======
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.2.0'
@@ -49,5 +41,4 @@ dependencies {
     compile 'com.arialyy.absadapter:AbsAdapter:1.1.0'
 //    compile 'com.arialyy.frame:MVVM2:2.0.0_dev'
     compile project(':mvvm2')
->>>>>>> 45f272d3eb773140e874b2d3e14a6e7da0a9bc63
 }

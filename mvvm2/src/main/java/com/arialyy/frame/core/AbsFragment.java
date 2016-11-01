@@ -151,19 +151,10 @@ public abstract class AbsFragment<VB extends ViewDataBinding> extends Fragment i
             int size = ViewGroup.LayoutParams.MATCH_PARENT;
             ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(size, size);
             if (mParent instanceof ViewPager) {
-<<<<<<< HEAD
-                ViewPager vp = (ViewPager) mParent;
-                //int position = vp.getAdapter().getItemPosition(this);
-                int position = vp.getCurrentItem();
-                L.d(TAG, "position ==> " + position);
-                //L.d(TAG, "hashCode ==> " + hashCode());
-                //View child = vp.getChildAt(position);
-=======
-//                ViewPager vp = (ViewPager) mParent;
-//                int position = vp.getCurrentItem();
-//                View child = vp.getChildAt(position);
-//                L.d(TAG, "hashcode ==> " + child.hashCode());
->>>>>>> 45f272d3eb773140e874b2d3e14a6e7da0a9bc63
+                //                ViewPager vp = (ViewPager) mParent;
+                //                int position = vp.getCurrentItem();
+                //                View child = vp.getChildAt(position);
+                //                L.d(TAG, "hashcode ==> " + child.hashCode());
                 View child = mRootView;
                 if (child != null) {
                     if (child instanceof LinearLayout) {
@@ -205,9 +196,9 @@ public abstract class AbsFragment<VB extends ViewDataBinding> extends Fragment i
                 mTempView.clearFocus();
                 if (mParent != null) {
                     if (mParent instanceof ViewPager) {
-//                        ViewPager vp = (ViewPager) mParent;
-//                        int position = vp.getCurrentItem();
-//                        View child = vp.getChildAt(position);
+                        //                        ViewPager vp = (ViewPager) mParent;
+                        //                        int position = vp.getCurrentItem();
+                        //                        View child = vp.getChildAt(position);
                         View child = mRootView;
                         ViewGroup vg = (ViewGroup) child;
                         if (vg != null) {
