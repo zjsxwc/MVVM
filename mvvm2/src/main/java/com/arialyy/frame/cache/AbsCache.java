@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.util.LruCache;
 import android.text.TextUtils;
+import com.arialyy.frame.cache.diskcache.DiskLruCache;
 import com.arialyy.frame.util.AndroidUtils;
 import com.arialyy.frame.util.AppUtils;
 import com.arialyy.frame.util.StreamUtil;
@@ -19,13 +20,13 @@ import java.io.OutputStream;
  * Created by “AriaLyy@outlook.com” on 2015/4/9.
  * 缓存抽象类，封装了缓存的读写操作
  */
-public abstract class AbsCache implements CacheParam {
+abstract class AbsCache implements CacheParam {
     private static final String                   TAG           = "AbsCache";
     private static final Object                   LOCK          = new Object();
     /**
      * 磁盘缓存工具
      */
-    private              DiskLruCache             mDiskLruCache = null;
+    private DiskLruCache mDiskLruCache = null;
     /**
      * 内存缓存工具
      */

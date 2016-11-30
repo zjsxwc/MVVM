@@ -4,7 +4,7 @@ package com.arialyy.frame.cache;
  * Created by “AriaLyy@outlook.com” on 2015/4/9.
  * 缓存参数
  */
-public interface CacheParam {
+interface CacheParam {
 
     /**
      * 磁盘缓存
