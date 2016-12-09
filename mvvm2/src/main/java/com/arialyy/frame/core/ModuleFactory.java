@@ -52,6 +52,7 @@ public class ModuleFactory {
         Object[] params     = {context};
         try {
             Constructor<T> con    = clazz.getConstructor(paramTypes);
+            con.setAccessible(true);
             T              module = con.newInstance(params);
             mModules.put(clazz.hashCode(), module);
             return module;
