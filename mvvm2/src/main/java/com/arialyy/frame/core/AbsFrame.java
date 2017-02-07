@@ -2,19 +2,17 @@ package com.arialyy.frame.core;
 
 import android.app.ActivityManager;
 import android.content.Context;
-
 import com.arialyy.frame.util.show.FL;
-
 import java.util.Iterator;
 import java.util.Stack;
 
 /**
- * Created by lyy on 2015/11/4.
+ * Created by “AriaLyy@outlook.com” on 2015/11/4.
  * APP生命周期管理类管理
  */
 public class AbsFrame {
-    private static final    String   TAG      = "AbsFrame";
-    private static final    Object   LOCK     = new Object();
+    private static final String TAG = "AbsFrame";
+    private static final Object LOCK = new Object();
     private volatile static AbsFrame mManager = null;
     private Context mContext;
     private Stack<AbsActivity> mActivityStack = new Stack<>();
@@ -29,9 +27,6 @@ public class AbsFrame {
 
     /**
      * 初始化框架
-     *
-     * @param applicationContext
-     * @return
      */
     public static AbsFrame init(Context applicationContext) {
         if (mManager == null) {
@@ -46,8 +41,6 @@ public class AbsFrame {
 
     /**
      * 获取AppManager管流程实例
-     *
-     * @return
      */
     public static AbsFrame getInstance() {
         if (mManager == null) {
@@ -58,7 +51,6 @@ public class AbsFrame {
 
     /**
      * 获取Activity栈
-     * @return
      */
     public Stack<AbsActivity> getActivityStack() {
         return mActivityStack;
@@ -66,7 +58,7 @@ public class AbsFrame {
 
     /**
      * 开启异常捕获
-     * 日志文件位于/data/data/Package Name/cache//crash/AbsExceptionFile.crash
+     * 日志文件位于/data/data/Package Name/cache//crash/2016.10.26_AbsExceptionFile.crash
      */
     public void openCrashHandler() {
         openCrashHandler("", "");
@@ -79,7 +71,7 @@ public class AbsFrame {
      * android:name="android.permission.ACCESS_NETWORK_STATE"
      *
      * @param serverHost 服务器地址
-     * @param key        数据传输键值
+     * @param key 数据传输键值
      */
     public AbsFrame openCrashHandler(String serverHost, String key) {
         CrashHandler handler = CrashHandler.getInstance(mContext);
@@ -131,7 +123,6 @@ public class AbsFrame {
      */
     public void finishActivity(AbsActivity activity) {
         if (activity != null) {
-            mActivityStack.remove(activity);
             activity.finish();
         }
     }
@@ -141,7 +132,10 @@ public class AbsFrame {
      */
     public void removeActivity(AbsActivity activity) {
         if (activity != null) {
-            mActivityStack.remove(activity);
+            int i = mActivityStack.search(activity);
+            if (i != -1) {
+                mActivityStack.remove(activity);
+            }
         }
     }
 
@@ -154,6 +148,7 @@ public class AbsFrame {
             AbsActivity activity = iter.next();
             if (activity.getClass().equals(cls)) {
                 iter.remove();
+                activity.finish();
             }
         }
     }
@@ -178,7 +173,8 @@ public class AbsFrame {
     public void exitApp(Boolean isBackground) {
         try {
             finishAllActivity();
-            ActivityManager activityMgr = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+            ActivityManager activityMgr =
+                (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
             activityMgr.restartPackage(mContext.getPackageName());
         } catch (Exception e) {
             FL.e(TAG, FL.getExceptionString(e));
@@ -189,6 +185,4 @@ public class AbsFrame {
             }
         }
     }
-
-
 }
