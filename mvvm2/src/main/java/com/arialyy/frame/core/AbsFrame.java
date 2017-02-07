@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.arialyy.frame.util.show.FL;
 
+import java.util.Iterator;
 import java.util.Stack;
 
 /**
@@ -148,9 +149,11 @@ public class AbsFrame {
      * 结束指定类名的Activity
      */
     public void finishActivity(Class<?> cls) {
-        for (AbsActivity activity : mActivityStack) {
+        Iterator<AbsActivity> iter = mActivityStack.iterator();
+        while (iter.hasNext()) {
+            AbsActivity activity = iter.next();
             if (activity.getClass().equals(cls)) {
-                finishActivity(activity);
+                iter.remove();
             }
         }
     }
