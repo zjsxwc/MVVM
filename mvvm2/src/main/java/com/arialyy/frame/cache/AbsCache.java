@@ -116,7 +116,9 @@ abstract class AbsCache implements CacheParam {
      * 设置内存缓存大小
      */
     void setMemoryCacheSize(int size) {
-        mMemoryCache.resize(size);
+        if (useMemory && mMemoryCache != null) {
+            mMemoryCache.resize(size);
+        }
     }
 
     /**
