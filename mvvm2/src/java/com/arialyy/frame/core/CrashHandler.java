@@ -25,12 +25,12 @@ import java.util.WeakHashMap;
  * 异常捕获
  */
 final class CrashHandler implements Thread.UncaughtExceptionHandler {
-  private static final    Object       LOCK     = new Object();
-  private static final    String       TAG      = "CrashHandler";
+  private static final Object LOCK = new Object();
+  private static final String TAG = "CrashHandler";
   private static volatile CrashHandler INSTANCE = null;
   private Thread.UncaughtExceptionHandler mDefaultHandler;
-  private Context                         mContext;
-  private String                          mServerHost, mPramKey;
+  private Context mContext;
+  private String mServerHost, mPramKey;
   private String mExceptionFileName = CalendarUtils.getData() + "_" + "AbsExceptionFile.crash";
 
   private CrashHandler(Context context) {
@@ -119,8 +119,8 @@ final class CrashHandler implements Thread.UncaughtExceptionHandler {
         && AndroidUtils.checkPermission(mContext, Manifest.permission.ACCESS_NETWORK_STATE)) {
       if (NetUtils.isConnected(mContext) && !TextUtils.isEmpty(mServerHost) && !TextUtils.isEmpty(
           mPramKey)) {
-        HttpUtil            util   = HttpUtil.getInstance(mContext);
-        String              objStr = new Gson().toJson(info);
+        HttpUtil util = HttpUtil.getInstance(mContext);
+        String objStr = new Gson().toJson(info);
         Map<String, String> params = new WeakHashMap<>();
         params.put(mPramKey, objStr);
         util.get(mServerHost, params, new HttpUtil.AbsResponse());
@@ -156,9 +156,9 @@ final class CrashHandler implements Thread.UncaughtExceptionHandler {
   }
 
   private class ExceptionInfo {
-    int    versionCode;
+    int versionCode;
     String versionName;
-    int    systemVersionCode;
+    int systemVersionCode;
     String exceptionMsg;
     String phoneModel;
     String time;

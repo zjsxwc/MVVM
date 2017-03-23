@@ -14,7 +14,7 @@ import com.arialyy.frame.util.AndroidVersionUtil;
  * 权限回调帮助类
  */
 class PermissionHelp {
-  public static final    Object         LOCK     = new Object();
+  public static final Object LOCK = new Object();
   public volatile static PermissionHelp INSTANCE = null;
   public PermissionManager mPm;
 

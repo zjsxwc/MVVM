@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="基础组件使用">
-        <menu>
-            <item
-                android:id="@+id/module"
-                android:icon="@mipmap/ic_launcher"
-                android:title="AbsFragment 使用"/>
-            <item
-                android:id="@+id/activity"
-                android:icon="@mipmap/ic_launcher"
-                android:title="AbsActivity使用"/>
-            <item
-                android:id="@+id/dialog"
-                android:icon="@mipmap/ic_launcher"
-                android:title="AbsDialog使用"/>
-            <item
-                android:id="@+id/pop"
-                android:icon="@mipmap/ic_launcher"
-                android:title="popupwindow使用"/>
-        </menu>
-    </item>
+  <item android:title="基础组件使用">
+    <menu>
+      <item
+          android:id="@+id/module"
+          android:icon="@mipmap/ic_launcher"
+          android:title="AbsFragment 使用"/>
+      <item
+          android:id="@+id/activity"
+          android:icon="@mipmap/ic_launcher"
+          android:title="AbsActivity使用"/>
+      <item
+          android:id="@+id/dialog"
+          android:icon="@mipmap/ic_launcher"
+          android:title="AbsDialog使用"/>
+      <item
+          android:id="@+id/pop"
+          android:icon="@mipmap/ic_launcher"
+          android:title="popupwindow使用"/>
+    </menu>
+  </item>
 
-    <item android:title="基础功能使用">
-        <menu>
-            <item
-                android:id="@+id/permission"
-                android:icon="@mipmap/ic_launcher"
-                android:title="6.0权限申请"/>
-            <item
-                android:id="@+id/temp_view"
-                android:icon="@mipmap/ic_launcher"
-                android:title="TempView使用"/>
-            <item
-                android:id="@+id/crash"
-                android:icon="@mipmap/ic_launcher"
-                android:title="crash捕获"/>
-        </menu>
-    </item>
+  <item android:title="基础功能使用">
+    <menu>
+      <item
+          android:id="@+id/permission"
+          android:icon="@mipmap/ic_launcher"
+          android:title="6.0权限申请"/>
+      <item
+          android:id="@+id/temp_view"
+          android:icon="@mipmap/ic_launcher"
+          android:title="TempView使用"/>
+      <item
+          android:id="@+id/crash"
+          android:icon="@mipmap/ic_launcher"
+          android:title="crash捕获"/>
+    </menu>
+  </item>
 
 </menu>

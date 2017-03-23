@@ -14,8 +14,8 @@ import com.lyy.frame.R;
  */
 public class TempView extends AbsTempView {
   ProgressBar mPb;
-  TextView    mHint;
-  Button      mBt;
+  TextView mHint;
+  Button mBt;
   FrameLayout mErrorContent;
 
   public TempView(Context context) {

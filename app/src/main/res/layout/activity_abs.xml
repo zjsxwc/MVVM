@@ -1,78 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data>
+  <data>
 
-        <variable
-            name="str"
-            type="String"/>
+    <variable
+        name="str"
+        type="String"
+        />
 
-        <variable
-            name="dialogStr"
-            type="String"/>
+    <variable
+        name="dialogStr"
+        type="String"
+        />
 
-        <variable
-            name="moduleStr"
-            type="String"/>
-    </data>
+    <variable
+        name="moduleStr"
+        type="String"
+        />
+  </data>
 
-    <LinearLayout
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
+
+    <include layout="@layout/layout_bar"/>
+
+    <TextView
+        android:id="@+id/msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@{str}"
+        />
+
+    <TextView
+        android:id="@+id/dialog_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@{dialogStr}"
+        />
+
+    <TextView
+        android:id="@+id/module_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@{moduleStr}"
+        />
+
+    <Button
+        android:id="@+id/use_module_1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:onClick="onClick"
+        android:text="module使用方式_1"
+        />
 
-        <include layout="@layout/layout_bar"/>
+    <Button
+        android:id="@+id/use_module_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:onClick="onClick"
+        android:text="module使用方式_2"
+        />
 
-        <TextView
-            android:id="@+id/msg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{str}"/>
+    <Button
+        android:id="@+id/use_module_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:onClick="onClick"
+        android:text="在module中调用binding"
+        />
 
-        <TextView
-            android:id="@+id/dialog_msg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{dialogStr}"/>
+    <Button
+        android:id="@+id/show_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/get_ip_info"
+        android:background="?android:attr/selectableItemBackground"
+        android:onClick="onClick"
+        android:text="Dialog 回调"
+        />
 
-        <TextView
-            android:id="@+id/module_msg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{moduleStr}"/>
-
-        <Button
-            android:id="@+id/use_module_1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:onClick="onClick"
-            android:text="module使用方式_1"/>
-
-        <Button
-            android:id="@+id/use_module_2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:onClick="onClick"
-            android:text="module使用方式_2"/>
-
-        <Button
-            android:id="@+id/use_module_3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:onClick="onClick"
-            android:text="在module中调用binding"/>
-
-        <Button
-            android:id="@+id/show_dialog"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/get_ip_info"
-            android:background="?android:attr/selectableItemBackground"
-            android:onClick="onClick"
-            android:text="Dialog 回调"/>
-
-    </LinearLayout>
+  </LinearLayout>
 </layout>

@@ -35,15 +35,15 @@ import java.lang.reflect.Field;
 public abstract class AbsFragment<VB extends ViewDataBinding> extends Fragment
     implements OnTempBtClickListener {
   protected String TAG = "";
-  protected View        mRootView;
+  protected View mRootView;
   protected AbsActivity mActivity;
-  protected boolean     isInit;
+  protected boolean isInit;
   protected AbsTempView mTempView;
   protected boolean useTempView = true;
-  private VB            mBind;
-  private IOCProxy      mProxy;
+  private VB mBind;
+  private IOCProxy mProxy;
   private ModuleFactory mModuleF;
-  private ViewGroup     mParent;
+  private ViewGroup mParent;
 
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {

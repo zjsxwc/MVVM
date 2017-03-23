@@ -27,8 +27,8 @@ public class NinePatchBitmapFactory {
   private static final int TRANSPARENT_COLOR = 0x00000000;
 
   public static NinePatchDrawable createNinePatchDrawable(Resources res, Bitmap bitmap) {
-    RangeLists rangeLists   = checkBitmap(bitmap);
-    Bitmap     trimedBitmap = trimBitmap(bitmap);
+    RangeLists rangeLists = checkBitmap(bitmap);
+    Bitmap trimedBitmap = trimBitmap(bitmap);
     return createNinePatchWithCapInsets(res, trimedBitmap, rangeLists.rangeListX,
         rangeLists.rangeListY, null);
   }
@@ -83,7 +83,7 @@ public class NinePatchBitmapFactory {
   }
 
   public static RangeLists checkBitmap(Bitmap bitmap) {
-    int width  = bitmap.getWidth();
+    int width = bitmap.getWidth();
     int height = bitmap.getHeight();
 
     List<Range> rangeListX = new ArrayList<Range>();
@@ -92,9 +92,9 @@ public class NinePatchBitmapFactory {
     for (int i = 1; i < width - 1; i++) {
       int color = bitmap.getPixel(i, 0);
       int alpha = Color.alpha(color);
-      int red   = Color.red(color);
+      int red = Color.red(color);
       int green = Color.green(color);
-      int blue  = Color.blue(color);
+      int blue = Color.blue(color);
       //			System.out.println( String.valueOf(alpha) + "," + String.valueOf(red) + "," + String.valueOf(green) + "," + String.valueOf(blue) );
       if (alpha == 255 && red == 0 && green == 0 && blue == 0) {
         if (pos == -1) {
@@ -126,9 +126,9 @@ public class NinePatchBitmapFactory {
     for (int i = 1; i < height - 1; i++) {
       int color = bitmap.getPixel(0, i);
       int alpha = Color.alpha(color);
-      int red   = Color.red(color);
+      int red = Color.red(color);
       int green = Color.green(color);
-      int blue  = Color.blue(color);
+      int blue = Color.blue(color);
       if (alpha == 255 && red == 0 && green == 0 && blue == 0) {
         if (pos == -1) {
           pos = i - 1;
@@ -161,7 +161,7 @@ public class NinePatchBitmapFactory {
   }
 
   public static Bitmap trimBitmap(Bitmap bitmap) {
-    int width  = bitmap.getWidth();
+    int width = bitmap.getWidth();
     int height = bitmap.getHeight();
 
     Bitmap result = Bitmap.createBitmap(bitmap, 1, 1, width - 2, height - 2);

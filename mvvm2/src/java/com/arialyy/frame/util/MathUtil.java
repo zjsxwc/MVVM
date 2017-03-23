@@ -35,13 +35,13 @@ public class MathUtil {
    * http://spiritfrog.iteye.com/blog/602144
    */
   public class MBigDecimal {
-    public static final int ROUND_UP          = 0;
-    public static final int ROUND_DOWN        = 1;
-    public static final int ROUND_CEILING     = 2;
-    public static final int ROUND_FLOOR       = 3;
-    public static final int ROUND_HALF_UP     = 4;
-    public static final int ROUND_HALF_DOWN   = 5;
-    public static final int ROUND_HALF_EVEN   = 6;
+    public static final int ROUND_UP = 0;
+    public static final int ROUND_DOWN = 1;
+    public static final int ROUND_CEILING = 2;
+    public static final int ROUND_FLOOR = 3;
+    public static final int ROUND_HALF_UP = 4;
+    public static final int ROUND_HALF_DOWN = 5;
+    public static final int ROUND_HALF_EVEN = 6;
     public static final int ROUND_UNNECESSARY = 7;
   }
 }

@@ -15,10 +15,10 @@ import java.util.List;
  */
 @TargetApi(Build.VERSION_CODES.M) public class PermissionManager implements OnPermissionCallback {
   private static final String TAG = "PermissionManager";
-  private static final    Object                            LOCK       = new Object();
-  private static volatile PermissionManager                 INSTANCE   = null;
+  private static final Object LOCK = new Object();
+  private static volatile PermissionManager INSTANCE = null;
   private PermissionUtil mPu;
-  private                 SparseArray<OnPermissionCallback> mCallbacks = new SparseArray<>();
+  private SparseArray<OnPermissionCallback> mCallbacks = new SparseArray<>();
 
   private PermissionManager() {
     mPu = PermissionUtil.getInstance();
@@ -111,9 +111,9 @@ import java.util.List;
     if (list == null || list.size() == 0) {
       return null;
     }
-    String[]             denyPermission = mPu.list2Array(list);
-    int                  hashCode       = Arrays.hashCode(denyPermission);
-    OnPermissionCallback c              = mCallbacks.get(hashCode);
+    String[] denyPermission = mPu.list2Array(list);
+    int hashCode = Arrays.hashCode(denyPermission);
+    OnPermissionCallback c = mCallbacks.get(hashCode);
     if (c == null) {
       mCallbacks.append(hashCode, callback);
     }
@@ -121,8 +121,8 @@ import java.util.List;
   }
 
   @Override public void onSuccess(String... permissions) {
-    int                  hashCode = Arrays.hashCode(permissions);
-    OnPermissionCallback c        = mCallbacks.get(hashCode);
+    int hashCode = Arrays.hashCode(permissions);
+    OnPermissionCallback c = mCallbacks.get(hashCode);
     if (c != null) {
       c.onSuccess(permissions);
       mCallbacks.remove(hashCode);
@@ -130,8 +130,8 @@ import java.util.List;
   }
 
   @Override public void onFail(String... permissions) {
-    int                  hashCode = Arrays.hashCode(permissions);
-    OnPermissionCallback c        = mCallbacks.get(hashCode);
+    int hashCode = Arrays.hashCode(permissions);
+    OnPermissionCallback c = mCallbacks.get(hashCode);
     if (c != null) {
       c.onFail(permissions);
       mCallbacks.remove(hashCode);

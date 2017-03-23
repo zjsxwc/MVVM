@@ -19,34 +19,30 @@ import butterknife.Bind;
  * Created by lyy on 2016/4/28.
  */
 public class TVVPContentActivity extends BaseActivity<ActivityTempViewVpContentBinding> {
-    @Bind(R.id.vp)
-    ViewPager mVp;
-    @Bind(R.id.tool_bar)
-    TabLayout mTb;
+  @Bind(R.id.vp) ViewPager mVp;
+  @Bind(R.id.tool_bar) TabLayout mTb;
 
-    @Override
-    protected void init(Bundle savedInstanceState) {
-        super.init(savedInstanceState);
-        setupContentViewPager(mVp);
-        setTitle("多个Fragment的TempView测试");
-    }
+  @Override protected void init(Bundle savedInstanceState) {
+    super.init(savedInstanceState);
+    setupContentViewPager(mVp);
+    setTitle("多个Fragment的TempView测试");
+  }
 
-    @Override
-    protected int setLayoutId() {
-        return R.layout.activity_temp_view_vp_content;
-    }
+  @Override protected int setLayoutId() {
+    return R.layout.activity_temp_view_vp_content;
+  }
 
-    /**
-     * 初始化内容Viewpager
-     */
-    private void setupContentViewPager(ViewPager viewPager) {
-        SimpleViewPagerAdapter adapter = new SimpleViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(TempViewFragment1.newInstance(Color.BLUE), "蓝色");
-        adapter.addFrag(TempViewFragment1.newInstance(Color.YELLOW), "黄色");
-        adapter.addFrag(TempViewFragment1.newInstance(Color.RED), "红色");
-        adapter.addFrag(TempViewFragment1.newInstance(Color.GREEN), "绿色");
-        viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(5);
-        mTb.setupWithViewPager(viewPager);
-    }
+  /**
+   * 初始化内容Viewpager
+   */
+  private void setupContentViewPager(ViewPager viewPager) {
+    SimpleViewPagerAdapter adapter = new SimpleViewPagerAdapter(getSupportFragmentManager());
+    adapter.addFrag(TempViewFragment1.newInstance(Color.BLUE), "蓝色");
+    adapter.addFrag(TempViewFragment1.newInstance(Color.YELLOW), "黄色");
+    adapter.addFrag(TempViewFragment1.newInstance(Color.RED), "红色");
+    adapter.addFrag(TempViewFragment1.newInstance(Color.GREEN), "绿色");
+    viewPager.setAdapter(adapter);
+    viewPager.setOffscreenPageLimit(5);
+    mTb.setupWithViewPager(viewPager);
+  }
 }

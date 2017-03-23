@@ -15,9 +15,9 @@ import com.arialyy.frame.util.show.L;
  * 抽象的填充类
  */
 public abstract class AbsTempView extends LinearLayout implements ITempView {
-  private static String                TAG;
+  private static String TAG;
   protected int mType = ERROR;
-  private        OnTempBtClickListener mBtListener;
+  private OnTempBtClickListener mBtListener;
 
   public AbsTempView(Context context) {
     this(context, null);

@@ -22,7 +22,7 @@ import android.view.WindowManager;
  */
 public class ScreenUtil {
 
-  private static final    Object     LOCK  = new Object();
+  private static final Object LOCK = new Object();
   private volatile static ScreenUtil mUtil = null;
 
   private ScreenUtil() {
@@ -86,8 +86,8 @@ public class ScreenUtil {
 
     int statusHeight = -1;
     try {
-      Class<?> clazz  = Class.forName("com.android.internal.R$dimen");
-      Object   object = clazz.newInstance();
+      Class<?> clazz = Class.forName("com.android.internal.R$dimen");
+      Object object = clazz.newInstance();
       int height = Integer.parseInt(clazz.getField("status_bar_height").get(object).toString());
       statusHeight = context.getResources().getDimensionPixelSize(height);
     } catch (Exception e) {
@@ -105,7 +105,7 @@ public class ScreenUtil {
     final View view = activity.getWindow().getDecorView();
     view.setDrawingCacheEnabled(true);
     view.buildDrawingCache();
-    int width  = getScreenWidth(activity);
+    int width = getScreenWidth(activity);
     int height = getScreenHeight(activity);
     //        view.layout(0, 0, width, height);
 
@@ -126,14 +126,14 @@ public class ScreenUtil {
     View view = activity.getWindow().getDecorView();
     view.setDrawingCacheEnabled(true);
     view.buildDrawingCache();
-    Bitmap bmp   = view.getDrawingCache();
-    Rect   frame = new Rect();
+    Bitmap bmp = view.getDrawingCache();
+    Rect frame = new Rect();
     activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
     int statusBarHeight = frame.top;
 
-    int    width  = getScreenWidth(activity);
-    int    height = getScreenHeight(activity);
-    Bitmap bp     = null;
+    int width = getScreenWidth(activity);
+    int height = getScreenHeight(activity);
+    Bitmap bp = null;
     bp = Bitmap.createBitmap(bmp, 0, statusBarHeight, width, height - statusBarHeight);
     view.destroyDrawingCache();
     return bp;
@@ -158,8 +158,8 @@ public class ScreenUtil {
    * 获取屏幕的亮度
    */
   public float getScreenBrightness(Activity activity) {
-    int             nowBrightnessValue = 0;
-    ContentResolver resolver           = activity.getContentResolver();
+    int nowBrightnessValue = 0;
+    ContentResolver resolver = activity.getContentResolver();
     try {
       nowBrightnessValue = Settings.System.getInt(resolver, Settings.System.SCREEN_BRIGHTNESS);
     } catch (Exception e) {

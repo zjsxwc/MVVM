@@ -17,7 +17,7 @@ public class ObjUtil {
       return "[]";
     }
     StringBuilder strBuilder = new StringBuilder();
-    Object[]      array      = set.toArray();
+    Object[] array = set.toArray();
     strBuilder.append("[").append(array[0]).append("=").append(map.get(array[0]));
     for (int i = 1; i < array.length; ++i) {
       strBuilder.append(", ");

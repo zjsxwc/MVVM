@@ -35,13 +35,13 @@ import java.util.zip.ZipFile;
  * 文件操作工具 可以创建和删除文件等
  */
 public class FileUtil {
-  private static final String KB                 = "KB";
-  private static final String MB                 = "MB";
-  private static final String GB                 = "GB";
-  private static final String TAG                = "FileUtil";
+  private static final String KB = "KB";
+  private static final String MB = "MB";
+  private static final String GB = "GB";
+  private static final String TAG = "FileUtil";
   private static final String APPLICATION_FOLDER = "GameBar2";
-  private static final String ROM_FOLDER         = "roms";
-  private static final String DOWNLOAD_FOLDER    = "downloads";
+  private static final String ROM_FOLDER = "roms";
+  private static final String DOWNLOAD_FOLDER = "downloads";
 
   private FileUtil() {
   }

@@ -8,10 +8,9 @@ import com.arialyy.frame.util.ReflectionUtil;
  * 更新帮助类
  */
 public class NotifyHelp {
-  private static final    Object                                     LOCK        = new Object();
-  private static volatile NotifyHelp                                 INSTANCE    = null;
-  private                 SparseArray<SparseArray<OnNotifyCallback>> mNotifyObjs =
-      new SparseArray<>();
+  private static final Object LOCK = new Object();
+  private static volatile NotifyHelp INSTANCE = null;
+  private SparseArray<SparseArray<OnNotifyCallback>> mNotifyObjs = new SparseArray<>();
 
   private NotifyHelp() {
 

@@ -13,20 +13,18 @@ import butterknife.Bind;
  * Created by lyy on 2016/7/14.
  */
 public class AbsDialogFragmentTest extends BaseFragment<FragmentAbsBinding> {
-    @Bind(R.id.list)
-    RecyclerView mList;
+  @Bind(R.id.list) RecyclerView mList;
 
-    public static AbsDialogFragmentTest newInstance() {
-        
-        Bundle args = new Bundle();
-        
-        AbsDialogFragmentTest fragment = new AbsDialogFragmentTest();
-        fragment.setArguments(args);
-        return fragment;
-    }
+  public static AbsDialogFragmentTest newInstance() {
 
-    @Override
-    protected int setLayoutId() {
-        return R.layout.fragment_abs;
-    }
+    Bundle args = new Bundle();
+
+    AbsDialogFragmentTest fragment = new AbsDialogFragmentTest();
+    fragment.setArguments(args);
+    return fragment;
+  }
+
+  @Override protected int setLayoutId() {
+    return R.layout.fragment_abs;
+  }
 }

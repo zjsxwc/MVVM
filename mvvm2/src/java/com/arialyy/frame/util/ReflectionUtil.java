@@ -18,15 +18,15 @@ import org.xmlpull.v1.XmlPullParser;
  * 反射工具类
  */
 public class ReflectionUtil {
-  private static final String TAG      = "ReflectionUtil";
-  private static final String ID       = "$id";
-  private static final String LAYOUT   = "$layout";
-  private static final String STYLE    = "$style";
-  private static final String STRING   = "$string";
+  private static final String TAG = "ReflectionUtil";
+  private static final String ID = "$id";
+  private static final String LAYOUT = "$layout";
+  private static final String STYLE = "$style";
+  private static final String STRING = "$string";
   private static final String DRAWABLE = "$drawable";
-  private static final String ARRAY    = "$array";
-  private static final String COLOR    = "color";
-  private static final String ANIM     = "anim";
+  private static final String ARRAY = "$array";
+  private static final String COLOR = "color";
+  private static final String ANIM = "anim";
 
   /**
    * 从SDcard读取layout
@@ -34,10 +34,10 @@ public class ReflectionUtil {
   public static XmlPullParser getLayoutXmlPullParser(Context context, String filePath,
       String fileName) {
     XmlResourceParser paser = null;
-    AssetManager      asset = context.getResources().getAssets();
+    AssetManager asset = context.getResources().getAssets();
     try {
       Method method = asset.getClass().getMethod("addAssetPath", String.class);
-      int    cookie = (Integer) method.invoke(asset, filePath);
+      int cookie = (Integer) method.invoke(asset, filePath);
       if (cookie == 0) {
         FL.e(TAG, "加载路径失败");
       }
@@ -129,7 +129,7 @@ public class ReflectionUtil {
    */
   public static Class<?> loadClass(Context context, String ClassName) {
     String packageName = AndroidUtils.getPackageName(context);
-    String sourcePath  = AndroidUtils.getSourcePath(context, packageName);
+    String sourcePath = AndroidUtils.getSourcePath(context, packageName);
     if (!TextUtils.isEmpty(sourcePath)) {
       PathClassLoader cl =
           new PathClassLoader(sourcePath, "/data/app/", ClassLoader.getSystemClassLoader());

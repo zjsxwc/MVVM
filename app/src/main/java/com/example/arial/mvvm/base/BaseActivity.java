@@ -12,19 +12,17 @@ import com.example.arial.mvvm.R;
  */
 public abstract class BaseActivity<VB extends ViewDataBinding> extends AbsActivity<VB> {
 
-    Toolbar mBar;
+  Toolbar mBar;
 
-    @Override
-    protected void init(Bundle savedInstanceState) {
-        super.init(savedInstanceState);
-        mBar = (Toolbar) findViewById(R.id.toolbar);
-        if (mBar != null) {
-            setSupportActionBar(mBar);
-        }
+  @Override protected void init(Bundle savedInstanceState) {
+    super.init(savedInstanceState);
+    mBar = (Toolbar) findViewById(R.id.toolbar);
+    if (mBar != null) {
+      setSupportActionBar(mBar);
     }
+  }
 
-    @Override
-    protected void dataCallback(int result, Object data) {
+  @Override protected void dataCallback(int result, Object data) {
 
-    }
+  }
 }

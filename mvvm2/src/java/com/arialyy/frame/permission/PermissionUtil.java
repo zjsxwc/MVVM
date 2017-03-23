@@ -20,8 +20,8 @@ import java.util.List;
  * 6.0权限帮助工具
  */
 @TargetApi(Build.VERSION_CODES.M) class PermissionUtil {
-  public static final    Object         LOCK     = new Object();
-  private static final   String         TAG      = "PermissionUtil";
+  public static final Object LOCK = new Object();
+  private static final String TAG = "PermissionUtil";
   public volatile static PermissionUtil INSTANCE = null;
 
   private PermissionUtil() {

@@ -20,14 +20,14 @@ import com.arialyy.frame.util.StringUtil;
  */
 public abstract class AbsPopupWindow extends PopupWindow {
 
-  private static Context            mContext;
-  protected      String             TAG;
-  protected      View               mView;
-  protected      IOCProxy           mProxy;
-  protected      DialogSimpleModule mSimpleModule;
-  private        Drawable           mBackground;
-  private        Object             mObj;
-  private        ModuleFactory      mModuleF;
+  private static Context mContext;
+  protected String TAG;
+  protected View mView;
+  protected IOCProxy mProxy;
+  protected DialogSimpleModule mSimpleModule;
+  private Drawable mBackground;
+  private Object mObj;
+  private ModuleFactory mModuleF;
 
   public AbsPopupWindow(Context context) {
     this(context, null);

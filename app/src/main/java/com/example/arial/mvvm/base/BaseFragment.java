@@ -10,18 +10,15 @@ import com.arialyy.frame.core.AbsFragment;
  */
 public abstract class BaseFragment<VB extends ViewDataBinding> extends AbsFragment<VB> {
 
-    @Override
-    protected void init(Bundle savedInstanceState) {
+  @Override protected void init(Bundle savedInstanceState) {
 
-    }
+  }
 
-    @Override
-    protected void onDelayLoad() {
+  @Override protected void onDelayLoad() {
 
-    }
+  }
 
-    @Override
-    protected void dataCallback(int result, Object obj) {
+  @Override protected void dataCallback(int result, Object obj) {
 
-    }
+  }
 }

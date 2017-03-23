@@ -23,13 +23,13 @@ import com.lyy.frame.R;
  */
 public abstract class AbsDialogFragment<VB extends ViewDataBinding> extends DialogFragment {
   protected String TAG = "";
-  protected Object             mObj;
-  protected View               mRootView;
-  protected IOCProxy           mProxy;
+  protected Object mObj;
+  protected View mRootView;
+  protected IOCProxy mProxy;
   protected DialogSimpleModule mSimpleModule;
-  protected AbsActivity        mActivity;
-  private   VB                 mBind;
-  private   ModuleFactory      mModuleF;
+  protected AbsActivity mActivity;
+  private VB mBind;
+  private ModuleFactory mModuleF;
 
   public AbsDialogFragment() {
     this(null);

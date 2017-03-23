@@ -15,10 +15,10 @@ import com.arialyy.frame.util.StringUtil;
  */
 public abstract class AbsDialog extends Dialog {
   protected String TAG = "";
-  private Object             mObj;    //被观察者
-  private IOCProxy           mProxy;
+  private Object mObj;    //被观察者
+  private IOCProxy mProxy;
   private DialogSimpleModule mSimpleModule;
-  private ModuleFactory      mModuleF;
+  private ModuleFactory mModuleF;
 
   public AbsDialog(Context context) {
     this(context, null);
