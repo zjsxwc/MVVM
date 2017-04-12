@@ -60,13 +60,12 @@ public class AndroidUtils {
   /**
    * 重启app
    */
-  public static void reStartApp(Context context, Class<? extends Activity> launcherActivity) {
-    Intent mStartActivity = new Intent(context, launcherActivity);
-    int mPendingIntentId = 123456;
-    PendingIntent pi = PendingIntent.getActivity(context, mPendingIntentId, mStartActivity,
-        PendingIntent.FLAG_CANCEL_CURRENT);
-    AlarmManager mgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-    mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, pi);
+  public static void reStartApp(Context context) {
+    Intent intent = context.getPackageManager()
+        .getLaunchIntentForPackage(context.getPackageName());
+    PendingIntent restartIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+    AlarmManager mgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+    mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, restartIntent); // 1秒钟后重启应用
     System.exit(0);
   }
 
