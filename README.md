@@ -1,4 +1,10 @@
 # AbsFrame
+
+
+Android MVVM框架，与MVP不同在于，MVP的Presenter要手动更新安卓view对象，这里MVVM，只需要调用这种```getBinding(ActivityAbsBinding.class).setModuleStr(str);```
+修改model的Binding就可以自动更新到安卓view对象。
+
+
 AbsFrame是一个android应用开发框架，基于MVVM架构开发，VM和V的交互来自于谷歌dataBinding技术；IOC架构实现了 M 和 VM的交互。</br>
 ![MVVM架构](https://github.com/AriaLyy/MVVM/blob/v_2.1/img/mvvm.png)</br>
 框架具有以下特点：</br>
